@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    >
+    <include layout="@layout/app_title"
+        android:id="@+id/title"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@+id/title">
+        <View
+
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/gray_f4"/>
+
+        <com.github.customview.MyLinearLayout
+            android:id="@+id/ll_loginpassword"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_marginTop="7dp"
+            android:background="@color/white"
+            app:my_ll_bottom_line="true"
+            >
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:layout_height="wrap_content"
+                android:text="修改登录密码"
+                android:layout_marginRight="10dp"
+                android:textSize="14sp"
+                android:textColor="#333333"
+                tools:ignore="HardcodedText,MissingPrefix,RtlHardcoded"
+                android:includeFontPadding="false"
+                android:drawableRight="@mipmap/right_arrow"
+                />
+            <!--        <ImageView-->
+            <!--            android:padding="5dp"-->
+            <!--            android:layout_width="25dp"-->
+            <!--            android:layout_height="25dp"-->
+            <!--            android:src="@drawable/arrow_right"-->
+            <!--            tools:ignore="ContentDescription" />-->
+        </com.github.customview.MyLinearLayout>
+        <View
+
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/gray_f4"/>
+        <com.github.customview.MyLinearLayout
+            android:id="@+id/ll_paypassword"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:background="@color/white"
+            app:my_ll_bottom_line="true"
+            >
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:layout_height="wrap_content"
+                android:text="设置支付密码"
+                android:layout_marginEnd="10dp"
+                android:textSize="14sp"
+                android:textColor="#333333"
+                tools:ignore="HardcodedText,MissingPrefix,RtlHardcoded"
+                android:includeFontPadding="false"
+                android:drawableRight="@mipmap/right_arrow"
+                />
+
+        </com.github.customview.MyLinearLayout>
+        <View
+
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/gray_f4"/>
+        <com.github.customview.MyLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:background="@color/white"
+            android:layout_marginTop="2px"
+            app:my_ll_bottom_line="true"
+            tools:ignore="PxUsage">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:layout_height="wrap_content"
+                android:text="软件版本"
+                android:layout_marginEnd="10dp"
+                android:textSize="14sp"
+                android:textColor="#333333"
+                tools:ignore="MissingPrefix,RtlHardcoded"
+                android:includeFontPadding="false"
+                />
+
+            <com.github.customview.MyTextView
+                android:layout_width="wrap_content"
+                android:layout_height="21dp"
+                android:text="1.0.1"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:layout_marginEnd="10dp"
+                tools:ignore="HardcodedText" />
+        </com.github.customview.MyLinearLayout>
+
+        <View
+
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/gray_f4"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="70dp"
+            android:textColor="@color/grey_c5"
+            android:text="Copyright©2020"
+            android:textSize="12sp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/grey_c5"
+            android:layout_marginTop="10dp"
+            android:text="成都弘觅科技有限责任公司 版本所有"
+            android:textSize="12sp"
+            tools:ignore="HardcodedText" />
+    </LinearLayout>
+
+
+    <com.github.customview.MyTextView
+        android:id="@+id/tv_setting_exit"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="20dp"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:text="退出登录"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:my_tv_corner_radius="4dp"
+        app:my_tv_press="@color/red_3233"
+        app:my_tv_solid="@color/red_3233" />
+
+</RelativeLayout>

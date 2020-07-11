@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_f2"
+    >
+    <include layout="@layout/app_title"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_shopping_cart"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        >
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <com.github.customview.MyLinearLayout
+        android:id="@+id/ll_shopping_cart_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        app:my_ll_top_line="true"
+        tools:ignore="ObsoleteLayoutParam">
+        <com.github.customview.MyCheckBox
+            android:id="@+id/cb_shopingcart_select"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="全选"
+            android:textColor="@color/red"
+            app:my_checkbox_normal="@mipmap/circle_grey"
+            app:my_checkbox_checked="@mipmap/circle_red"
+            android:textSize="15sp"
+            android:layout_marginLeft="15dp"
+            android:paddingLeft="5dp"
+            />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1.4"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical|left"
+            android:paddingRight="20dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="合计："
+                android:layout_marginLeft="25dp"
+                />
+            <TextView
+                android:id="@+id/tv_shopingcart_total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="60dp"
+                android:text="¥0.0"
+                android:textColor="@color/red"
+                />
+        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_shopingcart_jiesuan"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="结算"
+            android:gravity="center"
+            android:background="@color/red"
+            android:textColor="@color/white"
+            />
+    </com.github.customview.MyLinearLayout>
+
+
+</LinearLayout>

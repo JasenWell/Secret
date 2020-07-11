@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_f4"
+    >
+    <include layout="@layout/app_title"/>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_above="@+id/tv_bank_add"
+                android:id="@+id/rv_bank"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            </androidx.recyclerview.widget.RecyclerView>
+            <com.github.customview.MyTextView
+                android:id="@+id/tv_bank_add"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:text="+添加银行卡"
+                android:textColor="@color/white"
+                app:my_tv_solid="@color/red_3233"
+                app:my_tv_press="@color/red_3233"
+                android:layout_alignParentBottom="true"
+                android:gravity="center"
+                android:textSize="15sp"
+                />
+        </RelativeLayout>
+
+</LinearLayout>

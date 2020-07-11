@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/background_f2"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:background="@color/white"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            >
+
+            <TextView
+                android:id="@+id/tv_taitou"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="智多星"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                />
+
+
+        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="类型"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:textSize="13sp"
+            android:textColor="@color/text_black_99"
+            android:layout_marginTop="10dp"
+            />
+
+        <TextView
+            android:id="@+id/tv_shuihao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="税号"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:textSize="13sp"
+            android:textColor="@color/text_black_99"
+            android:layout_marginTop="10dp"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="2px"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:background="@color/white"
+        >
+        <com.github.customview.MyCheckBox
+            android:id="@+id/cb_default"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:my_checkbox_normal="@mipmap/circle_grey"
+            app:my_checkbox_checked="@mipmap/circle_red"
+            android:checked="false"
+            android:text="设为默认"
+            android:textColor="@color/gray_66"
+            android:paddingLeft="4dp"
+            />
+        <View
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="1dp"/>
+
+        <TextView
+            android:id="@+id/tv_invoice_edit"
+            android:layout_width="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="编辑"
+            android:textSize="11sp"
+            android:drawablePadding="2dp"
+            android:drawableLeft="@mipmap/edit"
+            android:layout_toLeftOf="@+id/tv_invoice_delete"
+            fontPath="fonts/SourceHanSansCN-Medium.otf"
+            android:textColor="@color/black_3c"
+            tools:ignore="MissingPrefix" />
+        <TextView
+            android:id="@+id/tv_invoice_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="删除"
+            android:textSize="11sp"
+            android:drawablePadding="1dp"
+            android:drawableLeft="@mipmap/delete"
+            android:layout_alignParentEnd="true"
+            android:textColor="@color/black_3c"
+            tools:ignore="MissingPrefix" />
+
+
+
+    </LinearLayout>
+</LinearLayout>

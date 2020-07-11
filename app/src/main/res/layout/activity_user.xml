@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+    <include layout="@layout/app_title"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:background="@color/common_background_color"
+        android:layout_alignParentTop="true">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_marginTop="40dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:paddingEnd="20dp"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:textColor="@color/black"
+                    android:textSize="13sp"
+                    android:text="用户名&#12288;&#12288;&#12288;&#12288;"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="30dp"
+                    tools:ignore="HardcodedText,MissingPrefix" />
+
+                <com.github.customview.MyLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    app:my_ll_border_color="@color/text_black_99"
+                    app:my_ll_border_width="1dp"
+                    app:my_ll_corner_radius="4dp"
+                   >
+
+                    <com.github.customview.MyEditText
+                        android:id="@+id/et_acc"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center_vertical"
+                        android:imeOptions="actionNext"
+                        android:includeFontPadding="false"
+                        android:inputType="text"
+                        android:maxLength="11"
+                        android:maxLines="1"
+                        android:textSize="14sp"
+                        android:paddingLeft="5dp"
+                        android:textColor="@color/black"
+                        android:enabled="false"
+                        tools:ignore="HardcodedText,RtlHardcoded" />
+                </com.github.customview.MyLinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="20dp"
+                android:paddingEnd="20dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:textColor="@color/black"
+                    android:textSize="13sp"
+                    android:text="绑定账号（个）"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="30dp"
+                    tools:ignore="HardcodedText,MissingPrefix" />
+                <com.github.customview.MyLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    app:my_ll_border_color="@color/text_black_99"
+                    app:my_ll_border_width="1dp"
+                    app:my_ll_corner_radius="4dp"
+                    >
+
+                    <com.github.customview.MyEditText
+                        android:id="@+id/et_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center_vertical"
+                        android:imeOptions="actionNext"
+                        android:includeFontPadding="false"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:textSize="14sp"
+                        android:paddingLeft="5dp"
+                        android:enabled="false"
+                        tools:ignore="HardcodedText,RtlHardcoded" />
+                </com.github.customview.MyLinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="20dp"
+                android:paddingEnd="20dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:textColor="@color/black"
+                    android:textSize="13sp"
+                    android:text="软件到期&#12288;&#12288;&#12288;"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="30dp"
+                    tools:ignore="HardcodedText,MissingPrefix" />
+                <com.github.customview.MyLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    app:my_ll_border_color="@color/text_black_99"
+                    app:my_ll_border_width="1dp"
+                    app:my_ll_corner_radius="4dp"
+                    >
+
+                    <com.github.customview.MyEditText
+                        android:id="@+id/et_endtime"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center_vertical"
+                        android:imeOptions="actionNext"
+                        android:includeFontPadding="false"
+                        android:inputType="text"
+                        android:paddingLeft="5dp"
+                        android:maxLines="1"
+                        android:textSize="14sp"
+                        android:enabled="false"
+                        tools:ignore="HardcodedText,RtlHardcoded" />
+                </com.github.customview.MyLinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:visibility="gone"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:textColor="@color/black"
+                    android:textSize="13sp"
+                    android:text="&#12288;&#12288;&#12288;&#12288;"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="30dp"
+                    tools:ignore="HardcodedText,MissingPrefix" />
+                <com.github.customview.MyLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="horizontal"
+                  >
+
+                    <Button
+                        android:id="@+id/btn_change"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:background="@drawable/bt_shape_login"
+                        android:stateListAnimator="@drawable/state_list_animator_z"
+                        android:text="立即修改"
+                        android:layout_marginBottom="20dp"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_title" />
+                </com.github.customview.MyLinearLayout>
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>
+
+
+

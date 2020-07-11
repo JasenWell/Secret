@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_f4"
+    android:orientation="vertical"
+    >
+    <include layout="@layout/app_title"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/white"
+        >
+
+        <com.github.customview.MyLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:layout_margin="20dp"
+            app:my_ll_corner_radius="15dp"
+            app:my_ll_solid="@color/button_orange"
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="9dp"
+                android:gravity="center"
+                android:text="¥888"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="9dp"
+                android:gravity="center"
+                android:text="账户余额(元)"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                tools:ignore="HardcodedText" />
+
+
+
+        </com.github.customview.MyLinearLayout>
+
+        <com.github.customview.MyLinearLayout
+            android:id="@+id/ll_mingxi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="20dp"
+            app:my_ll_bottom_line="true"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginRight="20dp"
+                android:drawableLeft="@drawable/wallet1"
+                android:drawablePadding="5dp"
+                android:gravity="center|left"
+                android:text="交易明细"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                tools:ignore="HardcodedText,RtlHardcoded" />
+
+        </com.github.customview.MyLinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_yinhangka"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="20dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginEnd="20dp"
+                android:drawableStart="@drawable/wallet3"
+                android:drawablePadding="5dp"
+                android:gravity="center|left"
+                android:text="银行卡管理"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                tools:ignore="HardcodedText,RtlHardcoded" />
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.github.customview.MyTextView
+            android:id="@+id/tv_chongzhi"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="充值"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_margin="20dp"
+            android:textColor="@color/white"
+            app:my_tv_solid="@color/red_3233"
+            app:my_tv_press="@color/red_3233"
+            android:gravity="center"
+            app:my_tv_corner_radius="4dp"
+            android:textSize="14sp"
+            android:layout_marginTop="30dp"
+            tools:ignore="HardcodedText" />
+
+        <com.github.customview.MyTextView
+            android:id="@+id/tv_tixian"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="提现"
+            android:layout_margin="20dp"
+            android:textColor="@color/white"
+            app:my_tv_solid="@color/red_3233"
+            app:my_tv_press="@color/red_3233"
+            android:gravity="center"
+            app:my_tv_corner_radius="4dp"
+            android:textSize="14sp"
+            android:layout_marginTop="30dp"
+            tools:ignore="HardcodedText" />
+
+    </LinearLayout>
+</LinearLayout>

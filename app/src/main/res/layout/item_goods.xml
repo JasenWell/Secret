@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:background="@color/white"
+             android:gravity="center_vertical"
+    >
+
+    <com.github.customview.MyImageView
+        android:id="@+id/iv_goods_img"
+        android:layout_width="166dp"
+        android:layout_height="190dp"
+        android:scaleType="fitCenter"
+        android:layout_gravity="center"
+        />
+    <TextView
+        android:id="@+id/tv_goods_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="一次性洗脸巾洁面巾"
+        android:maxLines="2"
+        android:lines="2"
+        android:ellipsize="end"
+        android:textColor="@color/black"
+        android:gravity="center|left"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="¥70000"
+            android:textColor="@color/bottom_color"
+            />
+        <TextView
+            android:id="@+id/tv_goods_price"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:layout_height="wrap_content"
+            tools:text="12.5"
+            android:textColor="@color/c76"
+            />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:orientation="horizontal"
+        android:background="@mipmap/main_button_color"
+        >
+        <TextView
+            android:id="@+id/tv_goods_goumai"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="24334人购买"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            />
+
+    </RelativeLayout>
+</LinearLayout>

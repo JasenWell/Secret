@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    >
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        app:titleTextColor="@color/gray_66"
+        app:layout_collapseMode="pin"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginStart="13dp"
+            android:maxLines="1"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            tools:text="left_title"
+            tools:ignore="MissingPrefix,RtlHardcoded,SmallSp" />
+
+        <TextView
+            android:id="@id/app_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            tools:text="title"
+            tools:ignore="MissingPrefix" />
+
+        <ImageView
+            android:id="@id/app_right_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:maxHeight="?attr/actionBarSize"
+            android:paddingEnd="20dp"
+            android:visibility="gone"
+            tools:ignore="ContentDescription,RtlHardcoded,RtlSymmetry" />
+        <TextView
+            android:id="@id/app_right_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginEnd="13dp"
+            android:maxLines="1"
+            android:textColor="@color/text_black_33"
+            android:textSize="16sp"
+            tools:text="right_title"
+            tools:ignore="MissingPrefix,RtlHardcoded,SmallSp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:gravity="center"
+            android:layout_marginEnd="10dp"
+            android:maxLines="1"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            tools:text="city"
+            android:visibility="gone"
+            tools:ignore="RtlHardcoded" />
+    </androidx.appcompat.widget.Toolbar>
+    <View
+        android:id="@+id/v_bottom_line"
+        android:layout_height="1dp"
+        android:layout_width="match_parent"
+        />
+
+</LinearLayout>

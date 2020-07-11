@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">秘密</string>
+
+    <string name="str_none">无数据</string>
+    <string name="load_failed_no_network">没有网络</string>
+    <string name="empty">空</string>
+
+    <string name="add_invoice_information">新增发票信息</string>
+    <string name="fapiao_title">发票抬头</string>
+    <string name="invoice_type">发票类型</string>
+    <string name="geren">个人</string>
+    <string name="company">公司</string>
+    <string name="phone">电话号码</string>
+    <string name="login">登录</string>
+    <string name="code">获取验证码</string>
+    <string name="phone_number">手机号</string>
+    <string name="sex">性别</string>
+    <string name="birthday">生日</string>
+    <string name="inviter">邀请人</string>
+    <string name="save">保存</string>
+
+
+    <string name="timepicker_year">年</string>
+    <string name="timepicker_month">月</string>
+    <string name="timepicker_day">日</string>
+    <string name="timepicker_hour">时</string>
+    <string name="timepicker_min">分</string>
+    <string name="timepicker_finish">确认</string>
+
+</resources>

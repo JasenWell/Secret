@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+    <include layout="@layout/app_title"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="75dp"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        >
+        <ImageView
+            android:layout_width="164dp"
+            android:layout_height="128dp"
+            android:adjustViewBounds="true"
+            android:src="@mipmap/success_dengji"
+
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/b4b"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:text="信息登记成功"
+            android:textSize="21sp"
+          />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/a1"
+            android:layout_marginTop="20dp"
+            android:gravity="center_horizontal"
+            android:text="我们后续会有客服联系您，请保持电话通畅"
+            android:textSize="16sp"
+            />
+
+    </LinearLayout>
+
+
+    </LinearLayout>

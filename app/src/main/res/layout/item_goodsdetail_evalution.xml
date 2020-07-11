@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_marginBottom="20dp"
+    xmlns:tools="http://schemas.android.com/tools">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="UselessParent">
+        <LinearLayout
+            android:id="@+id/ly_my_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp"
+            >
+            <com.github.customview.MyImageView
+                android:id="@+id/civ_my_img"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                />
+            <com.github.customview.MyRelativeLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:paddingStart="12dp"
+                tools:ignore="RtlSymmetry">
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/b4b"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="5dp"
+                    android:includeFontPadding="false"
+                    android:text="张三娃"
+                    tools:ignore="HardcodedText,MissingPrefix" />
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:textColor="@color/c76"
+                    tools:ignore="HardcodedText,MissingPrefix,SmallSp"
+                    android:text="2020-5-30 08:30:52"
+                    android:includeFontPadding="false"
+                    android:layout_below="@+id/tv_name"/>
+
+            </com.github.customview.MyRelativeLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="10dp"
+            android:layout_below="@+id/ly_my_top">
+            <TextView
+                android:id="@+id/tv_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/c76"
+                android:textSize="14sp"
+                android:text="dasdasdadasdasdadasdasdadasdada"
+                tools:ignore="HardcodedText,MissingPrefix" />
+        </LinearLayout>
+    </RelativeLayout>
+<!--    <com.yiwuzhijia.ddyp.mvp.view.MultiImageView-->
+<!--        android:id="@+id/multiImagView"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="@color/white"-->
+<!--        >-->
+<!--    </com.yiwuzhijia.ddyp.mvp.view.MultiImageView>-->
+
+    <cn.bingoogolapple.photopicker.widget.BGANinePhotoLayout
+        android:id="@+id/npl_item_moment_photos"
+        style="@style/MatchWrap"
+        android:layout_marginTop="8dp"
+        app:bga_npl_itemCornerRadius="5dp"
+        app:bga_npl_itemSpanCount="3"
+        app:bga_npl_itemWhiteSpacing="4dp"
+        app:bga_npl_itemWidth="0dp"
+        app:bga_npl_otherWhiteSpacing="64dp"
+        app:bga_npl_placeholderDrawable="@mipmap/bga_pp_ic_holder_light"
+        app:bga_npl_showAsLargeWhenOnlyOne="false"/>
+</LinearLayout>

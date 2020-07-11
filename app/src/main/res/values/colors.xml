@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#f4f4f4</color>
+    <color name="colorPrimaryDark">#f4f4f4</color>
+    <color name="colorAccent">#f4f4f4</color>
+
+    <color name="text_black_33">#333333</color>
+    <color name="text_black_66">#666666</color>
+    <color name="text_black_99">#999999</color>
+
+    <color name="text_grey_76">#767676</color>
+    <color name="text_grey_f5">#f5f5f5</color>
+    <color name="text_black_cc">#cccccc</color>
+    <color name="text_black_ee">#eeeeee</color>
+    <color name="divider_color">@color/gray_f4</color>
+
+    <color name="background_f2">#f2f2f2</color>
+    <color name="bottom_color">#FF3333</color>
+    <color name="grey_ec">#ECECEC</color>
+
+    <color name="zhusediao">#FF3333</color>
+    <color name="fusediao">#28C18E</color>
+    <color name="fusediao_orange">#FC7F04</color>
+    <color name="f7">#F7B500</color>
+    <color name="dabiaoti">#202020</color>
+    <color name="b4b">#4B4B4B</color>
+    <color name="c76">#767676</color>
+    <color name="a1">#A1A1A1</color>
+    <color name="cc">#CCCCCC</color>
+    <color name="e8">#E8E8E8</color>
+    <color name="f5">#F5F5F5</color>
+    <color name="bottom_bar_color">#6D7278</color>
+    <color name="magic_indicator_color">#FEA198</color>
+    <color name="common_background_color">#FCFBFF</color>
+    <color name="gray_f4">#f4f4f4</color>
+    <color name="gray_66">#99000000</color>
+    <color name="black">#000000</color>
+    <color name="black_20">#202020</color>
+    <color name="label_background1">#FFD7D7</color>
+    <color name="label_background2">#FEDFC0</color>
+    <color name="label_background3">#D2F2E7</color>
+
+    <color name="label_text_background1">#EF6F2F</color>
+    <color name="label_text_background2">#FC7F04</color>
+    <color name="label_text_background3">#28C18E</color>
+
+    <color name="grey_a1">#A1A1A1</color>
+
+    <color name="b7">#B7B7B7</color>
+    <color name="black_3c">#3C3C3C</color>
+    <color name="white">#ffffff</color>
+    <color name="red">#c20c0c</color>
+    <color name="red_66">#ec0f38</color>
+    <color name="red_3233"> #FE3233</color>
+
+
+    <!--<color name="main_color">#7EABF4</color>-->
+
+    <color name="grey_d9">#D9D9D9</color>
+    <color name="grey_c5">#c5c5c5</color>
+    <color name="bottom_navigation_unselected">#515151</color>
+
+    <color name="button_orange">#F57F17</color>
+    <color name="detail_orange">#F2CDA5</color>
+</resources>

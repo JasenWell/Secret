@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingTop="15dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="15dp"
+        android:paddingLeft="10dp">
+
+        <com.github.customview.MyCheckBox
+            android:id="@+id/cb_goods"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:textColor="@color/gray_66"
+            android:layout_marginEnd="30dp"
+            android:layout_marginStart="5dp"
+            app:my_checkbox_normal="@mipmap/circle_grey"
+            app:my_checkbox_checked="@mipmap/circle_red"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="5dp"
+            android:layout_marginStart="6dp"
+            >
+
+            <ImageView
+                android:id="@+id/iv_goods"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:scaleType="fitXY"
+                tools:ignore="ContentDescription" />
+        </androidx.cardview.widget.CardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:textColor="@color/black"
+                android:includeFontPadding="false"
+                fontPath="fonts/SourceHanSansCN-Regular.otf"
+                android:textSize="14sp"
+                tools:ignore="MissingPrefix" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="7dp">
+                <TextView
+                    android:id="@+id/tv_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:text="23123"
+                    android:includeFontPadding="false"
+                    android:layout_marginStart="3dp"
+                    android:textColor="#949494"
+                    fontPath="fonts/SourceHanSansCN-Normal.otf"
+                    tools:ignore="HardcodedText,MissingPrefix,SmallSp" />
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

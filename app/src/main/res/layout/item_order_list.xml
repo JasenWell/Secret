@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.github.customview.MyLinearLayout
+    android:id="@+id/ll_my_order"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.github.customview.MyLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="15dp"
+        android:orientation="vertical"
+        app:my_ll_bottom_line="true"
+        app:my_ll_corner_radius="10dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="15dp"
+        app:my_ll_solid="@color/white"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            >
+
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="10dp"
+                android:src="@mipmap/order_shop"/>
+            <TextView
+                android:id="@+id/tv_order_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="16sp"
+                tools:text="TD123456"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                />
+
+            <TextView
+                android:id="@+id/tv_order_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/bottom_color"
+                tools:text="退款中"
+                />
+        </LinearLayout>
+
+        <com.xyp.mimi.mvp.view.NoTouchRecyclerView
+            android:id="@+id/rv_order_goods"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="13dp"
+            android:layout_marginBottom="13dp">
+
+        </com.xyp.mimi.mvp.view.NoTouchRecyclerView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|right"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/tv_order_total"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:textSize="12sp"
+                android:textColor="@color/text_grey_76"
+                tools:text="合计:¥97.00" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|right"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                tools:ignore="RtlHardcoded">
+
+                <com.github.customview.MyTextView
+                    android:id="@+id/tv_order_quxiao"
+                    android:layout_width="80dp"
+                    android:layout_height="28dp"
+                    android:gravity="center"
+                    android:text="取消订单"
+                    android:textColor="@color/text_grey_76"
+                    android:textSize="14sp"
+                    app:my_tv_solid="@color/white"
+                    android:visibility="gone"
+                    app:my_tv_border_color="@color/text_grey_76"
+                    app:my_tv_border_width="1px"
+                    app:my_tv_corner_radius="15dp"
+                    />
+
+                <com.github.customview.MyTextView
+                    android:id="@+id/tv_order_zhifu"
+                    android:layout_width="80dp"
+                    android:layout_height="28dp"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:text="立即付款"
+                    android:textColor="@color/red_3233"
+                    android:textSize="14sp"
+                    android:visibility="gone"
+                    app:my_tv_border_color="@color/red_3233"
+                    app:my_tv_border_width="1px"
+                    app:my_tv_corner_radius="15dp"
+                    app:my_tv_solid="@color/white"
+                    />
+
+                <com.github.customview.MyTextView
+                    android:layout_width="80dp"
+                    android:layout_height="28dp"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:text="上传凭证"
+                    android:textColor="@color/red_3233"
+                    android:textSize="14sp"
+                    android:visibility="gone"
+                    app:my_tv_border_color="@color/red_3233"
+                    app:my_tv_border_width="1px"
+                    app:my_tv_corner_radius="15dp"
+                    app:my_tv_solid="@color/white"
+                    />
+
+
+                <com.github.customview.MyTextView
+                    android:layout_width="80dp"
+                    android:layout_height="28dp"
+                    android:gravity="center"
+                    android:text="查看物流"
+                    android:visibility="gone"
+                    android:textColor="@color/text_grey_76"
+                    android:textSize="14sp"
+                    app:my_tv_solid="@color/white"
+                    app:my_tv_border_color="@color/text_grey_76"
+                    app:my_tv_border_width="1px"
+                    app:my_tv_corner_radius="15dp"
+                    />
+
+                <com.github.customview.MyTextView
+                    android:layout_width="80dp"
+                    android:layout_height="28dp"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:text="确认收货"
+                    android:textColor="@color/red_3233"
+                    android:textSize="14sp"
+                    app:my_tv_border_color="@color/red_3233"
+                    app:my_tv_border_width="1px"
+                    android:visibility="gone"
+                    app:my_tv_corner_radius="15dp"
+                    app:my_tv_solid="@color/white"
+                    />
+                <com.github.customview.MyTextView
+                    android:layout_width="80dp"
+                    android:layout_height="28dp"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:text="立即评价"
+                    android:visibility="gone"
+                    android:textColor="@color/red_3233"
+                    android:textSize="14sp"
+                    app:my_tv_border_color="@color/red_3233"
+                    app:my_tv_border_width="1px"
+                    app:my_tv_corner_radius="15dp"
+                    app:my_tv_solid="@color/white"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+    </com.github.customview.MyLinearLayout>
+
+</com.github.customview.MyLinearLayout>

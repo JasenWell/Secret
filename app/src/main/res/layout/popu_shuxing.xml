@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+    <com.github.customview.MyRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        app:my_rl_corner_topLeftRadius="8dp"
+        app:my_rl_corner_topRightRadius="8dp"
+        app:my_rl_solid="@color/white"
+        >
+        <com.github.customview.MyTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="商品属性"
+            android:gravity="center_horizontal"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            />
+    </com.github.customview.MyRelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_above="@+id/rv_shuxing"
+            android:id="@+id/rv_invoice"
+            android:layout_width="fill_parent"
+            android:overScrollMode="never"
+            android:background="@color/white"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+        <com.github.customview.MyTextView
+            android:id="@+id/tv_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:layout_margin="20dp"
+            android:gravity="center"
+            android:text="完成"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:my_tv_corner_radius="22dp"
+            app:my_tv_press="@color/zhusediao"
+            app:my_tv_solid="@color/zhusediao" />
+    </LinearLayout>
+
+</LinearLayout>

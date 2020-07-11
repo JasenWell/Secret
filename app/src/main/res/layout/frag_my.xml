@@ -1,0 +1,849 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    >
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:background="@color/gray_f4">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="226dp"
+                android:background="@drawable/user_bg"
+                android:orientation="vertical">
+
+                <com.github.customview.MyLinearLayout
+                    android:id="@+id/ll_my_top"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingStart="13dp"
+                    android:paddingTop="52dp"
+                    android:paddingEnd="13dp"
+                    android:paddingBottom="19dp">
+
+                    <com.github.customview.MyImageView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:src="@drawable/sj" />
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_gravity="bottom|right"
+                        tools:ignore="ContentDescription,RtlHardcoded" />
+
+
+                    <com.github.customview.MyRelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:paddingStart="12dp"
+                        tools:ignore="RtlSymmetry">
+
+                        <TextView
+                            android:id="@+id/tv_my_center_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="7.5dp"
+                            android:gravity="center_vertical"
+                            android:includeFontPadding="false"
+                            android:text="大单易拼"
+                            android:textColor="@color/white"
+                            android:textSize="18sp"
+                            tools:ignore="HardcodedText,MissingPrefix" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_my_center_name"
+                            android:includeFontPadding="false"
+                            android:text="ID:10111"
+                            android:textColor="@color/white"
+                            android:textSize="11sp"
+                            tools:ignore="HardcodedText,MissingPrefix,SmallSp" />
+
+                    </com.github.customview.MyRelativeLayout>
+
+                </com.github.customview.MyLinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:baselineAligned="false"
+                    android:gravity="center_vertical">
+
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="5dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:includeFontPadding="false"
+                                android:text="收藏商品"
+                                android:textColor="@color/white"
+                                android:textSize="11sp"
+                                tools:ignore="HardcodedText,MissingPrefix,SmallSp" />
+                            <!--                                <View-->
+                            <!--                                    android:visibility="gone"-->
+                            <!--                                    android:layout_width="6dp"-->
+                            <!--                                    android:layout_height="6dp"-->
+                            <!--                                    android:layout_toEndOf="@id/attention"-->
+                            <!--                                    android:background="@drawable/red_tips"-->
+                            <!--                                    />-->
+                        </RelativeLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:includeFontPadding="false"
+                            android:text="888"
+                            android:textColor="@color/white"
+                            android:textSize="11sp"
+                            tools:ignore="HardcodedText,MissingPrefix,SmallSp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="5dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:includeFontPadding="false"
+                                android:text="收藏店铺"
+                                android:textColor="@color/white"
+                                android:textSize="11sp"
+                                tools:ignore="HardcodedText,MissingPrefix,SmallSp" />
+                            <!--                                <View-->
+                            <!--                                    android:visibility="gone"-->
+                            <!--                                    android:layout_width="6dp"-->
+                            <!--                                    android:layout_height="6dp"-->
+                            <!--                                    android:layout_toEndOf="@id/fans"-->
+                            <!--                                    android:background="@drawable/red_tips"-->
+                            <!--                                    />-->
+                        </RelativeLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:includeFontPadding="false"
+                            android:text="888"
+                            android:textColor="@color/white"
+                            android:textSize="11sp"
+                            tools:ignore="HardcodedText,MissingPrefix,SmallSp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="5dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:includeFontPadding="false"
+                                android:text="优惠券"
+                                android:textColor="@color/white"
+                                android:textSize="11sp"
+                                tools:ignore="HardcodedText,MissingPrefix,SmallSp" />
+                            <!--                                <View-->
+                            <!--                                    android:visibility="gone"-->
+                            <!--                                    android:layout_width="6dp"-->
+                            <!--                                    android:layout_height="6dp"-->
+                            <!--                                    android:layout_toEndOf="@id/collect"-->
+                            <!--                                    android:background="@drawable/red_tips"-->
+                            <!--                                    />-->
+                        </RelativeLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:includeFontPadding="false"
+                            android:text="888"
+                            android:textColor="@color/white"
+                            android:textSize="11sp"
+                            tools:ignore="HardcodedText,MissingPrefix,SmallSp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="180dp">
+                <com.github.customview.MyLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="13dp"
+
+                    android:layout_marginRight="13dp"
+                    android:layout_marginBottom="7dp"
+                    android:orientation="vertical"
+                    android:padding="3dp"
+                    app:my_ll_corner_radius="5dp"
+                    app:my_ll_solid="@color/white">
+
+                    <com.github.customview.MyLinearLayout
+                        android:id="@+id/ll_order"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="7dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerInParent="true"
+                                android:layout_marginBottom="12dp"
+                                android:gravity="center_vertical"
+                                android:text="我的订单"
+                                android:textColor="@color/black"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                tools:ignore="HardcodedText,MissingPrefix" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerInParent="true"
+                                android:gravity="center_vertical"
+                                android:text="查看全部 >"
+                                android:textColor="@color/gray_66"
+                                android:textSize="11sp"
+                                tools:ignore="HardcodedText,MissingPrefix,SmallSp" />
+                        </RelativeLayout>
+
+                    </com.github.customview.MyLinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="@color/text_black_cc"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp" />
+
+                    <com.github.customview.MyLinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginBottom="12dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+
+                        <LinearLayout
+                            android:id="@+id/ll_daifukuan"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal|center_vertical"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal|center_vertical"
+                            android:orientation="vertical"
+                            tools:ignore="UseCompoundDrawables">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_marginBottom="8dp"
+                                android:background="@drawable/u_order1"
+                                tools:ignore="ContentDescription" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:includeFontPadding="false"
+                                android:text="待付款"
+                                android:textColor="@color/black"
+                                android:textSize="14sp"
+                                tools:ignore="HardcodedText,MissingPrefix" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_daishenhe"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal|center_vertical"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal|center_vertical"
+                            android:orientation="vertical"
+                            tools:ignore="UseCompoundDrawables">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_marginBottom="8dp"
+                                android:background="@drawable/u_order2"
+                                tools:ignore="ContentDescription" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:includeFontPadding="false"
+                                android:text="待审核"
+                                android:textColor="@color/black"
+                                android:textSize="14sp"
+                                tools:ignore="HardcodedText,MissingPrefix" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_daifahuo"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal|center_vertical"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal|center_vertical"
+                            android:orientation="vertical"
+                            tools:ignore="UseCompoundDrawables">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_marginBottom="8dp"
+                                android:background="@drawable/u_order3"
+                                tools:ignore="ContentDescription" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:includeFontPadding="false"
+                                android:text="待发货"
+                                android:textColor="@color/black"
+                                android:textSize="14sp"
+                                tools:ignore="HardcodedText,MissingPrefix" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_daishouhuo"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal|center_vertical"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal|center_vertical"
+                            android:orientation="vertical"
+                            tools:ignore="UseCompoundDrawables">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_marginBottom="8dp"
+                                android:background="@drawable/u_order4"
+                                tools:ignore="ContentDescription" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:includeFontPadding="false"
+                                android:text="待收货"
+                                android:textColor="@color/black"
+                                android:textSize="14sp"
+                                tools:ignore="HardcodedText,MissingPrefix" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_daipingjia"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal|center_vertical"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal|center_vertical"
+                            android:orientation="vertical"
+                            tools:ignore="UseCompoundDrawables">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_marginBottom="8dp"
+                                android:background="@drawable/u_order5"
+                                tools:ignore="ContentDescription" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:includeFontPadding="false"
+                                android:text="待评价"
+                                android:textColor="@color/black"
+                                android:textSize="14sp"
+                                tools:ignore="HardcodedText,MissingPrefix" />
+                        </LinearLayout>
+
+                    </com.github.customview.MyLinearLayout>
+                </com.github.customview.MyLinearLayout>
+
+                <com.github.customview.MyLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="13dp"
+                    android:layout_marginRight="13dp"
+                    android:orientation="vertical"
+                    android:padding="3dp"
+                    app:my_ll_bottom_line="true"
+                    app:my_ll_corner_radius="5dp"
+                    app:my_ll_solid="@color/white">
+
+                    <com.github.customview.MyLinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="7dp">
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerInParent="true"
+                                android:layout_marginBottom="13dp"
+                                android:gravity="center_vertical"
+                                android:text="我的服务"
+                                android:textStyle="bold"
+                                android:textColor="@color/black"
+                                android:textSize="14sp"
+                                tools:ignore="HardcodedText,MissingPrefix" />
+                        </RelativeLayout>
+
+                    </com.github.customview.MyLinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="@color/text_black_cc"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp" />
+
+                    <com.github.customview.MyLinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="7dp">
+
+
+                        <LinearLayout
+                            android:id="@+id/ll_wallet"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal|center_vertical"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal|center_vertical"
+                            android:orientation="vertical"
+                            tools:ignore="UseCompoundDrawables">
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginBottom="5dp"
+                                android:background="@drawable/pay_yue"
+                                tools:ignore="ContentDescription" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="6dp"
+                                android:gravity="center_vertical"
+                                android:includeFontPadding="false"
+                                android:text="我的钱包"
+                                android:textColor="@color/black"
+                                android:textSize="10sp"
+                                tools:ignore="HardcodedText,MissingPrefix,SmallSp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_shouyi"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal|center_vertical"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal|center_vertical"
+                            android:orientation="vertical"
+                            tools:ignore="UseCompoundDrawables">
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginBottom="5dp"
+                                android:background="@drawable/u_sy"
+                                tools:ignore="ContentDescription" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="6dp"
+                                android:gravity="center_vertical"
+                                android:includeFontPadding="false"
+                                android:text="我的收益"
+                                android:textColor="@color/black"
+                                android:textSize="10sp"
+                                tools:ignore="HardcodedText,MissingPrefix,SmallSp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal|center_vertical"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal|center_vertical"
+                            android:orientation="vertical"
+                            tools:ignore="UseCompoundDrawables">
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginBottom="5dp"
+                                android:background="@drawable/u_team"
+                                tools:ignore="ContentDescription" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="6dp"
+                                android:gravity="center_vertical"
+                                android:includeFontPadding="false"
+                                android:text="我的团队"
+                                android:textColor="@color/black"
+                                android:textSize="10sp"
+                                tools:ignore="HardcodedText,MissingPrefix,SmallSp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal|center_vertical"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal|center_vertical"
+                            android:orientation="vertical"
+                            tools:ignore="UseCompoundDrawables">
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginBottom="5dp"
+                                android:background="@drawable/pay_yue"
+                                tools:ignore="ContentDescription" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="6dp"
+                                android:gravity="center_vertical"
+                                android:includeFontPadding="false"
+                                android:text="退款/售后"
+                                android:textColor="@color/black"
+                                android:textSize="10sp"
+                                tools:ignore="HardcodedText,MissingPrefix,SmallSp" />
+                        </LinearLayout>
+
+                    </com.github.customview.MyLinearLayout>
+
+                    <com.github.customview.MyLinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="7dp">
+
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal|center_vertical"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal|center_vertical"
+                            android:orientation="vertical"
+                            tools:ignore="UseCompoundDrawables">
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginBottom="5dp"
+                                android:background="@drawable/u_pj"
+                                tools:ignore="ContentDescription" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="6dp"
+                                android:gravity="center_vertical"
+                                android:includeFontPadding="false"
+                                android:text="我的评价"
+                                android:textColor="@color/black"
+                                android:textSize="10sp"
+                                tools:ignore="HardcodedText,MissingPrefix,SmallSp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_invoice"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal|center_vertical"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal|center_vertical"
+                            android:orientation="vertical"
+                            tools:ignore="UseCompoundDrawables">
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginBottom="5dp"
+                                android:background="@drawable/u_fp"
+                                tools:ignore="ContentDescription" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="6dp"
+                                android:gravity="center_vertical"
+                                android:includeFontPadding="false"
+                                android:text="发票信息"
+                                android:textColor="@color/black"
+                                android:textSize="10sp"
+                                tools:ignore="HardcodedText,MissingPrefix,SmallSp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal|center_vertical"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal|center_vertical"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginBottom="5dp"
+                                android:background="@drawable/u_yq"
+                                tools:ignore="ContentDescription" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="6dp"
+                                android:gravity="center_vertical"
+                                android:includeFontPadding="false"
+                                android:text="推荐好友"
+                                android:textColor="@color/black"
+                                android:textSize="10sp"
+                                tools:ignore="HardcodedText,MissingPrefix,SmallSp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_address"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal|center_vertical"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal|center_vertical"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginBottom="5dp"
+                                android:background="@drawable/u_addr"
+                                tools:ignore="ContentDescription" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="6dp"
+                                android:gravity="center_vertical"
+                                android:includeFontPadding="false"
+                                android:text="地址管理"
+                                android:textColor="@color/black"
+                                android:textSize="10sp"
+                                tools:ignore="HardcodedText,MissingPrefix,SmallSp" />
+                        </LinearLayout>
+
+
+                    </com.github.customview.MyLinearLayout>
+
+                    <com.github.customview.MyLinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="7dp">
+
+
+                        <LinearLayout
+                            android:id="@+id/ll_record"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal|center_vertical"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal|center_vertical"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginBottom="5dp"
+                                android:background="@drawable/u_zj" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="6dp"
+                                android:gravity="center_vertical"
+                                android:includeFontPadding="false"
+                                android:text="浏览记录"
+                                android:textColor="@color/black"
+                                android:textSize="10sp"
+                                tools:ignore="HardcodedText,MissingPrefix,SmallSp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_problem"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal|center_vertical"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal|center_vertical"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginBottom="5dp"
+                                android:background="@drawable/u_fk" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="6dp"
+                                android:gravity="center_vertical"
+                                android:includeFontPadding="false"
+                                android:text="常见问题"
+                                android:textColor="@color/black"
+                                android:textSize="10sp"
+                                tools:ignore="MissingPrefix" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal|center_vertical"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal|center_vertical"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginBottom="5dp"
+                                android:background="@drawable/u_kf" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="6dp"
+                                android:gravity="center_vertical"
+                                android:includeFontPadding="false"
+                                android:text="官方客服"
+                                android:textColor="@color/black"
+                                android:textSize="10sp"
+                                tools:ignore="MissingPrefix" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:id="@+id/ll_setting"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal|center_vertical"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal|center_vertical"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginBottom="5dp"
+                                android:background="@drawable/u_set" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="6dp"
+                                android:gravity="center_vertical"
+                                android:includeFontPadding="false"
+                                android:text="设置"
+                                android:textColor="@color/black"
+                                android:textSize="10sp"
+                                tools:ignore="MissingPrefix" />
+                        </LinearLayout>
+
+                    </com.github.customview.MyLinearLayout>
+                </com.github.customview.MyLinearLayout>
+            </LinearLayout>
+
+        </FrameLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</FrameLayout>

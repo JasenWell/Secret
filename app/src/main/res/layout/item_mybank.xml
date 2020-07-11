@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+        <com.github.customview.MyLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            android:layout_margin="10dp"
+            app:my_ll_corner_radius="5dp"
+            app:my_ll_solid="@color/colorAccent"
+            android:gravity="center_vertical"
+            >
+            <com.github.customview.MyImageView
+                app:my_iv_radius="15dp"
+                android:id="@+id/iv_account_icon"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                tools:src="@drawable/bank_icon"
+                android:layout_marginRight="20dp"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                >
+                <TextView
+                    android:id="@+id/tv_account_bank"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="中国银行"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    />
+                <TextView
+                    android:id="@+id/tv_jiebang"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="[解绑银行卡]"
+                    android:textSize="12sp"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="5dp"
+                    />
+                <TextView
+                    android:id="@+id/tv_banknumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="****  **** **** "
+                    android:textSize="12sp"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="5dp"
+                    />
+
+            </LinearLayout>
+        </com.github.customview.MyLinearLayout>
+
+</LinearLayout>
