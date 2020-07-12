@@ -42,6 +42,9 @@ allprojects {
         maven {
             url 'http://maven.aliyun.com/nexus/content/repositories/releases/'
         }
+        //融云im_sdk by hjh 2020-7-12
+        mavenCentral()
+        maven {url  "https://dl.bintray.com/rongcloud/maven"}
 
     }
 }

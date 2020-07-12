@@ -49,12 +49,10 @@ public class MyFragment extends BaseSupportFragment {
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
 //        toolbar.setBackgroundColor(getResources().getColor(R.color.red_3233));
-
     }
 
     @Override
     public void setData(@Nullable Object data) {
-
 
     }
 

@@ -1,13 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?><manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.xyp.mimi">
 
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
-    <!-- Required -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- Required -->
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
@@ -15,7 +14,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -26,21 +25,24 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
-        android:name="com.xyp.mimi.app.base.BaseApp"
+        android:name=".app.base.BaseApp"
         android:allowBackup="true"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/icon"
         android:label="@string/app_name"
         android:maxAspectRatio="2.4"
         android:networkSecurityConfig="@xml/network_security_config"
-        android:hardwareAccelerated="true"
         android:resizeableActivity="true"
         android:roundIcon="@mipmap/icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:replace="theme,android:allowBackup"
+        tools:replace="theme,android:allowBackup,android:icon"
         tools:targetApi="n">
-        <!-- 适配华为（huawei）刘海屏 -->
-
+        <activity android:name=".im.ui.activity.PokeInviteChatActivity"></activity>
+        <activity android:name=".im.ui.activity.NewFriendListActivity" />
+        <activity android:name=".im.ui.activity.GroupNoticeListActivity" />
+        <activity android:name=".im.ui.activity.SealPicturePagerActivity" />
+        <activity android:name=".im.ui.activity.ConversationActivity" /> <!-- 适配华为（huawei）刘海屏 -->
         <meta-data
             android:name="android.notch_support"
             android:value="true" /> <!-- 适配小米（xiaomi）刘海屏 -->
@@ -54,7 +56,7 @@
      只要依赖 AutoSize 就必须填写设计图尺寸, 否则报错, 不想使用 AutoSize 就不要依赖 AutoSize
             只要填写完设计图的尺寸, AutoSize 就会自动启动, 以下 dp 尺寸是根据公式 px / (dpi / 160) 求出, 运算时使用测试机的 dpi 即可
             AutoSize 的详细介绍请看这里 https://juejin.im/post/5bce688e6fb9a05cf715d1c2
-            -->
+        -->
         <meta-data
             android:name="design_width_in_dp"
             android:value="375" />
@@ -64,204 +66,201 @@
         <meta-data
             android:name="com.xyp.mimi.app.GlobalConfiguration"
             android:value="ConfigModule" />
-
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="Ylo6DWMXodAprvbetCq412zCm2cK8tGc" />
-
-
-        <!-- 设置环信应用的AppKey -->
-        <meta-data android:name="EASEMOB_APPKEY"  android:value="zpxxgd#mimi" />
-        <!-- 声明SDK所需的service SDK核心功能-->
-        <service android:name="com.hyphenate.chat.EMChatService" android:exported="true"/>
-        <service android:name="com.hyphenate.chat.EMJobService"
-            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:value="Ylo6DWMXodAprvbetCq412zCm2cK8tGc" /> <!-- 设置环信应用的AppKey -->
+        <meta-data
+            android:name="EASEMOB_APPKEY"
+            android:value="zpxxgd#mimi" /> <!-- 声明SDK所需的service SDK核心功能 -->
+        <service
+            android:name="com.hyphenate.chat.EMChatService"
+            android:exported="true" />
+        <service
+            android:name="com.hyphenate.chat.EMJobService"
             android:exported="true"
-            />
-        <!-- 声明SDK所需的receiver -->
+            android:permission="android.permission.BIND_JOB_SERVICE" /> <!-- 声明SDK所需的receiver -->
         <receiver android:name="com.hyphenate.chat.EMMonitorReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
-                <data android:scheme="package"/>
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
+                <data android:scheme="package" />
             </intent-filter>
             <!-- 可选filter -->
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
         </receiver>
 
-
-
         <activity
-            android:name="com.xyp.mimi.mvp.ui.activity.login.SplashActivity"
-            android:theme="@style/Splash_Theme"
+            android:name=".mvp.ui.activity.login.SplashActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/Splash_Theme"
             android:windowSoftInputMode="adjustPan"
             tools:ignore="LockedOrientationActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".MainActivity"
             android:screenOrientation="fullSensor"
             android:theme="@style/AppTheme" />
         <activity
-            android:name="com.xyp.mimi.mvp.ui.activity.login.LoginActivity"
+            android:name=".mvp.ui.activity.login.LoginActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
-
         <activity
-            android:name="com.xyp.mimi.mvp.ui.activity.login.RegisterActivity"
+            android:name=".mvp.ui.activity.login.RegisterActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
-
         <activity
-            android:name="com.xyp.mimi.mvp.ui.activity.MainActivity"
+            android:name=".mvp.ui.activity.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="fullSensor" />
         <activity
-            android:name="com.xyp.mimi.mvp.ui.activity.UserActivity"
+            android:name=".mvp.ui.activity.UserActivity"
             android:launchMode="singleTask"
             android:screenOrientation="fullSensor" />
         <activity
-            android:name="com.xyp.mimi.mvp.ui.activity.ChongzhiActivity"
+            android:name=".mvp.ui.activity.ChongzhiActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name="com.xyp.mimi.mvp.ui.activity.GoogleMoneyResultActivity"
+            android:name=".mvp.ui.activity.GoogleMoneyResultActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name="com.xyp.mimi.mvp.ui.activity.user.PasswordActivity"
+            android:name=".mvp.ui.activity.user.PasswordActivity"
             android:launchMode="singleTask"
             android:screenOrientation="fullSensor" />
-        <activity android:name="com.xyp.mimi.app.base.BaseSupportActivity" /> <!-- 明细 -->
+        <activity android:name=".app.base.BaseSupportActivity" /> <!-- 明细 -->
         <activity
-            android:name="com.xyp.mimi.mvp.ui.activity.wallet.MoneyDetailActivity"
+            android:name=".mvp.ui.activity.wallet.MoneyDetailActivity"
             android:launchMode="singleTask" />
         <activity
-            android:name="com.xyp.mimi.mvp.ui.activity.wallet.AddBankCardActivity"
+            android:name=".mvp.ui.activity.wallet.AddBankCardActivity"
             android:launchMode="singleTask" /> <!-- 银行卡管理 -->
         <activity
-            android:name="com.xyp.mimi.mvp.ui.activity.wallet.BankListActivity"
+            android:name=".mvp.ui.activity.wallet.BankListActivity"
             android:launchMode="singleTask" />
         <activity
-            android:name="com.xyp.mimi.mvp.ui.activity.wallet.SelelctBankActivity"
+            android:name=".mvp.ui.activity.wallet.SelelctBankActivity"
             android:launchMode="singleTask" />
         <activity
-            android:name="com.xyp.mimi.mvp.ui.activity.wallet.TixianActivity"
+            android:name=".mvp.ui.activity.wallet.TixianActivity"
             android:launchMode="singleTask" />
         <activity
-            android:name="com.xyp.mimi.mvp.ui.activity.wallet.WalletActivity"
+            android:name=".mvp.ui.activity.wallet.WalletActivity"
             android:launchMode="singleTask" />
         <activity
-            android:name="com.xyp.mimi.mvp.ui.activity.wallet.YueChongActivity"
+            android:name=".mvp.ui.activity.wallet.YueChongActivity"
             android:launchMode="singleTask" /> <!-- 我的收益 -->
         <activity
-            android:name="com.xyp.mimi.mvp.ui.activity.wallet.MyEarningActivity"
+            android:name=".mvp.ui.activity.wallet.MyEarningActivity"
             android:launchMode="singleTask" /> <!-- 收益明细和提现记录 -->
         <activity
-            android:name="com.xyp.mimi.mvp.ui.activity.wallet.EarningAndTixianActivity"
+            android:name=".mvp.ui.activity.wallet.EarningAndTixianActivity"
             android:launchMode="singleTask" />
         <activity
-            android:name="com.xyp.mimi.mvp.ui.activity.address.AddressListActivity"
+            android:name=".mvp.ui.activity.address.AddressListActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name="com.xyp.mimi.mvp.ui.activity.address.AddAddressActivity"
+            android:name=".mvp.ui.activity.address.AddAddressActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" /> <!-- 发票 -->
         <activity
-            android:name="com.xyp.mimi.mvp.ui.activity.invoice.InvoiceListActivity"
+            android:name=".mvp.ui.activity.invoice.InvoiceListActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name="com.xyp.mimi.mvp.ui.activity.invoice.InvoiceAddAndEditorActivity"
+            android:name=".mvp.ui.activity.invoice.InvoiceAddAndEditorActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name="com.xyp.mimi.mvp.ui.activity.history.HistoryActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
-
-        <activity
-            android:name="com.xyp.mimi.mvp.ui.activity.setting.SettingActivity"
+            android:name=".mvp.ui.activity.history.HistoryActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name="com.xyp.mimi.mvp.ui.activity.user.ChangeLoginPasswordActivity"
+            android:name=".mvp.ui.activity.setting.SettingActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name="com.xyp.mimi.mvp.ui.activity.user.SetPayPasswordActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
-
-        <activity
-            android:name="com.xyp.mimi.mvp.ui.activity.order.OrderListActivity"
+            android:name=".mvp.ui.activity.user.ChangeLoginPasswordActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name="com.xyp.mimi.mvp.ui.activity.order.OrderDetailActivity"
+            android:name=".mvp.ui.activity.user.SetPayPasswordActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".mvp.ui.activity.order.OrderListActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".mvp.ui.activity.order.OrderDetailActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity">
 
-            <!--            <intent-filter>-->
-            <!--                <action android:name="android.intent.action.MAIN" />-->
-            <!--                <action android:name="android.intent.action.VIEW" />-->
-            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
-            <!--            </intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+            <!-- <action android:name="android.intent.action.VIEW" /> -->
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
-
         <activity
-            android:name="com.xyp.mimi.mvp.ui.activity.order.CredentialsActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity">
-            <!--                        <intent-filter>-->
-            <!--                            <action android:name="android.intent.action.MAIN" />-->
-            <!--                            <action android:name="android.intent.action.VIEW" />-->
-            <!--                            <category android:name="android.intent.category.LAUNCHER" />-->
-            <!--                        </intent-filter>-->
-        </activity>
-
-        <activity
-            android:name="com.xyp.mimi.mvp.ui.activity.order.ImagePreviewActivity"
+            android:name=".mvp.ui.activity.order.CredentialsActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity">
 
-
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+            <!-- <action android:name="android.intent.action.VIEW" /> -->
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
-        <activity android:name="com.xyp.mimi.mvp.ui.activity.market.GoodsDetailActivity"
-
-            />
-
+        <activity
+            android:name=".mvp.ui.activity.order.ImagePreviewActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity android:name=".mvp.ui.activity.market.GoodsDetailActivity" />
         <activity android:name=".mvp.ui.activity.ProblemActivity" />
         <activity android:name=".mvp.ui.activity.user.RegisterActivity" />
-        <activity android:name="com.xyp.mimi.mvp.ui.activity.user.UserInformationActivity" />
-        <activity android:name="com.xyp.mimi.mvp.ui.activity.user.UserNameActivity" />
-        <activity android:name="com.xyp.mimi.mvp.ui.activity.user.RetrievePasswordActivity" />
+        <activity android:name=".mvp.ui.activity.user.UserInformationActivity" />
+        <activity android:name=".mvp.ui.activity.user.UserNameActivity" />
+        <activity android:name=".mvp.ui.activity.user.RetrievePasswordActivity" />
 
+        <!-- org.devio.takephoto:takephoto_library:4.1.0 库里面已配置,如未使用此库根据需要添加
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.xyp.mimi.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/rc_file_path" />
+        </provider>
+        -->
     </application>
+
 </manifest>

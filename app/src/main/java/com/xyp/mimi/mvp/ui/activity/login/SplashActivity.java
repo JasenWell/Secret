@@ -54,10 +54,10 @@ public class SplashActivity extends BaseSupportActivity  {
     private void enterHomeActivity() {
         String token =  SPUtils.getInstance().getString(AppConstant.User.USER_ID);
         if (!TextUtils.isEmpty(token)) {
-            startActivity(new Intent(mContext, MainActivity.class));
+            startActivity(new Intent(mContext, com.xyp.mimi.MainActivity.class));
             finish();
         } else {
-            startActivity(new Intent(mContext, LoginActivity.class));
+            startActivity(new Intent(mContext, com.xyp.mimi.MainActivity.class));//LoginAcitivity
             finish();
         }
     }
