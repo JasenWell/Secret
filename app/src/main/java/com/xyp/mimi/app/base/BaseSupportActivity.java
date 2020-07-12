@@ -1,12 +1,26 @@
 package com.xyp.mimi.app.base;
 
+import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.graphics.Point;
+import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.Window;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,6 +29,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
 
 import com.billy.android.loading.Gloading;
 import com.github.androidtools.inter.MyOnClickListener;
@@ -24,11 +41,19 @@ import com.gyf.barlibrary.ImmersionBar;
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.mvp.IPresenter;
 import com.xyp.mimi.R;
+import com.xyp.mimi.im.common.IntentExtra;
+import com.xyp.mimi.im.im.IMManager;
+import com.xyp.mimi.im.utils.ToastUtils;
+import com.xyp.mimi.im.utils.log.SLog;
 import com.xyp.mimi.mvp.event.ResponseErrorEvent;
+import com.xyp.mimi.mvp.ui.activity.login.LoginActivity;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.List;
 import java.util.Objects;
 
 import me.yokeyword.fragmentation.ExtraTransaction;
@@ -64,6 +89,11 @@ public  abstract  class  BaseSupportActivity<P extends IPresenter> extends BaseA
     protected Gloading.Holder mHolder;
 
     private CompositeSubscription mCSubscription;
+    //-----hjh-------------
+    private boolean mEnableListenKeyboardState = false;
+    private Handler handler = new Handler();
+    private long lastClickTime;
+    //-----hjh--------------
 
     @Override
     public SupportActivityDelegate getSupportDelegate() {
@@ -100,8 +130,18 @@ public  abstract  class  BaseSupportActivity<P extends IPresenter> extends BaseA
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         mContext = this;
         mDelegate.onCreate(savedInstanceState);
-        super.onCreate(savedInstanceState);
 
+        /*
+         * 修复部分 Android 8.0 手机在TargetSDK 大于 26 时，在透明主题时指定 Activity 方向时崩溃的问题
+         */
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.O && isTranslucentOrFloating()) {
+            fixOrientation();
+        }
+        super.onCreate(savedInstanceState);
+        if (isFullScreen()) {
+            // 隐藏Activity顶部的状态栏
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }
         if(istoolbar){
             if (null != findViewById(R.id.toolbar)) {
                 toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -180,7 +220,30 @@ public  abstract  class  BaseSupportActivity<P extends IPresenter> extends BaseA
 //            pl_load.setInter(this);
 //        }
 
+        // 监听退出
+        if (isObserveLogout()) {
+            registerLogoutBoardcast();
+            IMManager.getInstance().getKickedOffline().observe(this, new Observer<Boolean>() {
+                @Override
+                public void onChanged(Boolean isLogout) {
+                    /*
+                     * 只有当前显示的 Activity 会走此段逻辑
+                     */
+                    if (isLogout) {
+                        SLog.d(BaseActivity.class.getCanonicalName(), "Log out.");
+                        sendLogoutNotify();
+                        IMManager.getInstance().resetKickedOfflineState();
+                        Intent intent = new Intent(BaseSupportActivity.this, LoginActivity.class);
+                        intent.putExtra(IntentExtra.BOOLEAN_KICKED_BY_OTHER_USER, true);
+                        startActivity(intent);
+                        finish();
+                    }
+                }
+            });
+        }
 
+        // 清除已存在的 Fragment 防止因没有复用导致叠加显示
+        clearAllFragmentExistBeforeCreate();
     }
 //
     @Override
@@ -239,6 +302,14 @@ public  abstract  class  BaseSupportActivity<P extends IPresenter> extends BaseA
         mImmersionBar.init();
     }
 
+    public void defaultImmersionBar(){
+        mImmersionBar
+                .statusBarDarkFont(true, 0.2f)//设置状态栏图片为深色，(如果android 6.0以下就是半透明)
+                .fitsSystemWindows(true)//设置这个是为了防止布局和顶部的状态栏重叠
+                .statusBarColor(R.color.seal_main_title_bg)//这里的颜色，你可以自定义。
+                .init();
+    }
+
     protected BaseDividerListItem getItemDivider(int height){
         return new BaseDividerListItem(mContext,BaseDividerListItem.VERTICAL_LIST,height,R.color.background_f2);
     }
@@ -270,6 +341,7 @@ public  abstract  class  BaseSupportActivity<P extends IPresenter> extends BaseA
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         ImmersionBar.with(this).init();
+        recreate();
     }
     protected void initLoadingStatusViewIfNeed() {
         if (mHolder == null) {
@@ -322,6 +394,13 @@ public  abstract  class  BaseSupportActivity<P extends IPresenter> extends BaseA
         super.onDestroy();
         if (mImmersionBar != null)
             mImmersionBar.destroy();  //必须调用该方法，防止内存泄漏，不调用该方法，如果界面bar发生改变，在不关闭app的情况下，退出此界面再进入将记忆最后一次bar改变的状态
+
+        // 注销广播
+        if (isObserveLogout()) {
+            unRegisterLogoutBroadcast();
+        }
+        //移除所有
+        handler.removeCallbacksAndMessages(null);
     }
 
 
@@ -461,4 +540,266 @@ public  abstract  class  BaseSupportActivity<P extends IPresenter> extends BaseA
     public <T extends ISupportFragment> T findFragment(Class<T> fragmentClass) {
         return SupportHelper.findFragment(getSupportFragmentManager(), fragmentClass);
     }
+
+    //----------------------------hjh------------------------
+    /**
+     * 清除所有已存在的 Fragment 防止因重建 Activity 时，前 Fragment 没有销毁和重新复用导致界面重复显示
+     * 如果有自己实现 Fragment 的复用，请复写此方法并不实现内容
+     */
+    public void clearAllFragmentExistBeforeCreate() {
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+        if (fragments.size() == 0) return;
+
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        for (Fragment fragment : fragments) {
+            fragmentTransaction.remove(fragment);
+        }
+        fragmentTransaction.commitNow();
+    }
+
+    /**
+     * 是否隐藏状态栏全屏
+     *
+     * @return
+     */
+    protected boolean isFullScreen() {
+        return false;
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mEnableListenKeyboardState) {
+            addKeyboardStateListener();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        removeKeyBoardStateListener();
+    }
+
+    /**
+     * 隐藏键盘
+     */
+    public void hideInputKeyboard() {
+        View currentFocus = getCurrentFocus();
+        if (currentFocus != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(currentFocus.getWindowToken(), 0);
+        }
+    }
+
+    /**
+     * 设置沉浸式状态栏
+     */
+    public void setStatusBarTransparent() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
+                    | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.TRANSPARENT);
+        }
+    }
+
+    /**
+     * 隐藏导航键
+     */
+    public void hideNavigationBar() {
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                | View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
+    }
+
+    /**
+     * 启动键盘状态监听
+     *
+     * @param enable
+     */
+    public void enableKeyboardStateListener(boolean enable) {
+        mEnableListenKeyboardState = enable;
+    }
+
+    /**
+     * 添加键盘显示监听
+     */
+    private void addKeyboardStateListener() {
+        getWindow().getDecorView().getViewTreeObserver().addOnGlobalLayoutListener(onKeyboardStateChangedListener);
+    }
+
+    /**
+     * 移除键盘显示监听
+     */
+    private void removeKeyBoardStateListener() {
+        getWindow().getDecorView().getViewTreeObserver().removeOnGlobalLayoutListener(onKeyboardStateChangedListener);
+    }
+
+    /**
+     * 监听键盘显示状态
+     */
+    private ViewTreeObserver.OnGlobalLayoutListener onKeyboardStateChangedListener = new ViewTreeObserver.OnGlobalLayoutListener() {
+        int mScreenHeight = 0;
+        boolean isCurrentActive = false;
+
+        private int getScreenHeight() {
+            if (mScreenHeight > 0) {
+                return mScreenHeight;
+            }
+            Point point = new Point();
+            ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getSize(point);
+            mScreenHeight = point.y;
+            return mScreenHeight;
+        }
+
+        @Override
+        public void onGlobalLayout() {
+            Rect rect = new Rect();
+            // 获取当前窗口显示范围
+            getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
+            int screenHeight = getScreenHeight();
+            int keyboardHeight = screenHeight - rect.bottom; // 输入法的高度
+            boolean isActive = false;
+            if (Math.abs(keyboardHeight) > screenHeight / 4) {
+                isActive = true; // 超过屏幕1/4则表示弹出了输入法
+            }
+
+            if (isCurrentActive != isActive) {
+                isCurrentActive = isActive;
+                onKeyboardStateChanged(isActive, keyboardHeight);
+            }
+        }
+    };
+
+    /**
+     * 当软键盘显示时回调
+     * 此回调在调用{@link BaseSupportActivity#enableKeyboardStateListener(boolean)}启用监听键盘显示
+     *
+     * @param isShown
+     * @param height
+     */
+    public void onKeyboardStateChanged(boolean isShown, int height) {
+
+    }
+
+    /**
+     * 判断当前主题是否是透明悬浮
+     *
+     * @return
+     */
+    private boolean isTranslucentOrFloating() {
+        boolean isTranslucentOrFloating = false;
+        try {
+            int[] styleableRes = (int[]) Class.forName("com.android.internal.R$styleable").getField("Window").get(null);
+            final TypedArray ta = obtainStyledAttributes(styleableRes);
+            Method m = ActivityInfo.class.getMethod("isTranslucentOrFloating", TypedArray.class);
+            m.setAccessible(true);
+            isTranslucentOrFloating = (boolean) m.invoke(null, ta);
+            m.setAccessible(false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return isTranslucentOrFloating;
+    }
+
+    /**
+     * 改变当前的 Activity 的显示方向
+     * 解决当前Android 8.0 系统在透明主题时设定显示方向时崩溃的问题
+     *
+     * @return
+     */
+    private boolean fixOrientation() {
+        try {
+            Field field = Activity.class.getDeclaredField("mActivityInfo");
+            field.setAccessible(true);
+            ActivityInfo o = (ActivityInfo) field.get(this);
+            o.screenOrientation = -1;
+            field.setAccessible(false);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public void setRequestedOrientation(int requestedOrientation) {
+        /*
+         * 修复 Android 8.0 手机在TargetSDK 大于 26 时，指定 Activity 方向时崩溃的问题
+         */
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.O && isTranslucentOrFloating()) {
+            return;
+        }
+        super.setRequestedOrientation(requestedOrientation);
+    }
+
+
+    public void showToast(String text) {
+        //toast
+        ToastUtils.showToast(text);
+    }
+
+    public void showToast(int resId) {
+        showToast(getString(resId));
+    }
+
+    // 退出应用
+    /**
+     * 是否监听退出应用操作，默认监听， 如果不像监听， 可复写
+     * 此方法并返回 false
+     *
+     * @return
+     */
+    public boolean isObserveLogout() {
+        return true;
+    }
+
+    private void registerLogoutBoardcast() {
+        IntentFilter intentFilter = new IntentFilter("com.rong.im.action.logout");
+        registerReceiver(logoutRecevier, intentFilter);
+    }
+
+    private void unRegisterLogoutBroadcast() {
+        unregisterReceiver(logoutRecevier);
+    }
+
+    /**
+     * 通知通其他注册了登出广播的 Activity 关闭
+     */
+    public void sendLogoutNotify() {
+        //发送广播
+        Intent intent = new Intent("com.rong.im.action.logout");
+        sendBroadcast(intent);
+    }
+
+    private BroadcastReceiver logoutRecevier = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            finish();
+        }
+    };
+
+
+    /**
+     * 为防止多次重复点击
+     *
+     * @return
+     */
+    public synchronized boolean isFastClick() {
+        long time = System.currentTimeMillis();
+        if (time - lastClickTime < 500) {
+            return true;
+        }
+        lastClickTime = time;
+        return false;
+    }
+
+    //----------------------------hjh------------------------
 }

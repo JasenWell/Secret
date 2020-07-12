@@ -5,9 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.animation.Animation;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 
@@ -17,11 +19,14 @@ import com.gyf.barlibrary.ImmersionOwner;
 import com.gyf.barlibrary.ImmersionProxy;
 import com.jess.arms.base.BaseFragment;
 import com.jess.arms.mvp.IPresenter;
+import com.xyp.mimi.R;
 import com.xyp.mimi.mvp.event.ResponseErrorEvent;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import me.yokeyword.fragmentation.ExtraTransaction;
 import me.yokeyword.fragmentation.ISupportFragment;
 import me.yokeyword.fragmentation.SupportFragmentDelegate;
@@ -36,7 +41,9 @@ public abstract class BaseSupportFragment<P extends IPresenter> extends BaseFrag
     protected FragmentActivity _mActivity;
 
     protected Activity mActivity;
-
+    private Handler handler = new Handler();
+    private Unbinder mUnbinder;
+    protected ImmersionBar mImmersionBar;
 
  /**
      * ImmersionBar代理类
@@ -89,8 +96,27 @@ public abstract class BaseSupportFragment<P extends IPresenter> extends BaseFrag
     }
 
     @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        //绑定到butterknife
+        mUnbinder = ButterKnife.bind(this,getView());
+        onInitView(savedInstanceState, getActivity().getIntent());
+        onInitViewModel();
+    }
+
+    @Override
     public void initImmersionBar() {
-        ImmersionBar.with(this).keyboardEnable(true).init();
+        mImmersionBar = ImmersionBar.with(this).keyboardEnable(true);
+        mImmersionBar.init();
+        defaultImmersionBar();
+    }
+
+    public void defaultImmersionBar(){
+        mImmersionBar
+                .statusBarDarkFont(true, 0.2f)//设置状态栏图片为深色，(如果android 6.0以下就是半透明)
+                .fitsSystemWindows(true)//设置这个是为了防止布局和顶部的状态栏重叠
+                .statusBarColor(R.color.seal_main_title_bg)//这里的颜色，你可以自定义。
+                .init();
     }
 
     @Override
@@ -133,6 +159,11 @@ public abstract class BaseSupportFragment<P extends IPresenter> extends BaseFrag
         mDelegate.onDestroy();
         super.onDestroy();
         immersionProxy.onDestroy();
+        if (mUnbinder != null && mUnbinder != Unbinder.EMPTY)
+            mUnbinder.unbind();
+        this.mUnbinder = null;
+        //移除所有
+        handler.removeCallbacksAndMessages(null);
     }
 
     protected void initLoadingStatusViewIfNeed() {
@@ -151,6 +182,19 @@ public abstract class BaseSupportFragment<P extends IPresenter> extends BaseFrag
 
     };
 
+    /**
+     * 初始化 view
+     *
+     * @param savedInstanceState
+     * @param intent
+     */
+    public  void onInitView(Bundle savedInstanceState, Intent intent){
+
+    }
+
+    public void onInitViewModel() {
+
+    }
 
     public void showLoading() {
         initLoadingStatusViewIfNeed();

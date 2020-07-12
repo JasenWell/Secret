@@ -1,9 +1,13 @@
 package com.xyp.mimi.app.base;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.multidex.MultiDexApplication;
 
 import com.billy.android.loading.Gloading;
 import com.jess.arms.base.App;
@@ -19,14 +23,23 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.xyp.mimi.R;
+import com.xyp.mimi.mvp.ui.activity.MainActivity;
 import com.xyp.mimi.mvp.ui.adapter.SpecialAdapter;
 
 //
-public class BaseApp extends Application implements App {
+public class BaseApp extends MultiDexApplication implements App {
 
     private AppDelegate mAppDelegate;
 
     private static Context mContext;
+    /**
+     * ???????
+     */
+    private boolean isAppInForeground;
+    private String lastVisibleActivityName;
+    private Intent nextOnForegroundIntent;
+    private boolean isMainActivityIsCreated;
+    private static BaseApp appInstance;
 
     /**
      * nickname for current user, the nickname instead of ID be shown when user receive notification from APNs
@@ -60,6 +73,7 @@ public class BaseApp extends Application implements App {
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         mContext = base ;
+        appInstance = this;
         if(this.mAppDelegate == null){
             this.mAppDelegate = new AppDelegate(base);
         }
@@ -91,5 +105,112 @@ public class BaseApp extends Application implements App {
         Preconditions.checkNotNull(this.mAppDelegate, "%s cannot be null", new Object[]{AppDelegate.class.getName()});
         Preconditions.checkState(this.mAppDelegate instanceof App, "%s must be implements %s", new Object[]{AppDelegate.class.getName(), App.class.getName()});
         return ((App) this.mAppDelegate).getAppComponent();
+    }
+
+
+    /**
+     * ??????????
+     */
+    private void observeAppInBackground() {
+        registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
+            @Override
+            public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+                if(activity instanceof MainActivity){
+                    isMainActivityIsCreated = true;
+                }
+            }
+
+            @Override
+            public void onActivityStarted(Activity activity) {
+            }
+
+            @Override
+            public void onActivityResumed(Activity activity) {
+                // ??????????????????
+                if (isMainActivityIsCreated && !isAppInForeground && nextOnForegroundIntent != null) {
+                    activity.startActivity(nextOnForegroundIntent);
+                    nextOnForegroundIntent = null;
+                }
+
+                lastVisibleActivityName = activity.getClass().getSimpleName();
+                isAppInForeground = true;
+            }
+
+            @Override
+            public void onActivityPaused(Activity activity) {
+                String pauseActivityName = activity.getClass().getSimpleName();
+                /*
+                 * ?? Activity ??????????????????? onResume?
+                 * ??????? onPause??????????????????????? onPause?
+                 * ?????????????
+                 */
+                if (pauseActivityName.equals(lastVisibleActivityName)) {
+                    isAppInForeground = false;
+                }
+            }
+
+            @Override
+            public void onActivityStopped(Activity activity) {
+            }
+
+            @Override
+            public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+            }
+
+            @Override
+            public void onActivityDestroyed(Activity activity) {
+                if(activity instanceof MainActivity){
+                    isMainActivityIsCreated = false;
+                }
+            }
+        });
+    }
+
+    /**
+     * ?? App ?????
+     *
+     * @return
+     */
+    public boolean isAppInForeground() {
+        return isAppInForeground;
+    }
+
+    /**
+     * ???????? Activity ??
+     *
+     * @return
+     */
+    public String getLastVisibleActivityName() {
+        return lastVisibleActivityName;
+    }
+
+    /**
+     * ??? App ????????? intent?? intent ??????
+     *
+     * @param intent
+     */
+    public void setOnAppForegroundStartIntent(Intent intent) {
+        nextOnForegroundIntent = intent;
+    }
+
+    /**
+     * ????????????? intent
+     *
+     * @return
+     */
+    public Intent getLastOnAppForegroundStartIntent() {
+        return nextOnForegroundIntent;
+    }
+
+    /**
+     * ???????????
+     * @return
+     */
+    public boolean isMainActivityCreated(){
+        return isMainActivityIsCreated;
+    }
+
+    public static BaseApp getApplication() {
+        return appInstance;
     }
 }

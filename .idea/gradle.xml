@@ -11,6 +11,9 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/contactcard" />
+            <option value="$PROJECT_DIR$/pushpermission" />
+            <option value="$PROJECT_DIR$/recognizer" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
