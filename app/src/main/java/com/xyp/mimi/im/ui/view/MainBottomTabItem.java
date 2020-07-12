@@ -79,7 +79,7 @@ public class MainBottomTabItem extends RelativeLayout {
     }
 
     /**
-     * 设置未读书多拽监听
+     * 设置未读多拽监听
      * @param listener
      */
     public void setTabUnReadNumDragListener(DragPointView.OnDragListencer listener) {

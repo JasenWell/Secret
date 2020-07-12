@@ -181,15 +181,15 @@ public class MainActivity extends BaseSupportActivity {
         tabGroupView.setSelected(tabIndex);
         initViewModel();
         clearBadgeStatu();
-        showRedCircle(false);
+        showRedCircle(Tab.CHAT.getValue(),false);
     }
 
     private void switchTitle(int position){
         if (position == Tab.ME.getValue()) {
             titleBar.setTitle("我");
         }else  if(position == Tab.CHAT.getValue()){
-            titleBar.setTitle("消息");
-        }else  if(position == Tab.CHAT.getValue()){
+            titleBar.setTitle("会话");
+        }else  if(position == Tab.CONTACTS.getValue()){
             titleBar.setTitle("通讯录");
         }else  if(position == Tab.FIND.getValue()){
             titleBar.setTitle("发现");
@@ -222,7 +222,7 @@ public class MainActivity extends BaseSupportActivity {
                     vpFragmentContainer.setCurrentItem(item.id);
                     // 如果是我的页面， 则隐藏红点
                     if (item.id == Tab.ME.getValue()) {
-                        ((MainBottomTabItem) tabGroupView.getView(Tab.ME.getValue())).setRedVisibility(View.GONE);
+                        showRedCircle(Tab.ME.getValue(),false);
                     }
 
                     switchTitle(item.id);
@@ -254,9 +254,9 @@ public class MainActivity extends BaseSupportActivity {
         ((MainBottomTabItem) tabGroupView.getView(Tab.CHAT.getValue())).setNumVisibility(View.VISIBLE);
     }
 
-    private void showRedCircle(boolean show){
-        MainBottomTabItem bottomTabItem = tabGroupView.getView(Tab.CHAT.getValue());
-        bottomTabItem.setRedVisibility(show ? View.VISIBLE : View.INVISIBLE);
+    private void showRedCircle(int id,boolean show){
+        MainBottomTabItem bottomTabItem = tabGroupView.getView(id);
+        bottomTabItem.setRedVisibility(show ? View.VISIBLE : View.GONE);
     }
 
     /**
@@ -294,7 +294,7 @@ public class MainActivity extends BaseSupportActivity {
             public void onPageSelected(int position) {
                 // 当页面切换完成之后， 同时也要把 tab 设置到正确的位置
                 if (position == Tab.ME.getValue()) {
-                    ((MainBottomTabItem) tabGroupView.getView(Tab.ME.getValue())).setRedVisibility(View.GONE);
+                    showRedCircle(Tab.ME.getValue(),false);
                 }
                 switchTitle(position);
                 tabGroupView.setSelected(position);
@@ -318,7 +318,7 @@ public class MainActivity extends BaseSupportActivity {
             public void onChanged(Resource<VersionInfo.AndroidVersion> resource) {
                 if (resource.status == Status.SUCCESS && resource.data != null) {
                     if (tabGroupView.getSelectedItemId() != Tab.ME.getValue()) {
-                        ((MainBottomTabItem) tabGroupView.getView(Tab.ME.getValue())).setRedVisibility(View.VISIBLE);
+                        showRedCircle(Tab.ME.getValue(),true);
                     }
                 }
             }
@@ -346,11 +346,7 @@ public class MainActivity extends BaseSupportActivity {
             @Override
             public void onChanged(Integer count) {
                 MainBottomTabItem chatTab = tabGroupView.getView(Tab.CONTACTS.getValue());
-                if (count > 0) {
-                    chatTab.setRedVisibility(View.VISIBLE);
-                } else {
-                    chatTab.setRedVisibility(View.GONE);
-                }
+                showRedCircle(Tab.CONTACTS.getValue(),count > 0);
             }
         });
 
