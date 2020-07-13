@@ -24,7 +24,11 @@
            <ImageView
                android:layout_width="match_parent"
                android:layout_height="200dp"
+<<<<<<< HEAD
               >
+=======
+               android:background="@drawable/circle_background">
+>>>>>>> c1102d2024adae19d2e36885137bae797473fb2e
 
            </ImageView>
             <com.github.customview.MyImageView
@@ -32,6 +36,10 @@
                 android:layout_height="60dp"
                 android:layout_gravity="right|bottom"
                 android:layout_marginBottom="20dp"
+<<<<<<< HEAD
+=======
+                android:background="@drawable/circle_background"
+>>>>>>> c1102d2024adae19d2e36885137bae797473fb2e
                 android:layout_marginEnd="20dp"
                 >
 

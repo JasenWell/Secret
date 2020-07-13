@@ -2,6 +2,7 @@ package com.xyp.mimi.mvp.presenter.circle;
 
 import android.app.Application;
 
+<<<<<<< HEAD
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.http.imageloader.ImageLoader;
 import com.jess.arms.integration.AppManager;
@@ -12,10 +13,28 @@ import com.xyp.mimi.mvp.http.entity.circle.CirclePost;
 import com.xyp.mimi.mvp.utils.RxUtils;
 
 import javax.inject.Inject;
+=======
+import com.jess.arms.integration.AppManager;
+import com.jess.arms.di.scope.ActivityScope;
+import com.jess.arms.mvp.BasePresenter;
+import com.jess.arms.http.imageloader.ImageLoader;
+>>>>>>> c1102d2024adae19d2e36885137bae797473fb2e
 
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 
+<<<<<<< HEAD
+=======
+import javax.inject.Inject;
+
+import com.xyp.mimi.mvp.contract.circle.CircleContract;
+import com.xyp.mimi.mvp.http.entity.BaseResponse;
+import com.xyp.mimi.mvp.http.entity.Circle.CirclePost;
+import com.xyp.mimi.mvp.http.entity.cart.CartListPost;
+import com.xyp.mimi.mvp.http.entity.cart.CartListResult;
+import com.xyp.mimi.mvp.utils.RxUtils;
+
+>>>>>>> c1102d2024adae19d2e36885137bae797473fb2e
 
 /**
  * ================================================

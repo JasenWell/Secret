@@ -19,7 +19,6 @@ import com.jess.arms.utils.ArmsUtils;
 import com.suke.widget.SwitchButton;
 import com.xyp.mimi.R;
 import com.xyp.mimi.app.base.BaseSupportActivity;
-import com.xyp.mimi.di.component.invoice.DaggerInvoiceComponent;
 import com.xyp.mimi.di.module.invoice.InvoiceModule;
 import com.xyp.mimi.mvp.contract.invoice.InvoiceContract;
 import com.xyp.mimi.mvp.event.RefreshInvoiceEvent;
@@ -98,10 +97,10 @@ public class InvoiceAddAndEditorActivity extends BaseSupportActivity<InvoiceAddA
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
-        DaggerInvoiceComponent.builder()
-                .appComponent(appComponent)
-                .invoiceModule(new InvoiceModule(this))
-                .build().injectAddInvoice(this);
+//        DaggerInvoiceComponent.builder()
+//                .appComponent(appComponent)
+//                .invoiceModule(new InvoiceModule(this))
+//                .build().injectAddInvoice(this);
     }
 
     @Override

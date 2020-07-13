@@ -25,7 +25,6 @@ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.xyp.mimi.R;
 import com.xyp.mimi.app.base.BaseSupportActivity;
-import com.xyp.mimi.di.component.address.DaggerAddressComponent;
 import com.xyp.mimi.di.module.address.AddressModule;
 import com.xyp.mimi.mvp.contract.address.AddressContract;
 import com.xyp.mimi.mvp.event.RefreshAddressEvent;
@@ -83,11 +82,11 @@ public class AddressListActivity extends BaseSupportActivity<AddressPresenter>  
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
-        DaggerAddressComponent.builder()
-                .appComponent(appComponent)
-                .addressModule(new AddressModule(this))
-                .build()
-                .inject(this);
+//        DaggerAddressComponent.builder()
+//                .appComponent(appComponent)
+//                .addressModule(new AddressModule(this))
+//                .build()
+//                .inject(this);
     }
 
     @Override

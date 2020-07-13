@@ -1,6 +1,7 @@
 package com.xyp.mimi.di.module.circle;
 
 import com.jess.arms.di.scope.ActivityScope;
+<<<<<<< HEAD
 import com.jess.arms.integration.IRepositoryManager;
 import com.xyp.mimi.mvp.contract.circle.CircleContract;
 import com.xyp.mimi.mvp.model.circle.CircleModel;
@@ -8,6 +9,19 @@ import com.xyp.mimi.mvp.model.circle.CircleModel;
 import dagger.Module;
 import dagger.Provides;
 
+=======
+
+import dagger.Binds;
+import dagger.Module;
+import dagger.Provides;
+
+import com.jess.arms.integration.IRepositoryManager;
+import com.xyp.mimi.mvp.contract.circle.CircleContract;
+import com.xyp.mimi.mvp.contract.history.HistoryContract;
+import com.xyp.mimi.mvp.model.circle.CircleModel;
+import com.xyp.mimi.mvp.model.history.HistoryModel;
+
+>>>>>>> c1102d2024adae19d2e36885137bae797473fb2e
 
 /**
  * ================================================
