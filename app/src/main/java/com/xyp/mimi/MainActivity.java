@@ -251,7 +251,7 @@ public class MainActivity extends BaseSupportActivity {
                 clearUnreadStatus();
             }
         });
-        ((MainBottomTabItem) tabGroupView.getView(Tab.CHAT.getValue())).setNumVisibility(View.VISIBLE);
+        ((MainBottomTabItem) tabGroupView.getView(Tab.CHAT.getValue())).setNumVisibility(View.GONE);//跟背景红圈相关联,默认没有
     }
 
     private void showRedCircle(int id,boolean show){
