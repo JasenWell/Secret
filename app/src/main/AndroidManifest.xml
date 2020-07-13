@@ -38,6 +38,8 @@
         android:theme="@style/AppTheme"
         tools:replace="theme,android:allowBackup,android:icon"
         tools:targetApi="n">
+        <activity android:name=".mvp.ui.activity.circle.AddCircleActivity"></activity>
+        <activity android:name=".mvp.ui.activity.circle.CircleActivity"/>
         <activity android:name=".im.ui.activity.PokeInviteChatActivity"></activity>
         <activity android:name=".im.ui.activity.NewFriendListActivity" />
         <activity android:name=".im.ui.activity.GroupNoticeListActivity" />
