@@ -137,10 +137,9 @@ public class LoginActivity extends BaseSupportActivity<LoginPresenter> implement
             return;
         }
 
-//        if (mPresenter != null) {
-//
-//            mPresenter.login(new LoginUserPost(phone, password));
-//        }
+        if (mPresenter != null) {
+            mPresenter.login(phone, password);
+        }
     }
 
     @Override

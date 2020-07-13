@@ -13,14 +13,17 @@ import androidx.appcompat.widget.Toolbar;
 import com.github.customview.MyEditText;
 import com.gyf.barlibrary.ImmersionBar;
 import com.jess.arms.di.component.AppComponent;
+import com.jess.arms.utils.ArmsUtils;
 import com.jess.arms.utils.DeviceUtils;
 import com.xyp.mimi.R;
 import com.xyp.mimi.app.base.BaseSupportActivity;
+import com.xyp.mimi.di.component.user.DaggerUserComponent;
 import com.xyp.mimi.di.module.user.UserModule;
 import com.xyp.mimi.mvp.contract.user.UserContract;
 import com.xyp.mimi.mvp.http.entity.BaseResponse;
 import com.xyp.mimi.mvp.http.entity.user.UserRegisterPost;
 import com.xyp.mimi.mvp.presenter.user.RegisterPresenter;
+import com.xyp.mimi.mvp.utils.GetSign;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -48,8 +51,7 @@ public class RegisterActivity extends BaseSupportActivity<RegisterPresenter> imp
     MyEditText etPassword2;
     @BindView(R.id.iv_password1)
     ImageView ivPassword1;
-    @BindView(R.id.tv_register)
-    TextView tvRegister;
+
     @BindView(R.id.tv_xieyi)
     TextView tvXieyi;
 
@@ -65,10 +67,10 @@ public class RegisterActivity extends BaseSupportActivity<RegisterPresenter> imp
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
-//        DaggerUserComponent.builder()
-//                .appComponent(appComponent)
-//                .userModule(new UserModule(this))
-//                .build().injectRegister(RegisterActivity.this);
+        DaggerUserComponent.builder()
+                .appComponent(appComponent)
+                .userModule(new UserModule(this))
+                .build().injectRegister(RegisterActivity.this);
     }
 
     @Override
@@ -85,27 +87,29 @@ public class RegisterActivity extends BaseSupportActivity<RegisterPresenter> imp
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_register:
-                attemptRegiter();
+                showMessage("密码不能为空/不可用");
+                DeviceUtils.hideSoftKeyboard(mContext, getCurrentFocus());
+                String phone = etPhone.getText().toString();
+                String password = etPassword.getText().toString();
+                if (TextUtils.isEmpty(password)) {
+                    showMessage("密码不能为空/不可用");
+                    return;
+                }
+                if (!GetSign.isMobile((phone))) {
+                    showMessage("请输入正确手机号");
+                    return;
+                }
+                if (TextUtils.isEmpty(phone)) {
+                    showMessage("账号不能为空");
+                    return;
+                }
+                if (mPresenter != null) {
+                    mPresenter.register(phone, password);
+                }
                 break;
         }
     }
 
-    private void attemptRegiter() {
-        DeviceUtils.hideSoftKeyboard(mContext, getCurrentFocus());
-        String phone = etPhone.getText().toString();
-        String password = etPassword.getText().toString();
-        if (TextUtils.isEmpty(password)) {
-            showMessage("密码不能为空/不可用");
-            return;
-        }
-        if (TextUtils.isEmpty(phone)) {
-            showMessage("账号不能为空");
-            return;
-        }
-        if (mPresenter != null) {
-            mPresenter.register(new UserRegisterPost(phone, password));
-        }
-    }
 
     @Override
     public void registerCodeResult(BaseResponse baseResponse) {
@@ -119,7 +123,8 @@ public class RegisterActivity extends BaseSupportActivity<RegisterPresenter> imp
 
     @Override
     public void showMessage(@NonNull String message) {
-
+        showLoadSuccess();
+        ArmsUtils.snackbarText(message);
     }
 
 

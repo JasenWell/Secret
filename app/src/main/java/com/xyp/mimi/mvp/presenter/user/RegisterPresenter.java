@@ -21,18 +21,7 @@ import com.xyp.mimi.mvp.utils.RxUtils;
 import java.util.Map;
 
 
-/**
- * ================================================
- * Description:
- * <p>
- * Created by MVPArmsTemplate on 05/20/2020 10:45
- * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
- * <a href="https://github.com/JessYanCoding">Follow me</a>
- * <a href="https://github.com/JessYanCoding/MVPArms">Star me</a>
- * <a href="https://github.com/JessYanCoding/MVPArms/wiki">See me</a>
- * <a href="https://github.com/JessYanCoding/MVPArmsTemplate">模版请保持更新</a>
- * ================================================
- */
+
 @ActivityScope
 public class RegisterPresenter extends BasePresenter<UserContract.Model, UserContract.RegisterView> {
     @Inject
@@ -69,8 +58,8 @@ public class RegisterPresenter extends BasePresenter<UserContract.Model, UserCon
         ;
     }
 
-    public void register(UserRegisterPost userRegisterPost){
-        mModel.register(userRegisterPost)
+    public void register(String account,String password){
+        mModel.register(account,password)
                 .compose(RxUtils.applySchedulers(mRootView))
                 .subscribe(new ErrorHandleSubscriber<BaseResponse>(mErrorHandler) {
                     @Override

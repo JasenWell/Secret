@@ -26,17 +26,18 @@ public class LoginPresenter extends BasePresenter<UserContract.Model, UserContra
         this.rxErrorHandler =rxErrorHandler;
     }
 
-    public void login(LoginUserPost loginUserPost){
-        mModel.login(loginUserPost)
+    public void login(String account,String password){
+        mModel.login(account,password)
         .compose(RxUtils.applySchedulers(mRootView))
-        .subscribe(new ErrorHandleSubscriber<BaseResponse<LoginUserResult>>(rxErrorHandler) {
+        .subscribe(new ErrorHandleSubscriber<LoginUserResult>(rxErrorHandler) {
             @Override
-            public void onNext(BaseResponse<LoginUserResult> userBeanBaseResponse) {
-                 if(userBeanBaseResponse.getCode()== 0 ){
-                     mRootView.loginResult(userBeanBaseResponse.getData());
-                 }else{
-                     mRootView.showMessage(userBeanBaseResponse.getMsg());
-                 }
+            public void onNext(LoginUserResult userBeanBaseResponse) {
+                Log.d("response",userBeanBaseResponse.toString());
+//                 if(userBeanBaseResponse.getUserId()){
+//                     mRootView.loginResult(userBeanBaseResponse.getData());
+//                 }else{
+//                     mRootView.showMessage(userBeanBaseResponse.getMsg());
+//                 }
             }
 
             @Override

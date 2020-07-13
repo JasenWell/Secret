@@ -9,8 +9,7 @@ public interface Api {
 
 //    String APP_DOMAIN =  "https://api.dadanyipin.com";
 
-    String APP_DOMAIN =  "https://www.wulin0009.com";
-
+    String APP_DOMAIN =  "http://www.wulin0009.com";
 
     int RequestSuccess = 0;
 

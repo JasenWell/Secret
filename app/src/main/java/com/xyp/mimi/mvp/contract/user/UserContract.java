@@ -93,7 +93,7 @@ public interface UserContract {
 
         Observable<UserInformationResult> User(UserPost UserPost);
 
-        Observable<BaseResponse<LoginUserResult>> login(LoginUserPost loginUserPost);
+        Observable<LoginUserResult> login(String phone, String password);
 
         Observable<BaseResponse> editName(UserEditPost userEditPost);
 
@@ -102,7 +102,7 @@ public interface UserContract {
 
         Observable<BaseResponse> getRegisterCode(Map map);
 
-        Observable<BaseResponse> register(UserRegisterPost userRegisterPost);
+        Observable<BaseResponse> register(String phone, String password);
 
         Observable<BaseResponse> getRetrievePasswordCode(Map map);
 

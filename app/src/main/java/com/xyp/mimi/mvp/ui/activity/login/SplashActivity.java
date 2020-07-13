@@ -57,7 +57,7 @@ public class SplashActivity extends BaseSupportActivity  {
             startActivity(new Intent(mContext, com.xyp.mimi.MainActivity.class));
             finish();
         } else {
-            startActivity(new Intent(mContext, com.xyp.mimi.MainActivity.class));//LoginAcitivity
+            startActivity(new Intent(mContext, LoginActivity.class));//LoginAcitivity
             finish();
         }
     }
