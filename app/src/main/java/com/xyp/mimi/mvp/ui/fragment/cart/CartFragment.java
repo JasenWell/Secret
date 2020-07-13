@@ -19,7 +19,6 @@ import com.gyf.barlibrary.ImmersionBar;
 import com.jess.arms.di.component.AppComponent;
 import com.xyp.mimi.R;
 import com.xyp.mimi.app.base.BaseSupportFragment;
-import com.xyp.mimi.di.component.cart.DaggerCartComponent;
 import com.xyp.mimi.di.module.cart.CartModule;
 import com.xyp.mimi.mvp.contract.cart.CartContract;
 import com.xyp.mimi.mvp.http.entity.cart.CartListPost;
@@ -62,11 +61,11 @@ public class CartFragment extends BaseSupportFragment<CartPresenter> implements 
 
     @Override
     public void setupFragmentComponent(@NonNull AppComponent appComponent) {
-        DaggerCartComponent.builder()
-                .appComponent(appComponent)
-                .cartModule(new CartModule(this))
-                .build()
-                .inject(this);
+//        DaggerCartComponent.builder()
+//                .appComponent(appComponent)
+//                .cartModule(new CartModule(this))
+//                .build()
+//                .inject(this);
     }
 
     @Override

@@ -24,7 +24,6 @@ import com.gyf.barlibrary.ImmersionBar;
 import com.jess.arms.di.component.AppComponent;
 import com.xyp.mimi.R;
 import com.xyp.mimi.app.base.BaseSupportActivity;
-import com.xyp.mimi.di.component.order.DaggerOrderDetailComponent;
 import com.xyp.mimi.mvp.contract.order.OrderDetailContract;
 import com.xyp.mimi.mvp.http.Constant;
 import com.xyp.mimi.mvp.http.entity.order.OrderDetailPost;
@@ -97,11 +96,11 @@ public class OrderDetailActivity extends BaseSupportActivity<OrderDetailPresente
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
-        DaggerOrderDetailComponent.builder()
-                .appComponent(appComponent)
-                .view(this)
-                .build()
-                .inject(this);
+//        DaggerOrderDetailComponent.builder()
+//                .appComponent(appComponent)
+//                .view(this)
+//                .build()
+//                .inject(this);
     }
 
     @Override
