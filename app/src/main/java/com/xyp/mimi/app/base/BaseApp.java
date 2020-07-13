@@ -97,6 +97,10 @@ public class BaseApp extends MultiDexApplication implements App {
         }
         Gloading.initDefault(new SpecialAdapter());
 
+<<<<<<< HEAD
+=======
+        //--------------------hjh
+>>>>>>> c84811523a64a75fe5af91fd6f60cb9c0f19a243
         ErrorCode.init(this);
 
         /*
@@ -124,6 +128,10 @@ public class BaseApp extends MultiDexApplication implements App {
 
         // ?? App ?????
         observeAppInBackground();
+<<<<<<< HEAD
+=======
+        //------------------------hjh-----------------
+>>>>>>> c84811523a64a75fe5af91fd6f60cb9c0f19a243
     }
 
     @Override
