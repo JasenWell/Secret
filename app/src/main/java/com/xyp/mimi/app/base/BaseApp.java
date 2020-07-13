@@ -23,8 +23,16 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.xyp.mimi.R;
+import com.xyp.mimi.im.common.ErrorCode;
+import com.xyp.mimi.im.contact.PhoneContactManager;
+import com.xyp.mimi.im.im.IMManager;
+import com.xyp.mimi.im.utils.SearchUtils;
 import com.xyp.mimi.mvp.ui.activity.MainActivity;
 import com.xyp.mimi.mvp.ui.adapter.SpecialAdapter;
+
+import io.rong.imlib.ipc.RongExceptionHandler;
+
+import static io.rong.imkit.utils.SystemUtils.getCurProcessName;
 
 //
 public class BaseApp extends MultiDexApplication implements App {
@@ -89,6 +97,35 @@ public class BaseApp extends MultiDexApplication implements App {
         }
         Gloading.initDefault(new SpecialAdapter());
 
+        //--------------------hjh
+        ErrorCode.init(this);
+
+        /*
+         * ?????????????
+         */
+        if (!getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext()))) {
+            return;
+        }
+
+        /*
+         * ??????????????
+         */
+        // ?????IM SDK???? SDK ?????????????
+        IMManager.getInstance().init(this);
+//        Stetho.initializeWithDefaults(this);
+
+        SearchUtils.init(this);
+
+        Thread.setDefaultUncaughtExceptionHandler(new RongExceptionHandler(this));
+
+        // ???????
+//        WXManager.getInstance().init(this);
+
+        PhoneContactManager.getInstance().init(this);
+
+        // ?? App ?????
+        observeAppInBackground();
+        //------------------------hjh-----------------
     }
 
     @Override
