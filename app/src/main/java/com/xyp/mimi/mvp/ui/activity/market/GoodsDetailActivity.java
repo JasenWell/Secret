@@ -42,7 +42,6 @@ import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
 import com.xyp.mimi.R;
 import com.xyp.mimi.app.base.BaseSupportActivity;
-import com.xyp.mimi.di.component.market.DaggerGoodsDetailActivityComponent;
 import com.xyp.mimi.mvp.contract.market.GoodsDetailActivityContract;
 import com.xyp.mimi.mvp.http.Constant;
 import com.xyp.mimi.mvp.http.entity.market.EvaluationListPost;
@@ -111,12 +110,12 @@ public class GoodsDetailActivity extends BaseSupportActivity<GoodsDetailActivity
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
-        DaggerGoodsDetailActivityComponent //如找不到该类,请编译一下项目
-                .builder()
-                .appComponent(appComponent)
-                .view(this)
-                .build()
-                .inject(this);
+//        DaggerGoodsDetailActivityComponent //如找不到该类,请编译一下项目
+//                .builder()
+//                .appComponent(appComponent)
+//                .view(this)
+//                .build()
+//                .inject(this);
     }
 
     @Override

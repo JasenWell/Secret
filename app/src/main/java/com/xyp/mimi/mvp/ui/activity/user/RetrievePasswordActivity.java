@@ -24,7 +24,6 @@ import com.jess.arms.utils.ArmsUtils;
 import com.jess.arms.utils.DeviceUtils;
 import com.xyp.mimi.R;
 import com.xyp.mimi.app.base.BaseSupportActivity;
-import com.xyp.mimi.di.component.user.DaggerUserComponent;
 import com.xyp.mimi.di.module.user.UserModule;
 import com.xyp.mimi.mvp.contract.user.UserContract;
 import com.xyp.mimi.mvp.http.entity.BaseResponse;
@@ -80,11 +79,11 @@ public class RetrievePasswordActivity extends BaseSupportActivity<RetrievePasswo
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
-        DaggerUserComponent.builder()
-                .appComponent(appComponent)
-                .userModule(new UserModule(this))
-                .build()
-                .injectRetrievePassword(this);
+//        DaggerUserComponent.builder()
+//                .appComponent(appComponent)
+//                .userModule(new UserModule(this))
+//                .build()
+//                .injectRetrievePassword(this);
     }
 
     @Override

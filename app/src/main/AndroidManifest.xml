@@ -38,7 +38,9 @@
         android:theme="@style/AppTheme"
         tools:replace="theme,android:allowBackup,android:icon"
         tools:targetApi="n">
-        <activity android:name=".im.ui.activity.PokeInviteChatActivity"></activity>
+        <activity android:name=".mvp.ui.activity.circle.CircleActivity" />
+        <activity android:name=".mvp.ui.activity.circle.AddCircleActivity" />
+        <activity android:name=".im.ui.activity.PokeInviteChatActivity" />
         <activity android:name=".im.ui.activity.NewFriendListActivity" />
         <activity android:name=".im.ui.activity.GroupNoticeListActivity" />
         <activity android:name=".im.ui.activity.SealPicturePagerActivity" />
@@ -249,18 +251,6 @@
         <activity android:name=".mvp.ui.activity.user.UserInformationActivity" />
         <activity android:name=".mvp.ui.activity.user.UserNameActivity" />
         <activity android:name=".mvp.ui.activity.user.RetrievePasswordActivity" />
-
-        <!-- org.devio.takephoto:takephoto_library:4.1.0 库里面已配置,如未使用此库根据需要添加
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="com.xyp.mimi.FileProvider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/rc_file_path" />
-        </provider>
-        -->
     </application>
 
 </manifest>
