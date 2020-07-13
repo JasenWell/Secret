@@ -783,7 +783,7 @@ public class IMManager {
         RongIM.registerMessageType(GroupApplyMessage.class);
         RongIM.registerMessageType(GroupClearMessage.class);
         RongIM.getInstance().registerConversationTemplate(new GroupApplyMessageProvider());
-        RongIM.registerMessageType(PokeMessage.class);
+        //RongIM.registerMessageType(PokeMessage.class);//屏蔽戳一戳功能
 //        RongIM.registerMessageTemplate(new PokeMessageItemProvider());
         //RongIM.registerMessageTemplate(new GroupApplyMessageProvider());
 
