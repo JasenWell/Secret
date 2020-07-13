@@ -26,7 +26,6 @@ import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
 import com.xyp.mimi.R;
 import com.xyp.mimi.app.base.BaseSupportActivity;
-import com.xyp.mimi.di.component.user.DaggerUserComponent;
 import com.xyp.mimi.di.module.user.UserModule;
 import com.xyp.mimi.mvp.contract.user.UserContract;
 import com.xyp.mimi.mvp.event.RefreshUserInfoEvent;
@@ -109,12 +108,12 @@ public class UserInformationActivity extends BaseSupportActivity<UserPresenter> 
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
-        DaggerUserComponent //如找不到该类,请编译一下项目
-                .builder()
-                .appComponent(appComponent)
-                .userModule(new UserModule(this))
-                .build()
-                .inject(this);
+//        DaggerUserComponent //如找不到该类,请编译一下项目
+//                .builder()
+//                .appComponent(appComponent)
+//                .userModule(new UserModule(this))
+//                .build()
+//                .inject(this);
     }
 
     @Override

@@ -25,7 +25,6 @@ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.xyp.mimi.R;
 import com.xyp.mimi.app.base.BaseSupportFragment;
-import com.xyp.mimi.di.component.order.DaggerOrderComponent;
 import com.xyp.mimi.mvp.contract.order.OrderContract;
 import com.xyp.mimi.mvp.http.Constant;
 import com.xyp.mimi.mvp.http.entity.BaseResponse;
@@ -75,11 +74,11 @@ public class AllOrderFragment extends BaseSupportFragment<OrderPresenter> implem
 
     @Override
     public void setupFragmentComponent(@NonNull AppComponent appComponent) {
-        DaggerOrderComponent.builder()
-                .appComponent(appComponent)
-                .view(this)
-                .build()
-                .inject(this);
+//        DaggerOrderComponent.builder()
+//                .appComponent(appComponent)
+//                .view(this)
+//                .build()
+//                .inject(this);
     }
 
     public static AllOrderFragment newInstance(int type) {

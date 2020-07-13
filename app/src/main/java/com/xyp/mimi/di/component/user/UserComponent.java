@@ -9,6 +9,7 @@ import com.xyp.mimi.di.module.user.UserModule;
 import com.jess.arms.di.scope.ActivityScope;
 import com.xyp.mimi.mvp.ui.activity.login.LoginActivity;
 import com.xyp.mimi.mvp.ui.activity.login.RegisterActivity;
+import com.xyp.mimi.mvp.ui.activity.setting.SettingActivity;
 import com.xyp.mimi.mvp.ui.activity.user.ChangeLoginPasswordActivity;
 import com.xyp.mimi.mvp.ui.activity.user.RetrievePasswordActivity;
 import com.xyp.mimi.mvp.ui.activity.user.SetPayPasswordActivity;
@@ -38,9 +39,12 @@ public interface UserComponent {
 
     void injectLogin(LoginActivity activity);
 
+//    void injectLoginout(SettingActivity settingActivity);
+
     void injectRegister(RegisterActivity activity);
 
     void injectRetrievePassword(RetrievePasswordActivity retrievePasswordActivity);
+
     void injectChangeLoginPassword(ChangeLoginPasswordActivity changeLoginPasswordActivity);
 
     void injectChangePayPassword(SetPayPasswordActivity setPayPasswordActivity);

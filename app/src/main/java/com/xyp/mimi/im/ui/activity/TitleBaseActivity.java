@@ -13,15 +13,20 @@ import com.xyp.mimi.R;
 import com.xyp.mimi.app.base.BaseSupportActivity;
 import com.xyp.mimi.im.ui.view.SealTitleBar;
 
+import butterknife.BindView;
+
 public abstract class TitleBaseActivity extends BaseSupportActivity {
-    private ViewFlipper contentContainer;
-    private SealTitleBar titleBar;
+    @BindView(R.id.layout_container)
+    ViewFlipper contentContainer;
+
+    @BindView(R.id.title_bar)
+    SealTitleBar titleBar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_base);
-        titleBar = findViewById(R.id.title_bar);
+        titleBar =  findViewById(R.id.title_bar);
         contentContainer = findViewById(R.id.layout_container);
         setTitleBarType(SealTitleBar.Type.NORMAL);
         getTitleBar().setOnBtnLeftClickListener(new View.OnClickListener() {
@@ -30,6 +35,10 @@ public abstract class TitleBaseActivity extends BaseSupportActivity {
                 finish();
             }
         });
+    }
+
+    public void initChildView(){
+
     }
 
     @Override

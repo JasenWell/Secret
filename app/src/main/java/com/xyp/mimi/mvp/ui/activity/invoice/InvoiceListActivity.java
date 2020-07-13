@@ -24,7 +24,6 @@ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.xyp.mimi.R;
 import com.xyp.mimi.app.base.BaseSupportActivity;
-import com.xyp.mimi.di.component.invoice.DaggerInvoiceComponent;
 import com.xyp.mimi.di.module.invoice.InvoiceModule;
 import com.xyp.mimi.mvp.contract.invoice.InvoiceContract;
 import com.xyp.mimi.mvp.event.RefreshInvoiceEvent;
@@ -80,10 +79,10 @@ public class InvoiceListActivity extends BaseSupportActivity<InvoicePresenter> i
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
-        DaggerInvoiceComponent.builder()
-                .appComponent(appComponent)
-                .invoiceModule(new InvoiceModule(this))
-                .build().injectInvoiceList(this);
+//        DaggerInvoiceComponent.builder()
+//                .appComponent(appComponent)
+//                .invoiceModule(new InvoiceModule(this))
+//                .build().injectInvoiceList(this);
     }
 
     @Override

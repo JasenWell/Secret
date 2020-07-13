@@ -1,6 +1,10 @@
 package com.xyp.mimi.mvp.http.entity.login;
 
-public class LoginUserResult {
+import com.xyp.mimi.im.bean.ResponseUserInfo;
+
+import java.io.Serializable;
+
+public class LoginUserResult implements Serializable {
     /**
      * UserId : 9D16ED168FF5930F
      * Token : 21343527B4FAA917EA632AAFBE9DDC34
@@ -14,6 +18,9 @@ public class LoginUserResult {
     private String Avatar;//头像
     private String NickName;//昵称
     private String ReferralCode;//邀请码
+
+    private String sessionId;
+    private ResponseUserInfo user;
 
 
 
@@ -55,5 +62,21 @@ public class LoginUserResult {
 
     public void setReferralCode(String ReferralCode) {
         this.ReferralCode = ReferralCode;
+    }
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
+
+    public ResponseUserInfo getUser() {
+        return user;
+    }
+
+    public void setUser(ResponseUserInfo user) {
+        this.user = user;
     }
 }

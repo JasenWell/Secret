@@ -28,6 +28,7 @@ import com.xyp.mimi.im.ui.view.UserInfoItemView;
 import com.xyp.mimi.im.utils.ImageLoaderUtils;
 import com.xyp.mimi.im.viewmodel.AppViewModel;
 import com.xyp.mimi.im.viewmodel.UserInfoViewModel;
+import com.xyp.mimi.mvp.ui.activity.setting.SettingActivity;
 
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
@@ -86,9 +87,12 @@ public class MainMeFragment extends BaseSupportFragment {
         });
     }
 
-    @OnClick({R.id.uiv_userinfo})
+    @OnClick({R.id.uiv_userinfo,R.id.ly_setting})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.ly_setting://设置
+                STActivity(SettingActivity.class);
+                break;
 //            case R.id.siv_setting_qrcode:
 //                Intent qrCodeIntent = new Intent(getActivity(), QrCodeDisplayActivity.class);
 //                qrCodeIntent.putExtra(IntentExtra.STR_TARGET_ID, RongIM.getInstance().getCurrentUserId());

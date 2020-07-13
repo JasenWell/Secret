@@ -1,6 +1,5 @@
 package com.xyp.mimi.im.ui.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +24,7 @@ import com.xyp.mimi.im.model.ChatRoomResult;
 import com.xyp.mimi.im.utils.ToastUtils;
 import com.xyp.mimi.im.viewmodel.AppViewModel;
 import com.xyp.mimi.im.utils.log.SLog;
+import com.xyp.mimi.mvp.ui.activity.circle.CircleActivity;
 
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
@@ -95,7 +95,7 @@ public class MainDiscoveryFragment extends BaseSupportFragment {
                 enterChatRoom(3, getString(R.string.discovery_chat_room_four));
                 break;
             case R.id.discovery_friend:
-                ArmsUtils.snackbarText("跳转到朋友圈");
+                STActivity(CircleActivity.class);
                 break;
             default:
                 break;

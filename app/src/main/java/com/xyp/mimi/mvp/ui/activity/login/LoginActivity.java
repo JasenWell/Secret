@@ -137,10 +137,9 @@ public class LoginActivity extends BaseSupportActivity<LoginPresenter> implement
             return;
         }
 
-//        if (mPresenter != null) {
-//
-//            mPresenter.login(new LoginUserPost(phone, password));
-//        }
+        if (mPresenter != null) {
+            mPresenter.login(phone, password);
+        }
     }
 
     @Override
@@ -158,7 +157,7 @@ public class LoginActivity extends BaseSupportActivity<LoginPresenter> implement
         SPUtils.getInstance().put(AppConstant.User.AVATAR, loginUserResult.getAvatar());
         SPUtils.getInstance().put(AppConstant.User.NICK_NAME, loginUserResult.getNickName());
         SPUtils.getInstance().put(AppConstant.User.REFERRAL_CODE, loginUserResult.getReferralCode());
-        startActivity(new Intent(mContext, MainActivity.class));
+        startActivity(new Intent(mContext, com.xyp.mimi.MainActivity.class));
         finish();
     }
 }

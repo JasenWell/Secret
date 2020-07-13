@@ -11,19 +11,28 @@ import java.util.Map;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.QueryMap;
 
 public interface UserService {
 
-    //登录
-    @Headers({"Content-Type: application/json","Accept: application/json"})//需要添加头
+//    //登录
+//    @Headers({"Content-Type: application/json","Accept: application/json"})//需要添加头
+//    @POST("/mall/interface/login")
+//    Observable<BaseResponse<LoginUserResult>> loginByUsernamePassword(
+//            @Body LoginUserPost loginUserPost
+//            );
+
+
+    @FormUrlEncoded
     @POST("/mall/interface/login")
     Observable<BaseResponse<LoginUserResult>> loginByUsernamePassword(
-            @Body LoginUserPost loginUserPost
-            );
-
+            @Field("account") String username,
+            @Field("password") String password
+    );
 
     //获取手机号注册短信
     @POST("/api/Login/GetRegSMSCode")
@@ -34,10 +43,14 @@ public interface UserService {
 
 
     //用户注册
-    @Headers({"Content-Type: application/json","Accept: application/json"})
-    @POST("/api/Login/MobileRegister")
-    Observable<BaseResponse> register(
-            @Body UserRegisterPost userRegisterPost
+    @FormUrlEncoded
+    @POST("/mall/interface/register")
+    Observable<BaseResponse<LoginUserResult>> register(
+            @Field("account") String userAaccount,
+            @Field("password") String password,
+            @Field("userName") String userName,
+            @Field("money") String money,
+            @Field("payPassword") String payPwd
     );
 
 

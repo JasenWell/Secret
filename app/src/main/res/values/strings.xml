@@ -268,7 +268,7 @@
     <string name="seal_staccount_dialog_title_format_error">设置 SealTalk 账号失败</string>
     <string name="seal_staccount_dialog_content">你确定将 SealTalk 号设置为 @ 吗？确定后将不可修改</string>
     <string name="seal_staccount_set_success">SealTalk 号设置成功</string>
-    <string name="seal_phone_or_sealtalk_account">手机号/SealTalk 号</string>>
+    <string name="seal_phone_or_sealtalk_account">手机号</string>>
 
     <!--gender-->
     <string name="seal_mine_my_account_gender">性别</string>
@@ -344,7 +344,7 @@
     <string name="seal_public_account_information">公众号信息</string>
     <string name="seal_member_mention_all_member">所有人</string>
     <string name="seal_search_phone_number">搜索手机号，如：(86)137XXXXX</string>
-    <string name="seal_search_phone_numeber_and_account">手机号/SealTalk 号</string>
+    <string name="seal_search_phone_numeber_and_account">手机号</string>
     <string name="seal_add_friend">加为好友</string>
     <string name="seal_add_text">加好友信息...</string>
     <string name="seal_account_not_exist">用户不存在</string>

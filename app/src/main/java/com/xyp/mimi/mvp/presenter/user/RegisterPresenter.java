@@ -13,26 +13,18 @@ import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 
 import javax.inject.Inject;
 
+import com.xyp.mimi.im.bean.ResponseUserInfo;
 import com.xyp.mimi.mvp.contract.user.UserContract;
+import com.xyp.mimi.mvp.http.api.Api;
 import com.xyp.mimi.mvp.http.entity.BaseResponse;
+import com.xyp.mimi.mvp.http.entity.login.LoginUserResult;
 import com.xyp.mimi.mvp.http.entity.user.UserRegisterPost;
 import com.xyp.mimi.mvp.utils.RxUtils;
 
 import java.util.Map;
 
 
-/**
- * ================================================
- * Description:
- * <p>
- * Created by MVPArmsTemplate on 05/20/2020 10:45
- * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
- * <a href="https://github.com/JessYanCoding">Follow me</a>
- * <a href="https://github.com/JessYanCoding/MVPArms">Star me</a>
- * <a href="https://github.com/JessYanCoding/MVPArms/wiki">See me</a>
- * <a href="https://github.com/JessYanCoding/MVPArmsTemplate">模版请保持更新</a>
- * ================================================
- */
+
 @ActivityScope
 public class RegisterPresenter extends BasePresenter<UserContract.Model, UserContract.RegisterView> {
     @Inject
@@ -69,14 +61,20 @@ public class RegisterPresenter extends BasePresenter<UserContract.Model, UserCon
         ;
     }
 
-    public void register(UserRegisterPost userRegisterPost){
-        mModel.register(userRegisterPost)
+    public void register(String account,String password,String userName, String money,String payPwd){
+        mModel.register(account,password,userName,money,payPwd)
                 .compose(RxUtils.applySchedulers(mRootView))
-                .subscribe(new ErrorHandleSubscriber<BaseResponse>(mErrorHandler) {
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<LoginUserResult>>(mErrorHandler) {
                     @Override
-                    public void onNext(BaseResponse userBeanBaseResponse) {
-                        if(userBeanBaseResponse.getCode()== 0 ){
-                            mRootView.registerResult(userBeanBaseResponse);
+                    public void onNext(BaseResponse<LoginUserResult> userBeanBaseResponse) {
+                        if(userBeanBaseResponse.getCode() == Api.RequestSuccess) {
+                            final ResponseUserInfo userInfo = userBeanBaseResponse.getData().getUser();
+                            if (userInfo.getId() != null) {
+                                mRootView.registerResult(userBeanBaseResponse);
+                            }else{
+                                mRootView.showMessage(userBeanBaseResponse.getMsg());
+                            }
+
                         }else{
                             mRootView.showMessage(userBeanBaseResponse.getMsg());
                         }

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+    <include layout="@layout/app_title"/>
+
+    <com.github.customview.MyRelativeLayout
+        android:layout_width="match_parent"
+        android:padding="10dp"
+        android:layout_height="wrap_content"
+        tools:ignore="PxUsage">
+        <com.github.customview.MyEditText
+            android:id="@+id/et_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top"
+            android:textSize="14sp"
+            android:imeOptions="actionNext"
+            android:textColor="@color/black"
+            android:paddingStart="7dp"
+            android:paddingEnd="7dp"
+            android:maxLines="6"
+            android:minLines="6"
+            android:maxLength="500"
+            android:lineSpacingExtra="3dp"
+            android:hint="快来说点什么吧！"
+            android:inputType="textMultiLine"
+            fontPath="fonts/SourceHanSansCN-Normal.otf"
+            tools:ignore="HardcodedText,MissingPrefix,RtlSymmetry"
+            android:includeFontPadding="false"
+            app:my_tv_corner_radius="10dp"
+            />
+
+<!--        <com.github.customview.MyTextView-->
+<!--            android:id="@+id/tv_content"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@+id/et_content"-->
+<!--            android:text="0/500字"-->
+<!--            android:layout_alignParentEnd="true"-->
+<!--            android:textColor="@color/gray_99"-->
+<!--            android:textSize="14sp"-->
+<!--            tools:ignore="HardcodedText" />-->
+
+    </com.github.customview.MyRelativeLayout>
+
+
+<!--    &lt;!&ndash;展示上传的图片&ndash;&gt;-->
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/recycler"-->
+<!--        android:padding="10dp"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:overScrollMode="never" />-->
+
+
+</LinearLayout>

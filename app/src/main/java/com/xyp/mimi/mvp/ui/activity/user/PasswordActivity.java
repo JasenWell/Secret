@@ -12,8 +12,6 @@ import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
 import com.xyp.mimi.R;
 import com.xyp.mimi.app.base.BaseSupportActivity;
-import com.xyp.mimi.di.component.DaggerPasswordComponent;
-import com.xyp.mimi.di.module.PasswordModule;
 import com.xyp.mimi.mvp.contract.PasswordContract;
 import com.xyp.mimi.mvp.presenter.PasswordPresenter;
 
@@ -53,11 +51,11 @@ public class PasswordActivity extends BaseSupportActivity<PasswordPresenter> imp
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
-        DaggerPasswordComponent.builder()
-                .appComponent(appComponent)
-                .passwordModule(new PasswordModule(this))
-                .build()
-                .inject(this);
+//        DaggerPasswordComponent.builder()
+//                .appComponent(appComponent)
+//                .passwordModule(new PasswordModule(this))
+//                .build()
+//                .inject(this);
     }
 
     @Override

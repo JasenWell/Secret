@@ -215,6 +215,19 @@ public class SealTitleBar extends RelativeLayout {
         tvRight.setVisibility(View.VISIBLE);
     }
 
+    public void setBtnRightDrawable(int resid){
+        btnRight.setImageResource(resid);
+    }
+
+    public void hideBtnRight(){
+        btnRight.setVisibility(INVISIBLE);
+    }
+
+    public void showBtnRight(){
+        btnRight.setVisibility(VISIBLE);
+    }
+
+
     /**
      * 设置有按钮文本
      *

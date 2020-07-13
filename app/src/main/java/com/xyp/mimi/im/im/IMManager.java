@@ -548,7 +548,9 @@ public class IMManager {
     private void initIMCache() {
         // 用户设置缓存 sp
         configCache = new UserConfigCache(context.getApplicationContext());
-        userCache = new UserCache(context.getApplicationContext());
+        UserCache .init(context);
+        userCache = UserCache.getInstance();
+//        userCache = new UserCache(context.getApplicationContext());
     }
 
     /**

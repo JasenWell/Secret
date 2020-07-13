@@ -38,7 +38,7 @@
             android:maxLines="1"
             android:textColor="@color/black"
             android:textSize="18sp"
-            tools:text="title"
+            android:text=""
             tools:ignore="MissingPrefix" />
 
         <ImageView
