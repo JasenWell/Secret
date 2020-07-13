@@ -98,21 +98,17 @@ public class BaseApp extends MultiDexApplication implements App {
         Gloading.initDefault(new SpecialAdapter());
 
 
+        //------------rongyun_sdk by hjh ------------------
         ErrorCode.init(this);
 
-        /*
-         * ?????????????
-         */
         if (!getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext()))) {
             return;
         }
 
-        /*
-         * ??????????????
-         */
-        // ?????IM SDK???? SDK ?????????????
+      
         IMManager.getInstance().init(this);
-//        Stetho.initializeWithDefaults(this);
+
+//        Stetho.initializeWithDefaults(this);//facebook??????
 
         SearchUtils.init(this);
 
@@ -125,6 +121,9 @@ public class BaseApp extends MultiDexApplication implements App {
 
         // ?? App ?????
         observeAppInBackground();
+
+        //------------rongyun_sdk by hjh ------------------
+
     }
 
     @Override
