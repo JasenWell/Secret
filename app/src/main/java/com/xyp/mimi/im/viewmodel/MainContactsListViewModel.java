@@ -98,9 +98,9 @@ public class MainContactsListViewModel extends CommonListBaseViewModel {
             functionInfo = new FunctionInfo("2", getApplication().getString(R.string.group), R.drawable.default_chatroom);
             functionInfo.setShowArrow(false);
             functionList.add(createFunModel(functionInfo));
-            functionInfo = new FunctionInfo("3", getApplication().getString(R.string.public_service), R.drawable.default_servicebrand_contact);
-            functionInfo.setShowArrow(false);
-            functionList.add(createFunModel(functionInfo));
+//            functionInfo = new FunctionInfo("3", getApplication().getString(R.string.public_service), R.drawable.default_servicebrand_contact);
+//            functionInfo.setShowArrow(false);
+//            functionList.add(createFunModel(functionInfo));
         }
         return functionList;
     }

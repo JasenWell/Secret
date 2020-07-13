@@ -71,7 +71,7 @@ public class UserTask {
         userService = HttpClientManager.getInstance(context).getClient().createService(UserService.class);
         dbManager = DbManager.getInstance(context.getApplicationContext());
         fileManager = new FileManager(context.getApplicationContext());
-        userCache = new UserCache(context.getApplicationContext());
+        userCache = UserCache.getInstance();
         countryCache = new CountryCache(context.getApplicationContext());
         imManager = IMManager.getInstance();
     }
@@ -108,7 +108,7 @@ public class UserTask {
                         public void onSuccess(String s) {
                             result.postValue(Resource.success(s));
                             // 存储当前登录成功的用户信息
-                            UserCacheInfo info = new UserCacheInfo(s, loginResult.token, phone, password, region, countryCache.getCountryInfoByRegion(region));
+                            UserCacheInfo info = new UserCacheInfo(s, loginResult.token, phone, password, region);
                             userCache.saveUserCache(info);
                         }
 

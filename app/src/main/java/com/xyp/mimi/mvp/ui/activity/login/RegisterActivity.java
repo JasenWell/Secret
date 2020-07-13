@@ -32,25 +32,21 @@ public class RegisterActivity extends BaseSupportActivity<RegisterPresenter> imp
 
     @BindView(R.id.app_title)
     TextView appTitle;
-    @BindView(R.id.app_right_iv)
-    ImageView appRightIv;
-    @BindView(R.id.app_right_tv)
-    TextView appRightTv;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+
+
     @BindView(R.id.v_bottom_line)
     View vBottomLine;
     @BindView(R.id.et_phone)
     MyEditText etPhone;
 
+    @BindView(R.id.et_username)
+    MyEditText etUserName;
+
     @BindView(R.id.et_password)
     MyEditText etPassword;
-    @BindView(R.id.iv_password)
-    ImageView ivPassword;
+
     @BindView(R.id.et_password2)
     MyEditText etPassword2;
-    @BindView(R.id.iv_password1)
-    ImageView ivPassword1;
 
     @BindView(R.id.tv_xieyi)
     TextView tvXieyi;
@@ -58,11 +54,6 @@ public class RegisterActivity extends BaseSupportActivity<RegisterPresenter> imp
     @Override
     public void initImmersionBar() {
         super.initImmersionBar();
-        ImmersionBar.with(this)
-                .statusBarColor(R.color.white)
-                .statusBarDarkFont(true)
-                .fitsSystemWindows(true)
-                .init();
     }
 
     @Override
@@ -87,10 +78,10 @@ public class RegisterActivity extends BaseSupportActivity<RegisterPresenter> imp
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_register:
-                showMessage("密码不能为空/不可用");
                 DeviceUtils.hideSoftKeyboard(mContext, getCurrentFocus());
                 String phone = etPhone.getText().toString();
                 String password = etPassword.getText().toString();
+                String nick = etUserName.getText().toString();
                 if (TextUtils.isEmpty(password)) {
                     showMessage("密码不能为空/不可用");
                     return;
@@ -103,8 +94,13 @@ public class RegisterActivity extends BaseSupportActivity<RegisterPresenter> imp
                     showMessage("账号不能为空");
                     return;
                 }
+
+                if (TextUtils.isEmpty(nick)) {
+                    showMessage("昵称不能为空");
+                    return;
+                }
                 if (mPresenter != null) {
-                    mPresenter.register(phone, password);
+                    mPresenter.register(phone, password,nick,"0","123456");
                 }
                 break;
         }
@@ -118,7 +114,9 @@ public class RegisterActivity extends BaseSupportActivity<RegisterPresenter> imp
 
     @Override
     public void registerResult(BaseResponse baseResponse) {
-
+        showLoadSuccess();
+        ArmsUtils.snackbarText("注册成功");
+        finish();
     }
 
     @Override

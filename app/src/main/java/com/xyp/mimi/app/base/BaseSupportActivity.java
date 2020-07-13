@@ -300,6 +300,7 @@ public  abstract  class  BaseSupportActivity<P extends IPresenter> extends BaseA
         //在BaseActivity里初始化
         mImmersionBar = ImmersionBar.with(this);
         mImmersionBar.init();
+        defaultImmersionBar();
     }
 
     public void defaultImmersionBar(){

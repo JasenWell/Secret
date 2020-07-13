@@ -77,7 +77,7 @@ public class UserModel extends BaseModel implements UserContract.Model {
     }
 
     @Override
-    public Observable<LoginUserResult> login(String phone, String password) {
+    public Observable<BaseResponse<LoginUserResult>> login(String phone, String password) {
         return mRepositoryManager.obtainRetrofitService(UserService.class)
                 .loginByUsernamePassword(phone,password);
     }
@@ -106,9 +106,9 @@ public class UserModel extends BaseModel implements UserContract.Model {
     }
 
     @Override
-    public Observable<BaseResponse> register(String phone, String password) {
+    public Observable<BaseResponse<LoginUserResult>> register(String phone, String password,String userName, String money,String payPwd) {
         return mRepositoryManager.obtainRetrofitService(UserService.class)
-                .register(phone,password);
+                .register(phone,password,userName,money,password);
     }
 
     @Override

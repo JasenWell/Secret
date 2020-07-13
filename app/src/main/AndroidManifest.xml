@@ -38,13 +38,46 @@
         android:theme="@style/AppTheme"
         tools:replace="theme,android:allowBackup,android:icon"
         tools:targetApi="n">
-        <activity android:name=".mvp.ui.activity.circle.CircleActivity" />
-        <activity android:name=".mvp.ui.activity.circle.AddCircleActivity" />
-        <activity android:name=".im.ui.activity.PokeInviteChatActivity" />
-        <activity android:name=".im.ui.activity.NewFriendListActivity" />
-        <activity android:name=".im.ui.activity.GroupNoticeListActivity" />
-        <activity android:name=".im.ui.activity.SealPicturePagerActivity" />
-        <activity android:name=".im.ui.activity.ConversationActivity" /> <!-- 适配华为（huawei）刘海屏 -->
+        <!-- add by hjh start-->
+        <activity android:name=".im.ui.activity.AddFriendActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+
+
+        <activity android:name=".im.ui.activity.SearchFriendActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity android:name=".im.ui.activity.SelectSingleFriendActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".im.ui.activity.SelectCreateGroupActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".mvp.ui.activity.circle.CircleActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".mvp.ui.activity.circle.AddCircleActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".im.ui.activity.PokeInviteChatActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".im.ui.activity.NewFriendListActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".im.ui.activity.GroupNoticeListActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".im.ui.activity.SealPicturePagerActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".im.ui.activity.ConversationActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <!-- add by hjh end-->
+        <!-- 适配华为（huawei）刘海屏 -->
         <meta-data
             android:name="android.notch_support"
             android:value="true" /> <!-- 适配小米（xiaomi）刘海屏 -->
@@ -109,7 +142,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="fullSensor"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".mvp.ui.activity.login.LoginActivity"
@@ -251,6 +284,9 @@
         <activity android:name=".mvp.ui.activity.user.UserInformationActivity" />
         <activity android:name=".mvp.ui.activity.user.UserNameActivity" />
         <activity android:name=".mvp.ui.activity.user.RetrievePasswordActivity" />
+
+
+
     </application>
 
 </manifest>

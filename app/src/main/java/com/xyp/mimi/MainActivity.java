@@ -24,11 +24,16 @@ import com.jaeger.library.StatusBarUtil;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
 import com.tbruyelle.rxpermissions2.RxPermissions;
+import com.xyp.mimi.im.common.IntentExtra;
 import com.xyp.mimi.im.db.model.FriendShipInfo;
 import com.xyp.mimi.im.model.Resource;
 import com.xyp.mimi.im.model.Status;
 import com.xyp.mimi.im.model.VersionInfo;
 import com.xyp.mimi.app.base.BaseSupportActivity;
+import com.xyp.mimi.im.ui.activity.AddFriendActivity;
+import com.xyp.mimi.im.ui.activity.SelectCreateGroupActivity;
+import com.xyp.mimi.im.ui.activity.SelectSingleFriendActivity;
+import com.xyp.mimi.im.ui.dialog.MorePopWindow;
 import com.xyp.mimi.im.ui.fragment.MainContactsListFragment;
 import com.xyp.mimi.im.ui.fragment.MainConversationListFragment;
 import com.xyp.mimi.im.ui.fragment.MainDiscoveryFragment;
@@ -39,6 +44,7 @@ import com.xyp.mimi.im.ui.view.SealTitleBar;
 import com.xyp.mimi.im.ui.widget.DragPointView;
 import com.xyp.mimi.im.ui.widget.TabGroupView;
 import com.xyp.mimi.im.ui.widget.TabItem;
+import com.xyp.mimi.im.utils.log.SLog;
 import com.xyp.mimi.im.viewmodel.AppViewModel;
 import com.xyp.mimi.im.viewmodel.MainViewModel;
 
@@ -51,7 +57,7 @@ import io.rong.imkit.RongIM;
 import me.yokeyword.fragmentation.ISupportFragment;
 import timber.log.Timber;
 //
-public class MainActivity extends BaseSupportActivity {
+public class MainActivity extends BaseSupportActivity implements MorePopWindow.OnPopWindowItemClickListener{
     public static final String PARAMS_TAB_INDEX = "tab_index";
     private static final int REQUEST_START_CHAT = 0;
     private static final int REQUEST_START_GROUP = 1;
@@ -70,7 +76,7 @@ public class MainActivity extends BaseSupportActivity {
     private ImageView ivMore;
     private AppViewModel appViewModel;
     public MainViewModel mainViewModel;
-
+    int currentIndex = 0;
 
     /**
      * tab 项枚举
@@ -128,11 +134,6 @@ public class MainActivity extends BaseSupportActivity {
      */
     private List<Fragment> fragments = new ArrayList<>();
 
-    @Override
-    protected void initImmersionBar() {
-        super.initImmersionBar();
-        defaultImmersionBar();
-    }
 
     @OnClick({R.id.btn_search, R.id.btn_more})
     public void onViewClicked(View view) {
@@ -144,8 +145,6 @@ public class MainActivity extends BaseSupportActivity {
                 break;
             case R.id.btn_more:
                 ArmsUtils.snackbarText("更多功能开发中...");
-//                MorePopWindow morePopWindow = new MorePopWindow(MainActivity.this, MainActivity.this);
-//                morePopWindow.showPopupWindow(v);
                 break;
         }
     }
@@ -171,6 +170,22 @@ public class MainActivity extends BaseSupportActivity {
 //        }
         titleBar.setType(SealTitleBar.Type.HOME);
         titleBar.setTitle("消息");
+        titleBar.setBtnRightDrawable(R.drawable.seal_ic_main_more);
+        titleBar.setOnBtnRightClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(currentIndex == 0) {
+                    MorePopWindow morePopWindow = new MorePopWindow(MainActivity.this, MainActivity.this);
+                    morePopWindow.showChildView(R.id.btn_start_chat);
+                    morePopWindow.hideChildView(R.id.btn_create_group);
+                    morePopWindow.hideChildView(R.id.btn_scan);
+                    morePopWindow.showPopupWindow(v);
+                }else {
+                    onAddFriendClick();
+                }
+
+            }
+        });
         int tabIndex = getIntent().getIntExtra(PARAMS_TAB_INDEX, Tab.CHAT.getValue());
         // 初始化底部 tabs
         initTabs();
@@ -186,13 +201,23 @@ public class MainActivity extends BaseSupportActivity {
 
     private void switchTitle(int position){
         if (position == Tab.ME.getValue()) {
+            currentIndex = 3;
             titleBar.setTitle("我");
+            titleBar.hideBtnRight();
         }else  if(position == Tab.CHAT.getValue()){
+            currentIndex = 0;
             titleBar.setTitle("会话");
+            titleBar.showBtnRight();
+            titleBar.setBtnRightDrawable(R.drawable.seal_ic_main_more);
         }else  if(position == Tab.CONTACTS.getValue()){
+            currentIndex = 1;
             titleBar.setTitle("通讯录");
+//            titleBar.setBtnRightDrawable(R.drawable.ease_new_friends_icon);
+            titleBar.showBtnRight();
         }else  if(position == Tab.FIND.getValue()){
+            currentIndex = 2;
             titleBar.setTitle("发现");
+            titleBar.hideBtnRight();
         }
     }
 
@@ -435,6 +460,66 @@ public class MainActivity extends BaseSupportActivity {
             this.finish();
             System.exit(0);
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case REQUEST_START_CHAT:
+                    mainViewModel.startPrivateChat(data.getStringExtra(IntentExtra.STR_TARGET_ID));
+                    break;
+                case REQUEST_START_GROUP:
+//                    ArrayList<String> memberList = data.getStringArrayListExtra(IntentExtra.LIST_STR_ID_LIST);
+//                    SLog.i(TAG, "memberList.size = " + memberList.size());
+//                    Intent intent = new Intent(this, CreateGroupActivity.class);
+//                    intent.putExtra(IntentExtra.LIST_STR_ID_LIST, memberList);
+//                    startActivity(intent);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+
+    }
+
+
+    /**
+     * 发起单聊
+     */
+    @Override
+    public void onStartChartClick() {
+        Intent intent = new Intent(this, SelectSingleFriendActivity.class);
+        startActivityForResult(intent, REQUEST_START_CHAT);
+    }
+
+    /**
+     * 创建群组
+     */
+    @Override
+    public void onCreateGroupClick() {
+        Intent intent = new Intent(this, SelectCreateGroupActivity.class);
+        startActivityForResult(intent, REQUEST_START_GROUP);
+    }
+
+    /**
+     * 添加好友
+     */
+    @Override
+    public void onAddFriendClick() {
+        Intent intent = new Intent(this, AddFriendActivity.class);
+        startActivity(intent);
+    }
+
+    /**
+     * 扫一扫
+     */
+    @Override
+    public void onScanClick() {
+//        Intent intent = new Intent(this, ScanActivity.class);
+//        startActivity(intent);
     }
 
 }

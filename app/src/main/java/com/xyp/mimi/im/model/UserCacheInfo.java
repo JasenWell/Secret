@@ -15,11 +15,10 @@ public class UserCacheInfo extends UserInfo {
         setId(id);
     }
 
-    public UserCacheInfo(String id, String loginToken, String phoneNumber, String password, String region, CountryInfo info) {
+    public UserCacheInfo(String id, String loginToken, String phoneNumber, String password, String region) {
         setId(id);
         setPhoneNumber(phoneNumber);
         setLoginToken(loginToken);
-        setCountryInfo(info);
         setRegion(region);
         setPassword(password);
     }
@@ -52,16 +51,7 @@ public class UserCacheInfo extends UserInfo {
         setFriendStatus(info.getFriendStatus());
         setOrderSpelling(info.getOrderSpelling());
         setLoginToken(info.getLoginToken());
-        setCountryInfo(info.getCountryInfo());
         setPassword(info.getPassword());
-    }
-
-    public CountryInfo getCountryInfo() {
-        return countryInfo;
-    }
-
-    public void setCountryInfo(CountryInfo countryInfo) {
-        this.countryInfo = countryInfo;
     }
 
     public String getLoginToken() {

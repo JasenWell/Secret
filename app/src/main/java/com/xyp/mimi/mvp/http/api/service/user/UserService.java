@@ -29,7 +29,7 @@ public interface UserService {
 
     @FormUrlEncoded
     @POST("/mall/interface/login")
-    Observable<LoginUserResult> loginByUsernamePassword(
+    Observable<BaseResponse<LoginUserResult>> loginByUsernamePassword(
             @Field("account") String username,
             @Field("password") String password
     );
@@ -45,9 +45,12 @@ public interface UserService {
     //用户注册
     @FormUrlEncoded
     @POST("/mall/interface/register")
-    Observable<BaseResponse> register(
-            @Field("account") String username,
-            @Field("password") String password
+    Observable<BaseResponse<LoginUserResult>> register(
+            @Field("account") String userAaccount,
+            @Field("password") String password,
+            @Field("userName") String userName,
+            @Field("money") String money,
+            @Field("payPassword") String payPwd
     );
 
 

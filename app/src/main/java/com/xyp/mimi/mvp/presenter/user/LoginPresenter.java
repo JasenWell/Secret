@@ -4,7 +4,13 @@ import android.util.Log;
 
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.mvp.BasePresenter;
+import com.xyp.mimi.im.bean.ResponseUserInfo;
+import com.xyp.mimi.im.common.ResultCallback;
+import com.xyp.mimi.im.im.IMManager;
+import com.xyp.mimi.im.model.UserCacheInfo;
+import com.xyp.mimi.im.sp.UserCache;
 import com.xyp.mimi.mvp.contract.user.UserContract;
+import com.xyp.mimi.mvp.http.api.Api;
 import com.xyp.mimi.mvp.http.entity.BaseResponse;
 import com.xyp.mimi.mvp.http.entity.login.LoginUserResult;
 import com.xyp.mimi.mvp.http.entity.login.LoginUserPost;
@@ -29,15 +35,39 @@ public class LoginPresenter extends BasePresenter<UserContract.Model, UserContra
     public void login(String account,String password){
         mModel.login(account,password)
         .compose(RxUtils.applySchedulers(mRootView))
-        .subscribe(new ErrorHandleSubscriber<LoginUserResult>(rxErrorHandler) {
+        .subscribe(new ErrorHandleSubscriber<BaseResponse<LoginUserResult>>(rxErrorHandler) {
             @Override
-            public void onNext(LoginUserResult userBeanBaseResponse) {
-                Log.d("response",userBeanBaseResponse.toString());
-//                 if(userBeanBaseResponse.getUserId()){
-//                     mRootView.loginResult(userBeanBaseResponse.getData());
-//                 }else{
-//                     mRootView.showMessage(userBeanBaseResponse.getMsg());
-//                 }
+            public void onNext(BaseResponse<LoginUserResult> userBeanBaseResponse) {
+                Log.d("response",userBeanBaseResponse.toString());//BaseResponse count
+                if(userBeanBaseResponse.getCode() == Api.RequestSuccess) {
+                    final ResponseUserInfo userInfo = userBeanBaseResponse.getData().getUser();
+                    if (userInfo.getId() != null) {
+                        String token = "s+3bqXLcrSbr0wDr5piVhR4B4wF2jeGy@zegh.cn.rongnav.com;zegh.cn.rongcfg.com";//73
+                        if (userInfo.getId().equals("74")) {
+                            token = "aFCpDkUQ1w7r0wDr5piVhZARhmSB1Z+Q@zegh.cn.rongnav.com;zegh.cn.rongcfg.com";
+                        }
+
+                        UserCache.getInstance().putString(UserCache.KEY_USER_TOKEN, token);
+                        IMManager.getInstance().connectIM(token, true, new ResultCallback<String>() {
+                            @Override
+                            public void onSuccess(String s) {
+                                // 存储当前登录成功的用户信息
+                                UserCacheInfo info = new UserCacheInfo(userInfo.getId(), UserCache.getInstance().getString(UserCache.KEY_USER_TOKEN, ""),
+                                        userInfo.getAccount(), userInfo.getPassword(), userInfo.getCountr());
+                                UserCache.getInstance().saveUserCache(info);
+                            }
+
+                            @Override
+                            public void onFail(int errorCode) {
+                            }
+                        });
+                        mRootView.loginResult(userBeanBaseResponse.getData());
+                    } else {
+                        mRootView.showMessage(userBeanBaseResponse.getMsg());
+                    }
+                }else{
+                    mRootView.showMessage(userBeanBaseResponse.getMsg());
+                }
             }
 
             @Override
