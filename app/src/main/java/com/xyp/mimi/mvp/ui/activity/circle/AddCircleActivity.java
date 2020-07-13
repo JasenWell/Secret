@@ -14,6 +14,8 @@ import com.xyp.mimi.mvp.presenter.circle.CirclePushPresenter;
 
 public class AddCircleActivity extends BaseSupportActivity<CirclePushPresenter> implements CircleContract.PushCircleView {
 
+
+
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
 
@@ -21,7 +23,7 @@ public class AddCircleActivity extends BaseSupportActivity<CirclePushPresenter> 
 
     @Override
     public int initView(@Nullable Bundle savedInstanceState) {
-        return R.layout.activity_circle; //如果你不需要框架帮你设置 setContentView(id) 需要自行设置,请返回 0
+        return R.layout.activity_circle_add; //如果你不需要框架帮你设置 setContentView(id) 需要自行设置,请返回 0
     }
 
     @Override

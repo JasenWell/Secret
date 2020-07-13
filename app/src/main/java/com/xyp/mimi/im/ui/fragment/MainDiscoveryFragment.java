@@ -96,7 +96,6 @@ public class MainDiscoveryFragment extends BaseSupportFragment {
                 break;
             case R.id.discovery_friend:
                 STActivity(CircleActivity.class);
-                ArmsUtils.snackbarText("跳转到朋友圈");
                 break;
             default:
                 break;

@@ -12,17 +12,6 @@ import com.xyp.mimi.mvp.http.entity.BaseResponse;
 import com.xyp.mimi.mvp.http.entity.circle.CirclePost;
 
 import javax.inject.Inject;
-import com.jess.arms.integration.IRepositoryManager;
-import com.jess.arms.mvp.BaseModel;
-
-import com.jess.arms.di.scope.ActivityScope;
-
-import javax.inject.Inject;
-
-import com.xyp.mimi.mvp.contract.circle.CircleContract;
-import com.xyp.mimi.mvp.http.api.service.cart.CartService;
-import com.xyp.mimi.mvp.http.api.service.circle.CircleService;
-import com.xyp.mimi.mvp.http.entity.BaseResponse;
 import io.reactivex.Observable;
 
 

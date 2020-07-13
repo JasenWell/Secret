@@ -7,52 +7,95 @@
     android:layout_height="match_parent"
     android:background="@color/gray_f4"
     >
-    <include layout="@layout/app_title"/>
-
-  <androidx.core.widget.NestedScrollView
-      android:layout_width="match_parent"
-      android:layout_height="match_parent">
-
-    <LinearLayout
+    <androidx.appcompat.widget.Toolbar
+        android:id="@id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="240dp">
+        android:layout_height="44dp"
+        android:background="@color/liji_c_blue"
+        android:gravity="center_vertical"
+        app:titleTextColor="@color/gray_66"
+        app:layout_collapseMode="pin"
+        >
 
-           <ImageView
-               android:layout_width="match_parent"
-               android:layout_height="200dp"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginStart="13dp"
+            android:maxLines="1"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            tools:text="left_title"
+            tools:ignore="MissingPrefix,RtlHardcoded,SmallSp" />
 
-              >
+        <TextView
+            android:id="@+id/app_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:text="朋友圈"
+            tools:ignore="MissingPrefix" />
 
-           </ImageView>
-            <com.github.customview.MyImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_gravity="right|bottom"
-                android:layout_marginBottom="20dp"
-                >
+        <ImageView
+            android:id="@+id/app_right_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:maxHeight="?attr/actionBarSize"
+            android:paddingEnd="20dp"
+            tools:ignore="ContentDescription,RtlHardcoded,RtlSymmetry" />
 
-            </com.github.customview.MyImageView>
-        </FrameLayout>
 
-        <com.scwang.smartrefresh.layout.SmartRefreshLayout
-            android:id="@+id/refreshLayout"
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            >
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_above="@+id/rv_circle"
-                android:id="@+id/rv_address_list"
-                android:layout_width="fill_parent"
-                android:overScrollMode="never"
+            android:orientation="vertical">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="240dp">
 
-                android:layout_height="fill_parent" />
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:background="@drawable/circle_background"
+                    tools:ignore="ContentDescription">
 
-        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+                </ImageView>
+                <com.github.customview.MyImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="right|bottom"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/circle_background"
+                    tools:ignore="RtlHardcoded">
 
-    </LinearLayout>
-  </androidx.core.widget.NestedScrollView>
+                </com.github.customview.MyImageView>
+            </FrameLayout>
+
+            <com.scwang.smartrefresh.layout.SmartRefreshLayout
+                android:id="@+id/refreshLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_circle"
+                    android:layout_width="fill_parent"
+                    android:overScrollMode="never"
+                    android:layout_height="fill_parent" />
+
+            </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>
