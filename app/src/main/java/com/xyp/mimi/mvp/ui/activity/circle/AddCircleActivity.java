@@ -12,11 +12,7 @@ import com.xyp.mimi.mvp.contract.circle.CircleContract;
 import com.xyp.mimi.mvp.http.entity.BaseResponse;
 import com.xyp.mimi.mvp.presenter.circle.CirclePushPresenter;
 
-<<<<<<< HEAD
 public class AddCircleActivity extends BaseSupportActivity<CirclePushPresenter> implements CircleContract.PushCircleView {
-=======
-public class AddCircleActivity extends BaseSupportActivity<CirclePushPresenter>implements CircleContract.PushCircleView {
->>>>>>> c1102d2024adae19d2e36885137bae797473fb2e
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {

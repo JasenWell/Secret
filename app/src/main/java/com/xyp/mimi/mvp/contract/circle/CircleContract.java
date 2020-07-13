@@ -1,17 +1,9 @@
 package com.xyp.mimi.mvp.contract.circle;
 
-<<<<<<< HEAD
 import com.jess.arms.mvp.IModel;
 import com.jess.arms.mvp.IView;
 import com.xyp.mimi.mvp.http.entity.BaseResponse;
 import com.xyp.mimi.mvp.http.entity.circle.CirclePost;
-
-=======
-import com.jess.arms.mvp.IView;
-import com.jess.arms.mvp.IModel;
-import com.xyp.mimi.mvp.http.entity.BaseResponse;
-import com.xyp.mimi.mvp.http.entity.Circle.CirclePost;
->>>>>>> c1102d2024adae19d2e36885137bae797473fb2e
 import io.reactivex.Observable;
 
 public interface CircleContract {

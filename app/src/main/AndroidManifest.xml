@@ -38,15 +38,9 @@
         android:theme="@style/AppTheme"
         tools:replace="theme,android:allowBackup,android:icon"
         tools:targetApi="n">
-<<<<<<< HEAD
-        <activity android:name=".mvp.ui.activity.circle.AddCircleActivity"></activity>
-        <activity android:name=".mvp.ui.activity.circle.CircleActivity"/>
-        <activity android:name=".im.ui.activity.PokeInviteChatActivity"></activity>
-=======
         <activity android:name=".mvp.ui.activity.circle.CircleActivity" />
         <activity android:name=".mvp.ui.activity.circle.AddCircleActivity" />
         <activity android:name=".im.ui.activity.PokeInviteChatActivity" />
->>>>>>> c1102d2024adae19d2e36885137bae797473fb2e
         <activity android:name=".im.ui.activity.NewFriendListActivity" />
         <activity android:name=".im.ui.activity.GroupNoticeListActivity" />
         <activity android:name=".im.ui.activity.SealPicturePagerActivity" />

@@ -11,10 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
-<<<<<<< HEAD
-=======
 import com.jess.arms.base.BaseActivity;
->>>>>>> c1102d2024adae19d2e36885137bae797473fb2e
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;

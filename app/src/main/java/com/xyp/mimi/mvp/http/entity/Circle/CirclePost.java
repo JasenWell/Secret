@@ -1,4 +1,4 @@
-package com.xyp.mimi.mvp.http.entity.Circle;
+package com.xyp.mimi.mvp.http.entity.circle;
 
 public class CirclePost {
 
