@@ -125,8 +125,8 @@ public class UserCache {
     public static String KEY_USER_TOKEN = "key_user_token";
 
 //    String loginToken = "SurIKWS2E4nr0wDr5piVhfOgWNL4EzDZ@zegh.cn.rongnav.com;zegh.cn.rongcfg.com";//72
-//    loginToken = "s+3bqXLcrSbr0wDr5piVhR4B4wF2jeGy@zegh.cn.rongnav.com;zegh.cn.rongcfg.com";//13402375956 73
-//    loginToken = "aFCpDkUQ1w7r0wDr5piVhZARhmSB1Z+Q@zegh.cn.rongnav.com;zegh.cn.rongcfg.com";//13526542876 74 123456
+//    loginToken = "s+3bqXLcrSbr0wDr5piVhR4B4wF2jeGy@zegh.cn.rongnav.com;zegh.cn.rongcfg.com";//13402375956 74
+//    loginToken = "aFCpDkUQ1w7r0wDr5piVhZARhmSB1Z+Q@zegh.cn.rongnav.com;zegh.cn.rongcfg.com";//13526542876 73 123456
 
     public void putString(String key,String value){
         sp.edit().putString(key,value).commit();

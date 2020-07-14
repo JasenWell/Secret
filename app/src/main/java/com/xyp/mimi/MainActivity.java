@@ -26,6 +26,7 @@ import com.jess.arms.utils.ArmsUtils;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.xyp.mimi.im.common.IntentExtra;
 import com.xyp.mimi.im.db.model.FriendShipInfo;
+import com.xyp.mimi.im.event.MessageEvent;
 import com.xyp.mimi.im.model.Resource;
 import com.xyp.mimi.im.model.Status;
 import com.xyp.mimi.im.model.VersionInfo;
@@ -47,6 +48,8 @@ import com.xyp.mimi.im.ui.widget.TabItem;
 import com.xyp.mimi.im.utils.log.SLog;
 import com.xyp.mimi.im.viewmodel.AppViewModel;
 import com.xyp.mimi.im.viewmodel.MainViewModel;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -135,19 +138,19 @@ public class MainActivity extends BaseSupportActivity implements MorePopWindow.O
     private List<Fragment> fragments = new ArrayList<>();
 
 
-    @OnClick({R.id.btn_search, R.id.btn_more})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.btn_search:
-                ArmsUtils.snackbarText("查询功能开发中...");
+//    @OnClick({R.id.btn_search, R.id.btn_more})
+//    public void onViewClicked(View view) {
+//        switch (view.getId()) {
+//            case R.id.btn_search:
+//                ArmsUtils.snackbarText("查询功能开发中...");
 //                Intent intent = new Intent(MainActivity.this, SealSearchActivity.class);
 //                startActivity(intent);
-                break;
-            case R.id.btn_more:
-                ArmsUtils.snackbarText("更多功能开发中...");
-                break;
-        }
-    }
+//                break;
+//            case R.id.btn_more:
+//                ArmsUtils.snackbarText("更多功能开发中...");
+//                break;
+//        }
+//    }
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
 
@@ -197,6 +200,14 @@ public class MainActivity extends BaseSupportActivity implements MorePopWindow.O
         initViewModel();
         clearBadgeStatu();
         showRedCircle(Tab.CHAT.getValue(),false);
+    }
+
+    @Subscribe
+    public void onEventMainThread(MessageEvent event){
+        //接收到发布者发布的事件后，进行相应的处理操作
+        if(event.getType() == MessageEvent.EventType.REFRESH_FRIEND_LIST){
+            switchTitle(1);
+        }
     }
 
     private void switchTitle(int position){

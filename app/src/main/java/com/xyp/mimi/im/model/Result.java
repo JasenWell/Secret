@@ -1,5 +1,6 @@
 package com.xyp.mimi.im.model;
 
+import com.google.gson.annotations.SerializedName;
 import com.xyp.mimi.im.common.ErrorCode;
 import com.xyp.mimi.im.common.NetConstant;
 
@@ -8,8 +9,14 @@ import com.xyp.mimi.im.common.NetConstant;
  * @param <T> 请求结果的实体类
  */
 public class Result<T> {
+    public int count;
     public int code;
+
+    @SerializedName("data")
     public T result;
+
+
+    private String msg;
 
     public Result(){
     }
@@ -32,6 +39,22 @@ public class Result<T> {
 
     public void setResult(T result) {
         this.result = result;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
     public boolean isSuccess(){

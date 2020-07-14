@@ -17,6 +17,7 @@ import com.xyp.mimi.MainActivity;
 import com.xyp.mimi.R;
 import com.xyp.mimi.im.db.model.FriendShipInfo;
 import com.xyp.mimi.im.db.model.FriendStatus;
+import com.xyp.mimi.im.event.MessageEvent;
 import com.xyp.mimi.im.im.IMManager;
 import com.xyp.mimi.im.model.Resource;
 import com.xyp.mimi.im.model.Status;
@@ -28,6 +29,9 @@ import com.xyp.mimi.im.ui.adapter.models.FunctionInfo;
 import com.xyp.mimi.im.ui.adapter.models.ListItemModel;
 import com.xyp.mimi.im.viewmodel.CommonListBaseViewModel;
 import com.xyp.mimi.im.viewmodel.MainContactsListViewModel;
+
+import org.greenrobot.eventbus.Subscribe;
+
 import io.rong.imkit.RongIM;
 import io.rong.imkit.utilities.OptionsPopupDialog;
 import io.rong.imlib.model.Conversation;
@@ -40,6 +44,15 @@ public class MainContactsListFragment extends CommonListBaseFragment {
     //    private ContactsAdapter adapter;
     private MainContactsListViewModel viewModel;
     private MainActivity mainActivity;
+
+
+    @Subscribe
+    public void onEventMainThread(MessageEvent event){
+        //接收到发布者发布的事件后，进行相应的处理操作
+        if(event.getType() == MessageEvent.EventType.REFRESH_FRIEND_LIST){
+
+        }
+    }
 
     @Override
     public void onInitView(Bundle savedInstanceState, Intent intent) {

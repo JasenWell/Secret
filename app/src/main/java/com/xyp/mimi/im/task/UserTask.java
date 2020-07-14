@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.xyp.mimi.im.bean.ResponseWrapperInfo;
 import com.xyp.mimi.im.common.ErrorCode;
 import com.xyp.mimi.im.common.ResultCallback;
 import com.xyp.mimi.im.db.DbManager;
@@ -204,6 +205,22 @@ public class UserTask {
             @Override
             protected LiveData<Result<UserInfo>> createCall() {
                 return userService.getUserInfo(userId);
+            }
+        }.asLiveData();
+    }
+
+    /**
+     * 获取请求添加我的的好友列表
+     * @param userId
+     * @return
+     */
+    public LiveData<Resource<ResponseWrapperInfo>> selectAddFriendsRequestlist(final String userId) {
+        return new NetworkOnlyResource<ResponseWrapperInfo, Result<ResponseWrapperInfo>>() {
+
+            @NonNull
+            @Override
+            protected LiveData<Result<ResponseWrapperInfo>> createCall() {
+                return userService.selectAddFriendsRequestlist(userId);
             }
         }.asLiveData();
     }

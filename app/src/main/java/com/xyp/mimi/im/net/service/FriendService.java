@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 import java.util.Map;
 
+import com.xyp.mimi.im.bean.ResponseSearchFriendInfo;
 import com.xyp.mimi.im.db.model.FriendDescription;
 import com.xyp.mimi.im.db.model.FriendShipInfo;
 import com.xyp.mimi.im.model.AddFriendResult;
@@ -12,14 +13,44 @@ import com.xyp.mimi.im.model.GetContactInfoResult;
 import com.xyp.mimi.im.model.Result;
 import com.xyp.mimi.im.model.SearchFriendInfo;
 import com.xyp.mimi.im.net.SealTalkUrl;
+import com.xyp.mimi.mvp.http.entity.BaseResponse;
+
+import io.reactivex.Observable;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.QueryMap;
 
 public interface FriendService {
+    //-------------------add by hjh start-----------------
+    /**
+     * 搜索好友
+     *
+     * @param queryMap
+     * @return
+     */
+    @POST("/mall/interface/insertFriendslist")
+    LiveData<Result<ResponseSearchFriendInfo>> searchFriend(@QueryMap(encoded = true) Map<String, String> queryMap);
+
+    //添加好友
+    @FormUrlEncoded
+    @POST("/mall/interface/insertFriendslist")
+    Observable<BaseResponse<Object>> insertFriendslist(
+            @Field("mianUid") String username,//用户id
+            @Field("phone") String friendPhone  //好友电话
+    );
+
+
+
+
+
+
+
+    //-------------------add by hjh end-----------------
 
     /**
      * 获取所有好友信息
@@ -72,14 +103,6 @@ public interface FriendService {
     @POST(SealTalkUrl.INVITE_FRIEND)
     LiveData<Result<AddFriendResult>> inviteFriend(@Body RequestBody body);
 
-    /**
-     * 搜索好友
-     *
-     * @param queryMap
-     * @return
-     */
-    @GET(SealTalkUrl.FIND_FRIEND)
-    LiveData<Result<SearchFriendInfo>> searchFriend(@QueryMap(encoded = true) Map<String, String> queryMap);
 
     @POST(SealTalkUrl.DELETE_FREIND)
     LiveData<Result> deleteFriend(@Body RequestBody body);
