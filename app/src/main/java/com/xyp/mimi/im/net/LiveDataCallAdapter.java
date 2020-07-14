@@ -58,10 +58,10 @@ public class LiveDataCallAdapter<R> implements CallAdapter<R, LiveData<R>> {
                             } else if (body instanceof Result) {
                                 Result result = (Result) body;
                                 // 当请求失败时，转义API错误码到全局错误码
-                                if (result.code != REQUEST_SUCCESS_CODE) {
-                                    int errorCode = ApiErrorCodeMap.getApiErrorCode(path, result.code);
-                                    result.setCode(errorCode);
-                                }
+//                                if (result.code != REQUEST_SUCCESS_CODE) {
+////                                    int errorCode = ApiErrorCodeMap.getApiErrorCode(path, result.code);
+////                                    result.setCode(errorCode);
+////                                }
                             }
                             postValue(body);
                         }

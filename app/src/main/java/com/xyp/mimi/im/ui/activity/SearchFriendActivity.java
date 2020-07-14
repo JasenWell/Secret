@@ -16,8 +16,11 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.jess.arms.di.component.AppComponent;
+import com.jess.arms.utils.ArmsUtils;
 import com.xyp.mimi.R;
+import com.xyp.mimi.im.bean.ResponseSearchFriendInfo;
 import com.xyp.mimi.im.common.IntentExtra;
+import com.xyp.mimi.im.event.MessageEvent;
 import com.xyp.mimi.im.im.IMManager;
 import com.xyp.mimi.im.model.AddFriendResult;
 import com.xyp.mimi.im.model.Resource;
@@ -30,6 +33,9 @@ import com.xyp.mimi.im.ui.fragment.SearchFriendResultFragment;
 import com.xyp.mimi.im.ui.interfaces.OnSearchFriendClickListener;
 import com.xyp.mimi.im.ui.interfaces.OnSearchFriendItemClickListener;
 import com.xyp.mimi.im.viewmodel.SearchFriendNetViewModel;
+
+import org.greenrobot.eventbus.EventBus;
+
 import io.rong.imkit.RongIM;
 import io.rong.imkit.userInfoCache.RongUserInfoManager;
 import io.rong.imlib.model.UserInfo;
@@ -40,11 +46,12 @@ public class SearchFriendActivity extends TitleBaseActivity implements OnSearchF
     private SearchFriendResultFragment searchFriendResultFragment;
     private SearchFriendNetViewModel viewModel;
     private boolean isFriend;
-    private int containerId = R.id.layout_container;//R.id.fl_fragment_container
+    private int containerId = R.id.fl_fragment_container;//R.id.layout_container
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_friend_search_content);
         getTitleBar().setTitle((R.string.seal_main_title_add_friends));
         getTitleBar().setOnBtnLeftClickListener(new View.OnClickListener() {
             @Override
@@ -56,15 +63,18 @@ public class SearchFriendActivity extends TitleBaseActivity implements OnSearchF
         searchFriendFragment.setOnSearchFriendClickListener(this);
         getSupportFragmentManager().beginTransaction() .add(containerId, searchFriendFragment).commit();
         viewModel = ViewModelProviders.of(this).get(SearchFriendNetViewModel.class);
-        viewModel.getSearchFriend().observe(this, new Observer<Resource<SearchFriendInfo>>() {
+        viewModel.getSearchFriend().observe(this, new Observer<Resource<ResponseSearchFriendInfo>>() {
             @Override
-            public void onChanged(Resource<SearchFriendInfo> searchFriendInfoResource) {
+            public void onChanged(Resource<ResponseSearchFriendInfo> searchFriendInfoResource) {
                 if (searchFriendInfoResource.status == Status.SUCCESS) {
-                    SearchFriendInfo friendInfo = searchFriendInfoResource.data;
-                    searchFriendResultFragment = new SearchFriendResultFragment();
-                    searchFriendResultFragment.setData(SearchFriendActivity.this, searchFriendInfoResource.data);
-                    pushFragment(searchFriendResultFragment);
-                    viewModel.isFriend(friendInfo.getId());
+                    ArmsUtils.snackbarText("添加好友请求已发送");
+                    EventBus.getDefault().post(new MessageEvent("添加好友成功",MessageEvent.EventType.REFRESH_FRIEND_LIST));
+                    finish();
+//                    ResponseSearchFriendInfo friendInfo = searchFriendInfoResource.data;
+//                    searchFriendResultFragment = new SearchFriendResultFragment();
+//                    searchFriendResultFragment.setData(SearchFriendActivity.this, searchFriendInfoResource.data);
+//                    pushFragment(searchFriendResultFragment);
+//                    viewModel.isFriend(friendInfo.getId());
                 } else if (searchFriendInfoResource.status == Status.ERROR) {
                     Toast.makeText(SearchFriendActivity.this, R.string.seal_account_not_exist, Toast.LENGTH_SHORT).show();
                 }
@@ -159,7 +169,7 @@ public class SearchFriendActivity extends TitleBaseActivity implements OnSearchF
 
     @Override
     public int initView(@Nullable Bundle savedInstanceState) {
-        return R.layout.activity_friend_search_content;
+        return 0;//R.layout.activity_friend_search_content;
     }
 
     @Override

@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.xyp.mimi.im.bean.ResponseSearchFriendInfo;
 import com.xyp.mimi.im.common.ThreadManager;
 import com.xyp.mimi.im.contact.PhoneContactManager;
 import com.xyp.mimi.im.db.DbManager;
@@ -445,19 +446,15 @@ public class FriendTask {
         return dbManager.getFriendDao().searchFriendsIncludeGroup(includeGroupId, matchSearch);
     }
 
-    public LiveData<Resource<SearchFriendInfo>> searchFriendFromServer(String stAccount, String region, String phone) {
-        return new NetworkOnlyResource<SearchFriendInfo, Result<SearchFriendInfo>>() {
+    public LiveData<Resource<ResponseSearchFriendInfo>> searchFriendFromServer(final  String stAccount, String region, String phone) {
+        return new NetworkOnlyResource<ResponseSearchFriendInfo, Result<ResponseSearchFriendInfo>>() {
 
             @NonNull
             @Override
-            protected LiveData<Result<SearchFriendInfo>> createCall() {
+            protected LiveData<Result<ResponseSearchFriendInfo>> createCall() {
                 HashMap<String, String> queryMap = new HashMap<>();
-                if (!TextUtils.isEmpty(stAccount)) {
-                    queryMap.put("st_account", stAccount);
-                } else {
-                    queryMap.put("region", region);
-                    queryMap.put("phone", phone);
-                }
+                queryMap.put("mianUid", stAccount);
+                queryMap.put("phone", phone);
                 return friendService.searchFriend(queryMap);
             }
         }.asLiveData();

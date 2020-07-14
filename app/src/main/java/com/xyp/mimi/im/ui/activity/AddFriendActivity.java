@@ -12,10 +12,13 @@ import androidx.annotation.Nullable;
 import com.jess.arms.di.component.AppComponent;
 import com.xyp.mimi.R;
 import com.xyp.mimi.im.common.IntentExtra;
+import com.xyp.mimi.im.event.MessageEvent;
 import com.xyp.mimi.im.model.qrcode.QrCodeDisplayType;
 //import com.xyp.mimi.im.ui.dialog.CommonDialog;
 import com.xyp.mimi.im.utils.CheckPermissionUtils;
 //import com.xyp.mimi.im.wx.WXManager;
+import org.greenrobot.eventbus.Subscribe;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
@@ -35,6 +38,15 @@ public class AddFriendActivity extends TitleBaseActivity implements View.OnClick
         }
 
     }
+
+    @Subscribe
+    public void onEventMainThread(MessageEvent event){
+        //接收到发布者发布的事件后，进行相应的处理操作
+        if(event.getType() == MessageEvent.EventType.REFRESH_FRIEND_LIST){
+            finish();
+        }
+    }
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

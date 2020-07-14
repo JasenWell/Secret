@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.xyp.mimi.R;
+import com.xyp.mimi.im.bean.ResponseWrapperInfo;
 import com.xyp.mimi.im.db.model.FriendDetailInfo;
 import com.xyp.mimi.im.db.model.FriendShipInfo;
 import com.xyp.mimi.im.db.model.FriendStatus;
@@ -107,28 +108,55 @@ public class MainContactsListViewModel extends CommonListBaseViewModel {
 
     private void loadFriendShip() {
         SLog.i(TAG, "loadFriendShip()");
-        LiveData<Resource<UserInfo>> userInfo = userTask.getUserInfo(IMManager.getInstance().getCurrentId());
-        conversationLiveData.addSource(userInfo, new Observer<Resource<UserInfo>>() {
+//        LiveData<Resource<UserInfo>> userInfo = userTask.getUserInfo(IMManager.getInstance().getCurrentId());
+//        conversationLiveData.addSource(userInfo, new Observer<Resource<UserInfo>>() {
+//            @Override
+//            public void onChanged(Resource<UserInfo> resource) {
+//
+//                if (resource.status != Status.LOADING) {
+//                    if (resource != null && resource.data != null) {
+//                        UserInfo data = resource.data;
+//                        FriendShipInfo info = new FriendShipInfo();
+//                        info.setDisplayName(data.getAlias());
+//                        info.setDisPlayNameSpelling(data.getAliasSpelling());
+//                        FriendDetailInfo friendDetailInfo = new FriendDetailInfo();
+//                        friendDetailInfo.setNickname(data.getName());
+//                        friendDetailInfo.setId(data.getId());
+//                        friendDetailInfo.setPhone(data.getPhoneNumber());
+//                        friendDetailInfo.setNameSpelling(data.getNameSpelling());
+//                        friendDetailInfo.setOrderSpelling(data.getOrderSpelling());
+//                        friendDetailInfo.setPortraitUri(data.getPortraitUri());
+//                        friendDetailInfo.setRegion(data.getRegion());
+//                        info.setUser(friendDetailInfo);
+//                        mySelfInfo = info;
+//                        post(getFunctionList(), mySelfInfo, friendList);
+//                    }
+//                }
+//            }
+//        });
+
+        LiveData<Resource<ResponseWrapperInfo>> userInfo = userTask.selectAddFriendsRequestlist(IMManager.getInstance().getCurrentId());
+        conversationLiveData.addSource(userInfo, new Observer<Resource<ResponseWrapperInfo>>() {
             @Override
-            public void onChanged(Resource<UserInfo> resource) {
+            public void onChanged(Resource<ResponseWrapperInfo> resource) {
 
                 if (resource.status != Status.LOADING) {
                     if (resource != null && resource.data != null) {
-                        UserInfo data = resource.data;
-                        FriendShipInfo info = new FriendShipInfo();
-                        info.setDisplayName(data.getAlias());
-                        info.setDisPlayNameSpelling(data.getAliasSpelling());
-                        FriendDetailInfo friendDetailInfo = new FriendDetailInfo();
-                        friendDetailInfo.setNickname(data.getName());
-                        friendDetailInfo.setId(data.getId());
-                        friendDetailInfo.setPhone(data.getPhoneNumber());
-                        friendDetailInfo.setNameSpelling(data.getNameSpelling());
-                        friendDetailInfo.setOrderSpelling(data.getOrderSpelling());
-                        friendDetailInfo.setPortraitUri(data.getPortraitUri());
-                        friendDetailInfo.setRegion(data.getRegion());
-                        info.setUser(friendDetailInfo);
-                        mySelfInfo = info;
-                        post(getFunctionList(), mySelfInfo, friendList);
+//                        UserInfo data = resource.data;
+//                        FriendShipInfo info = new FriendShipInfo();
+//                        info.setDisplayName(data.getAlias());
+//                        info.setDisPlayNameSpelling(data.getAliasSpelling());
+//                        FriendDetailInfo friendDetailInfo = new FriendDetailInfo();
+//                        friendDetailInfo.setNickname(data.getName());
+//                        friendDetailInfo.setId(data.getId());
+//                        friendDetailInfo.setPhone(data.getPhoneNumber());
+//                        friendDetailInfo.setNameSpelling(data.getNameSpelling());
+//                        friendDetailInfo.setOrderSpelling(data.getOrderSpelling());
+//                        friendDetailInfo.setPortraitUri(data.getPortraitUri());
+//                        friendDetailInfo.setRegion(data.getRegion());
+//                        info.setUser(friendDetailInfo);
+//                        mySelfInfo = info;
+//                        post(getFunctionList(), mySelfInfo, friendList);
                     }
                 }
             }
