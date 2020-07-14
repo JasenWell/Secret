@@ -6,12 +6,13 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/f5">
     <include layout="@layout/app_title"/>
 
     <com.github.customview.MyRelativeLayout
         android:layout_width="match_parent"
         android:padding="10dp"
+        android:background="@color/white"
         android:layout_height="wrap_content"
         tools:ignore="PxUsage">
         <com.github.customview.MyEditText

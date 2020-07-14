@@ -1,16 +1,32 @@
 package com.xyp.mimi.mvp.http.api.service.setting;
 
 import com.xyp.mimi.mvp.http.entity.BaseResponse;
+import com.xyp.mimi.mvp.http.entity.setting.UserPasswordResult;
 import com.xyp.mimi.mvp.http.entity.user.UserCodePost;
 import com.xyp.mimi.mvp.http.entity.user.UserLoginPasswordPost;
 import com.xyp.mimi.mvp.http.entity.user.UserPayPasswordPost;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
 public interface SettingService {
+
+    @FormUrlEncoded
+    @POST("/mall/interface/logout")
+    Observable<BaseResponse> userLoginOut(
+            @Field("userId") String userId
+    );
+
+    @FormUrlEncoded
+    @POST("/mall/interface/selectPhone")
+    Observable<UserPasswordResult> getUserPassword(
+            @Field("phone") String phone
+    );
+
 
     // 获得账号绑定的手机号
     @Headers({"Content-Type: application/json","Accept: application/json"})

@@ -152,7 +152,8 @@ public class LoginActivity extends BaseSupportActivity<LoginPresenter> implement
     @Override
     public void loginResult(LoginUserResult loginUserResult) {
         showLoadSuccess();
-        SPUtils.getInstance().put(AppConstant.User.USER_ID, loginUserResult.getUserId());//
+        SPUtils.getInstance().put(AppConstant.User.USER_ID, loginUserResult.getUser().getId());//
+        SPUtils.getInstance().put(AppConstant.User.PHONE, loginUserResult.getUser().getAccount());//
         SPUtils.getInstance().put(AppConstant.User.TOKEN, loginUserResult.getToken());//
         SPUtils.getInstance().put(AppConstant.User.AVATAR, loginUserResult.getAvatar());
         SPUtils.getInstance().put(AppConstant.User.NICK_NAME, loginUserResult.getNickName());

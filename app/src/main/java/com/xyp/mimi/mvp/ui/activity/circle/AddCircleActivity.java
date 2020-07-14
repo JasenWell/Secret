@@ -17,13 +17,20 @@ import com.github.baseclass.rx.RxBus;
 import com.github.baseclass.view.MyDialog;
 import com.github.customview.MyEditText;
 import com.jess.arms.di.component.AppComponent;
+import com.jess.arms.utils.ArmsUtils;
 import com.xyp.mimi.R;
 import com.xyp.mimi.app.base.BaseSupportActivity;
+import com.xyp.mimi.di.component.circle.DaggerCircleComponent;
+import com.xyp.mimi.di.module.circle.CircleModule;
 import com.xyp.mimi.mvp.contract.circle.CircleContract;
+import com.xyp.mimi.mvp.event.RefreshAddressEvent;
+import com.xyp.mimi.mvp.event.RefreshCircleEvent;
 import com.xyp.mimi.mvp.http.entity.BaseResponse;
 import com.xyp.mimi.mvp.http.entity.circle.CirclePost;
 import com.xyp.mimi.mvp.presenter.circle.CirclePushPresenter;
 import com.xyp.mimi.mvp.utils.AppConstant;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -39,7 +46,6 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
 public class AddCircleActivity extends BaseSupportActivity<CirclePushPresenter> implements CircleContract.PushCircleView {
-
 
     @BindView(R.id.app_title)
     TextView appTitle;
@@ -66,7 +72,11 @@ public class AddCircleActivity extends BaseSupportActivity<CirclePushPresenter> 
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
-
+        DaggerCircleComponent.builder()
+                .appComponent(appComponent)
+                .circleModule(new CircleModule(this))
+                .build()
+                .inject(this);
     }
 
     @Override
@@ -96,7 +106,8 @@ public class AddCircleActivity extends BaseSupportActivity<CirclePushPresenter> 
                 mDialog.setMessage("是否发布新动态");
                 mDialog.setNegativeButton("取消",(dialog, which) -> dialog.dismiss());
                 mDialog.setPositiveButton("确定",(dialog, which) -> {
-                    mPresenter.pushCircle(new CirclePost(uId,etContent.getText().toString()));
+                    mPresenter.pushCircle(uId,etContent.getText().toString());
+                    dialog.dismiss();
                 });
                 mDialog.create().show();
                 break;
@@ -104,12 +115,15 @@ public class AddCircleActivity extends BaseSupportActivity<CirclePushPresenter> 
     }
     @Override
     public void pushCircleResult(BaseResponse baseResponse) {
-
+        showLoadSuccess();
+        EventBus.getDefault().post(new RefreshCircleEvent());
+        finish();
     }
 
     @Override
     public void showMessage(@NonNull String message) {
-
+        showLoadSuccess();
+        ArmsUtils.snackbarText(message);
     }
 
 }

@@ -21,6 +21,7 @@ public interface AppConstant {
         String NICK_NAME = "NickName";//昵称
         String REFERRAL_CODE = "ReferralCode";//邀请码
         String ORDER_INDEX = "OrderIndex";//订单下标
+        String PHONE = "Phone";//
     }
 
     interface ActivityIntent {

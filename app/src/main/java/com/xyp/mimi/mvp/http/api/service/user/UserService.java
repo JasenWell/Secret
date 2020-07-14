@@ -34,6 +34,11 @@ public interface UserService {
             @Field("password") String password
     );
 
+
+
+
+
+
     //获取手机号注册短信
     @POST("/api/Login/GetRegSMSCode")
     Observable<BaseResponse> getSms(

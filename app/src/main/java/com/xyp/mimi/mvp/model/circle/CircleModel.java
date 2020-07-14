@@ -9,6 +9,7 @@ import com.jess.arms.mvp.BaseModel;
 import com.xyp.mimi.mvp.contract.circle.CircleContract;
 import com.xyp.mimi.mvp.http.api.service.circle.CircleService;
 import com.xyp.mimi.mvp.http.entity.BaseResponse;
+import com.xyp.mimi.mvp.http.entity.circle.CircleListResult;
 import com.xyp.mimi.mvp.http.entity.circle.CirclePost;
 
 import javax.inject.Inject;
@@ -48,15 +49,21 @@ public class CircleModel extends BaseModel implements CircleContract.Model {
     }
 
     @Override
-    public Observable<BaseResponse> getCircleList(CirclePost circlePost) {
+    public Observable<CircleListResult> getCircleList(String uid) {
         return mRepositoryManager.obtainRetrofitService(CircleService.class)
-                .getCircleList(circlePost);
+                .getCircleList(uid);
     }
 
     @Override
-    public Observable<BaseResponse> pushCircle(CirclePost circlePost) {
+    public Observable<BaseResponse> pushCircle(String uid,String context) {
         return mRepositoryManager.obtainRetrofitService(CircleService.class)
-                .pushCircle(circlePost);
+                .pushCircle(uid,context);
+    }
+
+    @Override
+    public Observable<BaseResponse> deleteCircle(String id) {
+        return mRepositoryManager.obtainRetrofitService(CircleService.class)
+                .deleteCircle(id);
     }
 
 }

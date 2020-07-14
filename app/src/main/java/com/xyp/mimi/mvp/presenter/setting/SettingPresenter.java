@@ -1,27 +1,28 @@
-package com.xyp.mimi.mvp.presenter.circle;
+package com.xyp.mimi.mvp.presenter.setting;
 
 import android.app.Application;
 
-import com.jess.arms.di.scope.ActivityScope;
-import com.jess.arms.http.imageloader.ImageLoader;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.mvp.BasePresenter;
-import com.xyp.mimi.mvp.contract.circle.CircleContract;
-import com.xyp.mimi.mvp.http.entity.BaseResponse;
-import com.xyp.mimi.mvp.http.entity.circle.CircleListResult;
-import com.xyp.mimi.mvp.http.entity.circle.CirclePost;
-import com.xyp.mimi.mvp.utils.RxUtils;
+import com.jess.arms.http.imageloader.ImageLoader;
 
-import javax.inject.Inject;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
+
+import javax.inject.Inject;
+
+import com.xyp.mimi.mvp.contract.setting.SettingContract;
+import com.xyp.mimi.mvp.http.entity.BaseResponse;
+import com.xyp.mimi.mvp.http.entity.circle.CircleListResult;
+import com.xyp.mimi.mvp.http.entity.setting.UserPasswordResult;
+import com.xyp.mimi.mvp.utils.RxUtils;
 
 
 /**
  * ================================================
  * Description:
  * <p>
- * Created by MVPArmsTemplate on 07/13/2020 09:45
+ * Created by MVPArmsTemplate on 07/14/2020 15:07
  * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
  * <a href="https://github.com/JessYanCoding">Follow me</a>
  * <a href="https://github.com/JessYanCoding/MVPArms">Star me</a>
@@ -29,8 +30,7 @@ import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
  * <a href="https://github.com/JessYanCoding/MVPArmsTemplate">模版请保持更新</a>
  * ================================================
  */
-@ActivityScope
-public class CirclePresenter extends BasePresenter<CircleContract.Model, CircleContract.CircleListView> {
+public class SettingPresenter extends BasePresenter<SettingContract.Model, SettingContract.View> {
     @Inject
     RxErrorHandler mErrorHandler;
     @Inject
@@ -41,41 +41,41 @@ public class CirclePresenter extends BasePresenter<CircleContract.Model, CircleC
     AppManager mAppManager;
 
     @Inject
-    public CirclePresenter(CircleContract.Model model, CircleContract.CircleListView rootView) {
+    public SettingPresenter(SettingContract.Model model, SettingContract.View rootView) {
         super(model, rootView);
     }
 
-
-    public void getCircleList(String  uid){
-        mModel.getCircleList(uid)
-                .compose(RxUtils.applySchedulers(mRootView))
-                .subscribe(new ErrorHandleSubscriber<CircleListResult>(mErrorHandler) {
-                    @Override
-                    public void onNext(CircleListResult baseResponse) {
-                        if(baseResponse.getCode() == 0){
-                            mRootView.getCircleListResult(baseResponse);
-                        }else{
-                            mRootView.showMessage(baseResponse.getMsg());
-                        }
-                    }
-                });
-    }
-
-
-    public void deleteCircle(String  id){
-        mModel.deleteCircle(id)
+    public void userLoginOut(String  uid){
+        mModel.userLoginOut(uid)
                 .compose(RxUtils.applySchedulers(mRootView))
                 .subscribe(new ErrorHandleSubscriber<BaseResponse>(mErrorHandler) {
                     @Override
                     public void onNext(BaseResponse baseResponse) {
                         if(baseResponse.getCode() == 0){
-                            mRootView.getDeleteCircleResult(baseResponse);
+                            mRootView.userLoginOutResult(baseResponse);
                         }else{
                             mRootView.showMessage(baseResponse.getMsg());
                         }
                     }
                 });
     }
+
+
+    public void getUserPassword(String  id){
+        mModel.getUserPassword(id)
+                .compose(RxUtils.applySchedulers(mRootView))
+                .subscribe(new ErrorHandleSubscriber<UserPasswordResult>(mErrorHandler) {
+                    @Override
+                    public void onNext(UserPasswordResult baseResponse) {
+                        if(baseResponse.getCode() == 0){
+                            mRootView.getUserPasswordResult(baseResponse);
+                        }else{
+                            mRootView.showMessage(baseResponse.getMsg());
+                        }
+                    }
+                });
+    }
+
 
     @Override
     public void onDestroy() {

@@ -21,6 +21,34 @@
             android:background="@color/gray_f4"/>
 
         <com.github.customview.MyLinearLayout
+            android:id="@+id/ly_user"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingEnd="20dp"
+            android:paddingLeft="10dp"
+            android:layout_marginTop="5dp"
+            app:my_ll_bottom_line="true"
+            app:my_ll_solid="@color/white">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textSize="14sp"
+                android:gravity="center_vertical"
+                android:textColor="#333333"
+                android:text="查询账号密码"
+                />
+
+            <ImageView
+                android:layout_width="8dp"
+                android:layout_height="12dp"
+                android:src="@drawable/my_arrow_grey"
+                />
+        </com.github.customview.MyLinearLayout>
+        <com.github.customview.MyLinearLayout
             android:id="@+id/ll_loginpassword"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -29,6 +57,7 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:layout_marginTop="7dp"
+            android:visibility="gone"
             android:background="@color/white"
             app:my_ll_bottom_line="true"
             >
@@ -52,11 +81,7 @@
             <!--            android:src="@drawable/arrow_right"-->
             <!--            tools:ignore="ContentDescription" />-->
         </com.github.customview.MyLinearLayout>
-        <View
 
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/gray_f4"/>
         <com.github.customview.MyLinearLayout
             android:id="@+id/ll_paypassword"
             android:layout_width="match_parent"
@@ -65,6 +90,7 @@
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
+            android:visibility="gone"
             android:background="@color/white"
             app:my_ll_bottom_line="true"
             >
@@ -130,25 +156,7 @@
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:background="@color/gray_f4"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="70dp"
-            android:textColor="@color/grey_c5"
-            android:text="Copyright©2020"
-            android:textSize="12sp"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:textColor="@color/grey_c5"
-            android:layout_marginTop="10dp"
-            android:text="成都弘觅科技有限责任公司 版本所有"
-            android:textSize="12sp"
-            tools:ignore="HardcodedText" />
+
     </LinearLayout>
 
 

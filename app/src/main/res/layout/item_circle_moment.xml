@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingLeft="12dp"
+    android:paddingRight="12dp"
+    android:background="@color/white"
+    xmlns:tools="http://schemas.android.com/tools">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="UselessParent">
+        <LinearLayout
+            android:id="@+id/ly_my_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="10dp"
+            >
+            <FrameLayout
+                android:id="@+id/fl_user_pic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+                <com.github.customview.MyImageView
+                    android:id="@+id/civ_my_img"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    app:my_iv_radius="15dp"
+                    android:src="@drawable/people" />
+                <ImageView
+                    android:id="@+id/iv_vip"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:visibility="gone"
+                    android:layout_gravity="bottom|right"
+
+                    tools:ignore="ContentDescription,RtlHardcoded" />
+            </FrameLayout>
+
+
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:paddingStart="7dp"
+                tools:ignore="RtlSymmetry">
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/grey"
+                    android:textSize="14sp"
+                    android:lineSpacingMultiplier="0.9"
+                    android:includeFontPadding="false"
+                    fontPath="fonts/SourceHanSansCN-Medium.otf"
+                    android:textStyle="bold"
+                    android:text="萨福萨福"
+                    tools:ignore="HardcodedText,MissingPrefix" />
+            </RelativeLayout>
+
+            <com.github.customview.MyImageView
+                android:id="@+id/iv_delete"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:visibility="gone"
+                android:layout_gravity="center_vertical"
+                android:src="@mipmap/delete" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@+id/ly_my_top">
+        <TextView
+            fontPath="fonts/SourceHanSansCN-Medium.otf"
+            android:id="@+id/tv_circle_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:lineSpacingMultiplier="1.2"
+            android:text=" "
+            android:layout_below="@+id/ly_my_top"
+            android:layout_marginBottom="5dp"
+            tools:ignore="HardcodedText,MissingPrefix" />
+        <TextView
+            fontPath="fonts/SourceHanSansCN-Normal.otf"
+            android:id="@+id/tv_circle_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:maxLines="5"
+            android:ellipsize="end"
+            android:lineSpacingMultiplier="1.2"
+            android:text=""
+            android:layout_below="@+id/ly_my_top"
+            android:layout_marginBottom="10dp"
+            tools:ignore="HardcodedText,MissingPrefix" />
+        </LinearLayout>
+        <RelativeLayout
+            android:id="@+id/ll_imageview"
+            android:layout_width="match_parent"
+            android:layout_height="62dp"
+            android:layout_marginBottom="10dp"
+            android:layout_below="@+id/ll_content"
+            >
+            <FrameLayout
+                android:id="@+id/fl_imageview"
+                android:layout_width="48dp"
+                android:layout_height="62dp"
+                android:layout_alignParentEnd="true"
+                >
+                <com.github.customview.MyImageView
+                    android:id="@+id/imageview_more"
+                    android:layout_width="48dp"
+                    android:layout_height="62dp"
+                    android:scaleType="fitXY"
+                    android:adjustViewBounds="true"
+                    app:my_iv_bottomLeftRadius="5dp"
+                    app:my_iv_topLeftRadius="5dp"
+
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/tv_imageviewSize"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    fontPath="fonts/SourceHanSansCN-Medium.otf"
+                    android:textStyle="bold"
+                    android:text="9张图"
+                    tools:ignore="HardcodedText,MissingPrefix" />
+            </FrameLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_imageview"
+                android:layout_toStartOf="@+id/fl_imageview"
+                android:layout_width="match_parent"
+                android:layout_height="62dp"/>
+        </RelativeLayout>
+        <!--    <com.petzm.training.view.MultiImageView-->
+        <!--        android:id="@+id/multiImagView"-->
+        <!--        android:layout_width="match_parent"-->
+        <!--        android:layout_height="wrap_content"-->
+        <!--        android:layout_below="@+id/tv_circle_content"-->
+        <!--        android:layout_marginTop="5dp" >-->
+        <!--    </com.petzm.training.view.MultiImageView>-->
+
+
+
+        <View
+            android:id="@+id/v_bottom_line"
+            android:layout_height="1px"
+            android:layout_below="@+id/ll_imageview"
+            android:layout_width="match_parent"
+
+            />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_below="@+id/v_bottom_line"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_centerInParent="true"
+            tools:ignore="DisableBaselineAlignment">
+
+            <TextView
+                android:id="@+id/tv_circle_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:textColor="@color/black"
+                android:textSize="9sp"
+                 android:layout_alignParentStart="true"
+                android:text="发布于2019年12月3日"
+                android:layout_centerInParent="true"
+                tools:ignore="HardcodedText,MissingPrefix,SmallSp" />
+
+            <TextView
+                android:id="@+id/tv_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:textColor="@color/grey"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:text="删除"
+                android:layout_marginStart="15dp"
+                android:layout_centerInParent="true"
+                android:layout_toRightOf="@+id/tv_circle_time"
+                tools:ignore="HardcodedText,MissingPrefix" />
+            <LinearLayout
+                android:id="@+id/ll_zan"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginRight="40dp"
+                android:layout_toLeftOf="@+id/ll_comment"
+                tools:ignore="UseCompoundDrawables">
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="6dp"
+                    android:background="@drawable/zan"
+                    tools:ignore="ContentDescription,RtlHardcoded" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="0"
+                    android:lineSpacingMultiplier="0.9"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/black"
+                    android:textSize="13sp"
+                    tools:ignore="HardcodedText,MissingPrefix" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginRight="20dp"
+                android:layout_alignParentEnd="true"
+                tools:ignore="UseCompoundDrawables">
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="6dp"
+                    android:background="@drawable/circle_comment"
+                    tools:ignore="ContentDescription,RtlHardcoded" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingMultiplier="0.9"
+                    android:includeFontPadding="false"
+                    fontPath="fonts/SourceHanSansCN-Medium.otf"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/black"
+                    android:text="0"
+                    android:textSize="13sp"
+                    tools:ignore="HardcodedText,MissingPrefix" />
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+
+<!--    <ImageView-->
+<!--        android:id="@+id/iv_jinghua"-->
+<!--        android:layout_width="70dp"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:scaleType="fitXY"-->
+<!--        android:layout_marginStart="20dp"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:layout_gravity="center_horizontal"-->
+<!--        android:adjustViewBounds="true"-->
+<!--        android:background="@mipmap/jinghua"-->
+<!--        tools:ignore="ContentDescription" />-->
+</RelativeLayout>

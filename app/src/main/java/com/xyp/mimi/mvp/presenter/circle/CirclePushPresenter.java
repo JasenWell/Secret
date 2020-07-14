@@ -45,8 +45,8 @@ public class CirclePushPresenter extends BasePresenter<CircleContract.Model, Cir
         super(model, rootView);
     }
 
-    public void pushCircle(CirclePost circlePost){
-        mModel.pushCircle(circlePost)
+    public void pushCircle(String uid,String context ){
+        mModel.pushCircle(uid,context)
                 .compose(RxUtils.applySchedulers(mRootView))
                 .subscribe(new ErrorHandleSubscriber<BaseResponse>(mErrorHandler) {
                     @Override

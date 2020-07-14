@@ -51,10 +51,18 @@ public class RegisterActivity extends BaseSupportActivity<RegisterPresenter> imp
     @BindView(R.id.tv_xieyi)
     TextView tvXieyi;
 
+
     @Override
     public void initImmersionBar() {
         super.initImmersionBar();
+        ImmersionBar.with(this)
+                .statusBarColor(R.color.white)
+                .statusBarDarkFont(true)
+                .fitsSystemWindows(true)
+                .init();
     }
+
+
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -106,7 +114,6 @@ public class RegisterActivity extends BaseSupportActivity<RegisterPresenter> imp
         }
     }
 
-
     @Override
     public void registerCodeResult(BaseResponse baseResponse) {
 
@@ -124,6 +131,4 @@ public class RegisterActivity extends BaseSupportActivity<RegisterPresenter> imp
         showLoadSuccess();
         ArmsUtils.snackbarText(message);
     }
-
-
 }

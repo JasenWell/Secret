@@ -13,11 +13,11 @@
     <color name="text_black_cc">#cccccc</color>
     <color name="text_black_ee">#eeeeee</color>
     <color name="divider_color">@color/gray_f4</color>
-
+    <color name="c_divider">#E2E2E2</color>
     <color name="background_f2">#f2f2f2</color>
     <color name="bottom_color">#FF3333</color>
     <color name="grey_ec">#ECECEC</color>
-
+    <color name="grey">#7185A8</color>
     <color name="zhusediao">#FF3333</color>
     <color name="fusediao">#28C18E</color>
     <color name="fusediao_orange">#FC7F04</color>
