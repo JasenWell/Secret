@@ -286,7 +286,7 @@ public class RegisterActivity extends BaseSupportActivity<RegisterPresenter> imp
     @Override
     public void registerResult(BaseResponse baseResponse) {
         showLoadSuccess();
-        ArmsUtils.snackbarText("注册成功");
+        showMsg("注册成功");
         finish();
     }
 

@@ -92,14 +92,8 @@ public class RegisterPresenter extends BasePresenter<UserContract.Model, UserCon
                 .subscribe(new ErrorHandleSubscriber<BaseResponse<LoginUserResult>>(mErrorHandler) {
                     @Override
                     public void onNext(BaseResponse<LoginUserResult> userBeanBaseResponse) {
-                        if(userBeanBaseResponse.getCode() == Api.RequestSuccess) {
-                            final ResponseUserInfo userInfo = userBeanBaseResponse.getData().getUser();
-                            if (userInfo.getId() != null) {
-                                mRootView.registerResult(userBeanBaseResponse);
-                            }else{
-                                mRootView.showMessage(userBeanBaseResponse.getMsg());
-                            }
-
+                        if(userBeanBaseResponse.getCode() == 0) {
+                            mRootView.registerResult(userBeanBaseResponse);
                         }else{
                             mRootView.showMessage(userBeanBaseResponse.getMsg());
                         }

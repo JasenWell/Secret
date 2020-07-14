@@ -338,6 +338,10 @@ public  abstract  class  BaseSupportActivity<P extends IPresenter> extends BaseA
         intent.setClass(this, clazz);
         this.startActivity(intent);
     }
+
+    public void showMsg(String msg) {
+        com.github.androidtools.ToastUtils.showToast(this.getApplicationContext(), msg);
+    }
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
