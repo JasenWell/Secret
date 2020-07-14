@@ -5,16 +5,21 @@ import com.xyp.mimi.mvp.http.entity.login.LoginUserResult;
 import com.xyp.mimi.mvp.http.entity.login.LoginUserPost;
 import com.xyp.mimi.mvp.http.entity.problem.ProblemListResult;
 import com.xyp.mimi.mvp.http.entity.user.UserPost;
+import com.xyp.mimi.mvp.http.entity.user.UserRegisterImgResult;
 import com.xyp.mimi.mvp.http.entity.user.UserRegisterPost;
 
+import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Headers;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.QueryMap;
 
 public interface UserService {
@@ -54,9 +59,18 @@ public interface UserService {
             @Field("account") String userAaccount,
             @Field("password") String password,
             @Field("userName") String userName,
-            @Field("money") String money,
-            @Field("payPassword") String payPwd
+            @Field("imgUrl") String imgUrl
     );
+
+
+    //图片上传
+    @Multipart
+    @POST("/mall/interface/insertimg")
+    Observable<UserRegisterImgResult> insertImg(
+            @Part List<MultipartBody.Part> partList
+
+    );
+
 
 
 

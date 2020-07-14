@@ -46,6 +46,7 @@
             </com.github.customview.MyLinearLayout>
 
             <com.github.customview.MyLinearLayout
+
                 android:layout_width="320dp"
                 android:layout_marginTop="20dp"
                 android:layout_height="wrap_content"
@@ -93,7 +94,7 @@
                         android:layout_height="45dp"
                         android:layout_weight="1"
                         android:gravity="center_vertical|left"
-                        android:hint="请输入新密码（最少8位，数字+字母）"
+                        android:hint="请输入密码"
                         android:imeOptions="actionNext"
                         android:includeFontPadding="false"
                         android:inputType="textVisiblePassword"
@@ -110,7 +111,6 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
                 android:orientation="horizontal"
-                android:layout_marginBottom="40dp"
                 tools:ignore="DisableBaselineAlignment">
 
                 <com.github.customview.MyLinearLayout
@@ -129,7 +129,7 @@
                         android:layout_height="45dp"
                         android:layout_weight="1"
                         android:gravity="center_vertical|left"
-                        android:hint="请再次输入新密码"
+                        android:hint="请再次输入密码"
                         android:imeOptions="actionNext"
                         android:includeFontPadding="false"
                         android:inputType="textVisiblePassword"
@@ -139,11 +139,43 @@
                 </com.github.customview.MyLinearLayout>
 
             </LinearLayout>
+            <com.github.customview.MyLinearLayout
+
+                android:layout_width="320dp"
+                android:layout_marginTop="20dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:layout_marginBottom="40dp"
+                app:my_ll_border_color="@color/background_f2"
+                app:my_ll_border_width="1dp"
+                app:my_ll_bottom_line="true">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="头像(必传)"
+                    android:layout_centerInParent="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/gray_66"
+                    android:textSize="16sp"
+                    tools:ignore="HardcodedText" />
+                <com.github.customview.MyImageView
+                    android:id="@+id/iv_user"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center_horizontal"
+                    app:my_iv_radius="25dp"
+                    android:layout_marginStart="50dp"
+                    android:src="@drawable/sj"
+                    />
+
+            </com.github.customview.MyLinearLayout>
             <TextView
                 android:id="@+id/tv_register"
                 android:layout_width="330dp"
                 android:layout_height="46dp"
-                android:text="同意协议并注册"
+                android:text="注册"
                 android:gravity="center"
                 android:textSize="18sp"
                 android:textColor="@color/white"
@@ -153,6 +185,7 @@
                 android:layout_width="320dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:visibility="gone"
                 android:gravity="center_horizontal"
                 android:layout_gravity="center_horizontal"
                 android:orientation="horizontal">

@@ -24,13 +24,16 @@ import com.xyp.mimi.mvp.http.entity.user.UserInformationResult;
 import com.xyp.mimi.mvp.http.entity.user.UserLoginPasswordPost;
 import com.xyp.mimi.mvp.http.entity.user.UserPayPasswordPost;
 import com.xyp.mimi.mvp.http.entity.user.UserPost;
+import com.xyp.mimi.mvp.http.entity.user.UserRegisterImgResult;
 import com.xyp.mimi.mvp.http.entity.user.UserRegisterPost;
 import com.xyp.mimi.mvp.http.entity.user.UserPhotoPost;
 import com.xyp.mimi.mvp.http.entity.user.UserPhotoResult;
 
+import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
 
 
 /**
@@ -71,6 +74,12 @@ public class UserModel extends BaseModel implements UserContract.Model {
     }
 
     @Override
+    public Observable<UserRegisterImgResult> insertimg(List<MultipartBody.Part> partList) {
+        return mRepositoryManager.obtainRetrofitService(UserService.class)
+                .insertImg(partList);
+    }
+
+    @Override
     public Observable<UserInformationResult> User(UserPost UserPost) {
         return mRepositoryManager.obtainRetrofitService(MemberService.class)
                 .getMemInfo(UserPost);
@@ -106,9 +115,9 @@ public class UserModel extends BaseModel implements UserContract.Model {
     }
 
     @Override
-    public Observable<BaseResponse<LoginUserResult>> register(String phone, String password,String userName, String money,String payPwd) {
+    public Observable<BaseResponse<LoginUserResult>> register(String phone, String password,String userName, String imgUrl) {
         return mRepositoryManager.obtainRetrofitService(UserService.class)
-                .register(phone,password,userName,money,password);
+                .register(phone,password,userName,imgUrl);
     }
 
     @Override

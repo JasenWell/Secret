@@ -10,6 +10,8 @@ import com.jess.arms.http.imageloader.ImageLoader;
 
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
+import okhttp3.MultipartBody;
+import retrofit2.http.Part;
 
 import javax.inject.Inject;
 
@@ -18,9 +20,11 @@ import com.xyp.mimi.mvp.contract.user.UserContract;
 import com.xyp.mimi.mvp.http.api.Api;
 import com.xyp.mimi.mvp.http.entity.BaseResponse;
 import com.xyp.mimi.mvp.http.entity.login.LoginUserResult;
+import com.xyp.mimi.mvp.http.entity.user.UserRegisterImgResult;
 import com.xyp.mimi.mvp.http.entity.user.UserRegisterPost;
 import com.xyp.mimi.mvp.utils.RxUtils;
 
+import java.util.List;
 import java.util.Map;
 
 
@@ -61,8 +65,29 @@ public class RegisterPresenter extends BasePresenter<UserContract.Model, UserCon
         ;
     }
 
-    public void register(String account,String password,String userName, String money,String payPwd){
-        mModel.register(account,password,userName,money,payPwd)
+    public void insertimg(@Part List<MultipartBody.Part> partList){
+        mModel.insertimg(partList)
+                .compose(RxUtils.applySchedulers(mRootView))
+                .subscribe(new ErrorHandleSubscriber<UserRegisterImgResult>(mErrorHandler) {
+                    @Override
+                    public void onNext(UserRegisterImgResult baseResponse) {
+                        if(baseResponse.getCode() == 0) {
+                                mRootView.insertimgResult(baseResponse);
+                        }else{
+                            mRootView.showMessage(baseResponse.getMsg());
+                        }
+                    }
+
+
+                })
+        ;
+    }
+
+
+
+
+    public void register(String account,String password,String userName, String imgUrl){
+        mModel.register(account,password,userName,imgUrl)
                 .compose(RxUtils.applySchedulers(mRootView))
                 .subscribe(new ErrorHandleSubscriber<BaseResponse<LoginUserResult>>(mErrorHandler) {
                     @Override

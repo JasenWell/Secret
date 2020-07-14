@@ -371,7 +371,9 @@ public class UserInformationActivity extends BaseSupportActivity<UserPresenter> 
                 try {
                     String imgStr = BitmapUtils.bitmapToString(result.getImages().get(0).getCompressPath());
                     Log.d("UserActivity", imgStr);
-                    subscriber.onNext(imgStr);
+                    subscriber.onNext(result.getImages().get(0).getCompressPath());
+
+//                    subscriber.onNext(imgStr);
                     subscriber.onCompleted();
                 } catch (Exception e) {
                     e.printStackTrace();

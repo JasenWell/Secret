@@ -12,13 +12,17 @@ import com.xyp.mimi.mvp.http.entity.user.UserInformationResult;
 import com.xyp.mimi.mvp.http.entity.user.UserLoginPasswordPost;
 import com.xyp.mimi.mvp.http.entity.user.UserPayPasswordPost;
 import com.xyp.mimi.mvp.http.entity.user.UserPost;
+import com.xyp.mimi.mvp.http.entity.user.UserRegisterImgResult;
 import com.xyp.mimi.mvp.http.entity.user.UserRegisterPost;
 import com.xyp.mimi.mvp.http.entity.user.UserPhotoPost;
 import com.xyp.mimi.mvp.http.entity.user.UserPhotoResult;
 
+import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
+import retrofit2.http.Part;
 
 
 /**
@@ -56,6 +60,8 @@ public interface UserContract {
         void  registerCodeResult(BaseResponse baseResponse);
 
         void  registerResult(BaseResponse baseResponse);
+
+        void  insertimgResult(UserRegisterImgResult userRegisterImgResult);
     }
 
 
@@ -91,6 +97,9 @@ public interface UserContract {
 
         Observable<UserPhotoResult> uploadPhoto(UserPhotoPost userPhotoPost);
 
+
+        Observable<UserRegisterImgResult> insertimg(@Part List<MultipartBody.Part> partList);
+
         Observable<UserInformationResult> User(UserPost UserPost);
 
         Observable<BaseResponse<LoginUserResult>> login(String phone, String password);
@@ -102,7 +111,7 @@ public interface UserContract {
 
         Observable<BaseResponse> getRegisterCode(Map map);
 
-        Observable<BaseResponse<LoginUserResult>> register(String phone, String password,String userName, String money,String payPwd);
+        Observable<BaseResponse<LoginUserResult>> register(String phone, String password,String userName, String imgUrl);
 
         Observable<BaseResponse> getRetrievePasswordCode(Map map);
 
