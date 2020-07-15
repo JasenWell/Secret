@@ -2,6 +2,8 @@ package com.xyp.mimi.mvp.contract.user;
 
 import com.jess.arms.mvp.IView;
 import com.jess.arms.mvp.IModel;
+import com.xyp.mimi.im.bean.ResponseIMTokenInfo;
+import com.xyp.mimi.im.bean.ResponseUserInfo;
 import com.xyp.mimi.mvp.http.entity.BaseResponse;
 import com.xyp.mimi.mvp.http.entity.login.LoginUserPost;
 import com.xyp.mimi.mvp.http.entity.login.LoginUserResult;
@@ -59,7 +61,8 @@ public interface UserContract {
 
         void  registerCodeResult(BaseResponse baseResponse);
 
-        void  registerResult(BaseResponse baseResponse);
+        void  registerResult(ResponseUserInfo userInfo);
+        void  getImTokenResult(ResponseIMTokenInfo tokenInfo);
 
         void  insertimgResult(UserRegisterImgResult userRegisterImgResult);
     }
@@ -111,7 +114,9 @@ public interface UserContract {
 
         Observable<BaseResponse> getRegisterCode(Map map);
 
-        Observable<BaseResponse<LoginUserResult>> register(String phone, String password,String userName, String imgUrl);
+        Observable<BaseResponse<ResponseUserInfo>> register(String phone, String password,String userName, String imgUrl);
+
+        Observable<ResponseIMTokenInfo> getImToken(Map<String,String> header,String userId,String name,String imageUrl);
 
         Observable<BaseResponse> getRetrievePasswordCode(Map map);
 

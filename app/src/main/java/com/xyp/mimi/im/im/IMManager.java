@@ -10,6 +10,7 @@ import android.view.View;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.blankj.utilcode.util.SPUtils;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -54,6 +55,7 @@ import com.xyp.mimi.im.ui.activity.PokeInviteChatActivity;
 import com.xyp.mimi.im.ui.activity.SealPicturePagerActivity;
 import com.xyp.mimi.im.ui.activity.UserDetailActivity;
 import com.xyp.mimi.im.utils.log.SLog;
+import com.xyp.mimi.mvp.utils.AppConstant;
 //import io.rong.contactcard.ContactCardExtensionModule;
 //import io.rong.contactcard.IContactCardInfoProvider;
 import io.rong.contactcard.ContactCardExtensionModule;
@@ -199,6 +201,11 @@ public class IMManager {
         }
 
         String loginToken = this.userCache.getUserCache().getLoginToken();
+        String token =  SPUtils.getInstance().getString(AppConstant.User.USER_ID);
+        if (TextUtils.isEmpty(token)) {
+            return;
+        }
+
         if (TextUtils.isEmpty(loginToken)) {
             autologinResult.setValue(false);
             return;

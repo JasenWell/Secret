@@ -15,12 +15,19 @@ import java.util.List;
 import com.jess.arms.di.component.AppComponent;
 import com.xyp.mimi.MainActivity;
 import com.xyp.mimi.R;
+import com.xyp.mimi.app.base.BaseSupportActivity;
+import com.xyp.mimi.im.bean.ResponseWrapperInfo;
 import com.xyp.mimi.im.db.model.FriendShipInfo;
 import com.xyp.mimi.im.db.model.FriendStatus;
 import com.xyp.mimi.im.event.MessageEvent;
 import com.xyp.mimi.im.im.IMManager;
 import com.xyp.mimi.im.model.Resource;
 import com.xyp.mimi.im.model.Status;
+import com.xyp.mimi.im.net.hjh.HttpHelper;
+import com.xyp.mimi.im.net.hjh.ResponseJson;
+import com.xyp.mimi.im.net.hjh.callback.IBaseCallBack;
+import com.xyp.mimi.im.net.hjh.imp.AsynModelImp;
+import com.xyp.mimi.im.sp.UserCache;
 import com.xyp.mimi.im.ui.activity.NewFriendListActivity;
 import com.xyp.mimi.im.ui.activity.UserDetailActivity;
 import com.xyp.mimi.im.ui.adapter.CommonListAdapter;
@@ -38,12 +45,13 @@ import io.rong.imlib.model.Conversation;
 
 import static com.xyp.mimi.im.common.IntentExtra.STR_TARGET_ID;
 
-public class MainContactsListFragment extends CommonListBaseFragment {
+public class MainContactsListFragment extends CommonListBaseFragment implements IBaseCallBack {
     private static final String TAG = "MainContactsListFragment";
 
     //    private ContactsAdapter adapter;
     private MainContactsListViewModel viewModel;
     private MainActivity mainActivity;
+    private AsynModelImp asynModelImp;
 
 
     @Subscribe
@@ -249,16 +257,36 @@ public class MainContactsListFragment extends CommonListBaseFragment {
 
     @Override
     public void setupFragmentComponent(@NonNull AppComponent appComponent) {
-
+        asynModelImp = new AsynModelImp(this);
     }
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-
+        asynModelImp.searchFriendRequest(HttpHelper.BUSINESS.REQUEST_SEARCH_FRIEND_REQUEST, UserCache.getInstance().getCurrentUserId());
     }
 
     @Override
     public void setData(@Nullable Object data) {
 
+    }
+
+    @Override
+    public void showErrorInfo(int code, String devMsg) {
+
+    }
+
+    @Override
+    public void onSuccess(Object object, int type) {
+        if(type == HttpHelper.BUSINESS.REQUEST_SEARCH_FRIEND_REQUEST.getCode()){
+            ResponseWrapperInfo wrapperInfo = (ResponseWrapperInfo) ((ResponseJson) object).getData();
+            if(wrapperInfo != null){
+
+            }
+        }
+    }
+
+    @Override
+    public BaseSupportActivity getCallBackActivity() {
+        return (BaseSupportActivity) getActivity();
     }
 }

@@ -1,5 +1,7 @@
 package com.xyp.mimi.mvp.http.api.service.user;
 
+import com.xyp.mimi.im.bean.ResponseIMTokenInfo;
+import com.xyp.mimi.im.bean.ResponseUserInfo;
 import com.xyp.mimi.mvp.http.entity.BaseResponse;
 import com.xyp.mimi.mvp.http.entity.login.LoginUserResult;
 import com.xyp.mimi.mvp.http.entity.login.LoginUserPost;
@@ -16,6 +18,7 @@ import okhttp3.MultipartBody;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.HeaderMap;
 import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -41,7 +44,14 @@ public interface UserService {
 
 
 
-
+    @FormUrlEncoded
+    @POST("/user/getToken.json")
+    Observable<ResponseIMTokenInfo> getImToken(
+            @HeaderMap Map<String,String> header,
+            @Field("userId") String userId,
+            @Field("name") String name,
+            @Field("portraitUri") String imageUrl
+    );
 
 
     //获取手机号注册短信
@@ -55,7 +65,7 @@ public interface UserService {
     //用户注册
     @FormUrlEncoded
     @POST("/mall/interface/register")
-    Observable<BaseResponse<LoginUserResult>> register(
+    Observable<BaseResponse<ResponseUserInfo>> register(
             @Field("account") String userAaccount,
             @Field("password") String password,
             @Field("userName") String userName,
