@@ -12,15 +12,31 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.xyp.mimi.im.ui.view.UserInfoItemView
-            android:id="@+id/uiv_userinfo"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/seal_mine_userfino_item_height"
-            android:layout_marginTop="@dimen/seal_mine_user_margin_top"
-            app:item_userinfo_portrait_height="@dimen/seal_mine_userfino_item_protrait"
-            app:item_userinfo_portrait_width="@dimen/seal_mine_userfino_item_protrait">
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:orientation="horizontal">
+            <com.github.customview.MyImageView
+                android:id="@+id/uiv_userinfo"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_marginStart="20dp"
+                android:scaleType="fitXY"
+                app:my_iv_radius="5dp"
+                android:layout_gravity="center_vertical"
+          />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="用户头像"
+                android:layout_marginStart="20dp"
+                android:layout_gravity="center_vertical"
+                ></TextView>
+        </LinearLayout>
 
-        </com.xyp.mimi.im.ui.view.UserInfoItemView>
 
         <com.github.customview.MyLinearLayout
             android:id="@+id/ly_setting"

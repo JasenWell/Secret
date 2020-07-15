@@ -2,42 +2,42 @@ package com.xyp.mimi.im.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.blankj.utilcode.util.SPUtils;
+import com.github.customview.MyImageView;
 import com.jess.arms.di.component.AppComponent;
 import com.xyp.mimi.R;
 import com.xyp.mimi.app.base.BaseSupportFragment;
-
-import com.xyp.mimi.R;
-import com.xyp.mimi.im.common.IntentExtra;
 import com.xyp.mimi.im.db.model.UserInfo;
 import com.xyp.mimi.im.model.Resource;
 import com.xyp.mimi.im.model.Status;
 import com.xyp.mimi.im.model.VersionInfo;
-import com.xyp.mimi.im.model.qrcode.QrCodeDisplayType;
 import com.xyp.mimi.im.ui.view.SettingItemView;
 import com.xyp.mimi.im.ui.view.UserInfoItemView;
 import com.xyp.mimi.im.utils.ImageLoaderUtils;
 import com.xyp.mimi.im.viewmodel.AppViewModel;
 import com.xyp.mimi.im.viewmodel.UserInfoViewModel;
 import com.xyp.mimi.mvp.ui.activity.setting.SettingActivity;
+import com.xyp.mimi.mvp.utils.AppConstant;
+import com.xyp.mimi.mvp.utils.GlideLoadUtils;
 
+import butterknife.BindView;
 import butterknife.OnClick;
-import io.rong.imkit.RongIM;
-import io.rong.imkit.userInfoCache.RongUserInfoManager;
 import io.rong.imkit.utilities.LangUtils;
-import io.rong.imlib.model.CSCustomServiceInfo;
 
 public class MainMeFragment extends BaseSupportFragment {
 
+    @BindView(R.id.uiv_userinfo)
+    MyImageView uivUserinfo;
     private SettingItemView sivAbout;
     private UserInfoItemView uivUserInfo;
     private AppViewModel appViewModel;
@@ -87,7 +87,7 @@ public class MainMeFragment extends BaseSupportFragment {
         });
     }
 
-    @OnClick({R.id.uiv_userinfo,R.id.ly_setting})
+    @OnClick({R.id.uiv_userinfo, R.id.ly_setting})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ly_setting://设置
@@ -138,7 +138,7 @@ public class MainMeFragment extends BaseSupportFragment {
 
     @Override
     public void setupFragmentComponent(@NonNull AppComponent appComponent) {
-        
+
     }
 
     @Override
@@ -148,7 +148,8 @@ public class MainMeFragment extends BaseSupportFragment {
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-
+        String  imgurl =  SPUtils.getInstance().getString(AppConstant.User.AVATAR);
+        GlideLoadUtils.getInstance().glideLoad(getActivity(),imgurl,uivUserinfo,R.drawable.default_image);
     }
 
     @Override

@@ -10,7 +10,7 @@ public class CircleListResult {
     /**
      * code : 0
      * count : 0
-     * data : {"dlist":[{"context":"123","createTime":1594692491000,"id":10,"uid":78},{"context":"666","createTime":1594692824000,"id":11,"uid":78}]}
+     * data : {"dlist":[{"context":"666","createTime":1594804734000,"id":18,"uid":85,"uimgUrl":"http://www.wulin0009.com:80/mall/file/showPic?fileName=1594803613334_.png","username":"xiang"}]}
      * msg :
      */
 
@@ -64,16 +64,20 @@ public class CircleListResult {
 
         public static class DlistBean implements MultiItemEntity {
             /**
-             * context : 123
-             * createTime : 1594692491000
-             * id : 10
-             * uid : 78
+             * context : 666
+             * createTime : 1594804734000
+             * id : 18
+             * uid : 85
+             * uimgUrl : http://www.wulin0009.com:80/mall/file/showPic?fileName=1594803613334_.png
+             * username : xiang
              */
 
             private String context;
             private long createTime;
             private String id;
             private int uid;
+            private String uimgUrl;
+            private String username;
 
             public String getContext() {
                 return context;
@@ -105,6 +109,22 @@ public class CircleListResult {
 
             public void setUid(int uid) {
                 this.uid = uid;
+            }
+
+            public String getUimgUrl() {
+                return uimgUrl;
+            }
+
+            public void setUimgUrl(String uimgUrl) {
+                this.uimgUrl = uimgUrl;
+            }
+
+            public String getUsername() {
+                return username;
+            }
+
+            public void setUsername(String username) {
+                this.username = username;
             }
 
             @Override

@@ -1,22 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout android:id="@+id/fl"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="240dp"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="200dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
         <ImageView
+            android:id="@+id/tv_big_pic"
             android:layout_width="match_parent"
-            android:layout_height="160dp"
+            android:layout_height="170dp"
+            android:scaleType="fitXY"
             android:background="@drawable/circle_background"
             tools:ignore="ContentDescription">
         </ImageView>
-<!--        <com.github.customview.MyImageView-->
-<!--            android:layout_width="60dp"-->
-<!--            android:layout_height="60dp"-->
-<!--            android:layout_gravity="right|bottom"-->
-<!--            android:layout_marginEnd="20dp"-->
-<!--            android:layout_marginTop="30dp"-->
-<!--            android:background="@drawable/circle_background"-->
-<!--            tools:ignore="RtlHardcoded">-->
-<!--        </com.github.customview.MyImageView>-->
+        <com.github.customview.MyImageView
+            android:id="@+id/tv_small_pic"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="right|bottom"
+            android:layout_marginEnd="20dp"
+            app:my_iv_radius="5dp"
+            android:background="@drawable/circle_background"
+            tools:ignore="RtlHardcoded">
+        </com.github.customview.MyImageView>
     </FrameLayout>
+    </LinearLayout>

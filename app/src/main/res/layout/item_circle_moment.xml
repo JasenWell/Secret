@@ -29,20 +29,14 @@
                     android:layout_width="44dp"
                     android:layout_height="44dp"
                     app:my_iv_radius="15dp"
+                    android:scaleType="fitXY"
                     android:src="@drawable/people" />
-                <ImageView
-                    android:id="@+id/iv_vip"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:visibility="gone"
-                    android:layout_gravity="bottom|right"
-
-                    tools:ignore="ContentDescription,RtlHardcoded" />
             </FrameLayout>
 
 
 
             <RelativeLayout
+                android:id="@+id/rl_name"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -79,23 +73,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_below="@+id/ly_my_top">
-        <TextView
-            fontPath="fonts/SourceHanSansCN-Medium.otf"
-            android:id="@+id/tv_circle_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:includeFontPadding="false"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:lineSpacingMultiplier="1.2"
-            android:text=" "
-            android:layout_below="@+id/ly_my_top"
-            android:layout_marginBottom="5dp"
-            tools:ignore="HardcodedText,MissingPrefix" />
-        <TextView
-            fontPath="fonts/SourceHanSansCN-Normal.otf"
+
+            <TextView
             android:id="@+id/tv_circle_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -106,7 +85,7 @@
             android:ellipsize="end"
             android:lineSpacingMultiplier="1.2"
             android:text=""
-            android:layout_below="@+id/ly_my_top"
+            android:layout_marginStart="51dp"
             android:layout_marginBottom="10dp"
             tools:ignore="HardcodedText,MissingPrefix" />
         </LinearLayout>
@@ -173,6 +152,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="30dp"
+
             android:layout_below="@+id/v_bottom_line"
             android:orientation="horizontal"
             android:gravity="center_vertical"
@@ -186,6 +166,7 @@
                 android:includeFontPadding="false"
                 android:textColor="@color/black"
                 android:textSize="9sp"
+                android:layout_marginStart="51dp"
                  android:layout_alignParentStart="true"
                 android:text="发布于2019年12月3日"
                 android:layout_centerInParent="true"
@@ -210,7 +191,7 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
                 android:gravity="center"
-                android:layout_marginRight="40dp"
+                android:layout_marginRight="20dp"
                 android:layout_toLeftOf="@+id/ll_comment"
                 tools:ignore="UseCompoundDrawables">
                 <ImageView

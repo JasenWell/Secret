@@ -27,6 +27,15 @@ public class ResponseUserInfo implements Serializable {
     private String rechargeCount;//0.0,
     private String status;// 1,
     private String userName;//"hjh"
+    private String imgUrl;
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
 
     public String getAccount() {
         return account;

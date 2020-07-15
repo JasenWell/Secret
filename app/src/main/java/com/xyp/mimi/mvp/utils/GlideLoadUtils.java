@@ -10,8 +10,10 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
+import com.xyp.mimi.im.ui.view.UserInfoItemView;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 public class GlideLoadUtils {
     private String TAG = "ImageLoader";
@@ -87,13 +89,13 @@ public class GlideLoadUtils {
         }
     }
 
-    public void glideLoad(Fragment fragment, String url, ImageView imageView, int default_image) {
-        if (fragment != null && fragment.getActivity() != null) {
-            Glide.with(fragment).load(url).apply(new RequestOptions().error(default_image).diskCacheStrategy(DiskCacheStrategy.ALL)).into(imageView);
-        } else {
-            Log.i(TAG, "Picture loading failed,fragment is null");
-        }
-    }
+//    public void glideLoad(FragmentActivity fragment, String url, UserInfoItemView imageView, int default_image) {
+//        if (fragment != null ) {
+//            Glide.with(fragment).load(url).apply(new RequestOptions().error(default_image).diskCacheStrategy(DiskCacheStrategy.ALL)).into(imageView);
+//        } else {
+//            Log.i(TAG, "Picture loading failed,fragment is null");
+//        }
+//    }
 
     public void glideLoad(android.app.Fragment fragment, String url, ImageView imageView, int default_image) {
         if (fragment != null && fragment.getActivity() != null) {

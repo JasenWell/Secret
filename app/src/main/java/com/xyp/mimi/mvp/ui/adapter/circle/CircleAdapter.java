@@ -32,6 +32,7 @@ import com.xyp.mimi.R;
 import com.xyp.mimi.mvp.http.entity.circle.CircleListResult;
 import com.xyp.mimi.mvp.ui.adapter.address.AddressAdapter;
 import com.xyp.mimi.mvp.utils.FormatCurrentData;
+import com.xyp.mimi.mvp.utils.GlideLoadUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -58,11 +59,14 @@ public class CircleAdapter extends BaseMultiItemQuickAdapter<CircleListResult.Da
                 TextView name0 = helper.getView(R.id.tv_name);
                 TextView circleContent0 = helper.getView(R.id.tv_circle_content);
                 RelativeLayout relativeLayout0 = helper.getView(R.id.ll_imageview);   //没有图片的时候隐藏控件
+
+                MyImageView iv = helper.getView(R.id.civ_my_img);
+                GlideLoadUtils.getInstance().glideLoad(mContext,dataBean.getUimgUrl(),iv,R.drawable.default_image);
                 relativeLayout0.setVisibility(View.GONE);
                 //头像
 //                Glide.with(mContext).load(dataBean.getId()).apply(bitmapTransform(new CircleCrop())).into((ImageView) helper.getView(R.id.civ_my_img));
                 //名字
-                name0.setText("TEST");
+                name0.setText(dataBean.getUsername());
                 //标题
 //                TextView circleTitle0 = helper.getView(R.id.tv_circle_title);
 //                circleTitle0.setText(com.petzm.training.tools.StringUtils.convertUTF8ToString(dataBean.getCircleName()));
