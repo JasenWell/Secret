@@ -10,6 +10,7 @@ public interface Api {
 //    String APP_DOMAIN =  "https://api.dadanyipin.com";
 
     String APP_DOMAIN =  "http://www.wulin0009.com";
+    String IM_TOKEN_DOMAIN = "http://api-cn.ronghub.com";
 
     int RequestSuccess = 0;
 

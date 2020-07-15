@@ -8,6 +8,7 @@ import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.mvp.BasePresenter;
 import com.jess.arms.http.imageloader.ImageLoader;
 
+import me.jessyan.retrofiturlmanager.RetrofitUrlManager;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 import okhttp3.MultipartBody;
@@ -15,6 +16,7 @@ import retrofit2.http.Part;
 
 import javax.inject.Inject;
 
+import com.xyp.mimi.im.bean.ResponseIMTokenInfo;
 import com.xyp.mimi.im.bean.ResponseUserInfo;
 import com.xyp.mimi.mvp.contract.user.UserContract;
 import com.xyp.mimi.mvp.http.api.Api;
@@ -84,18 +86,19 @@ public class RegisterPresenter extends BasePresenter<UserContract.Model, UserCon
     }
 
 
-
+    public void getImToken(Map<String,String> header,String userId,String name,String imageUrl){
+    }
 
     public void register(String account,String password,String userName, String imgUrl){
         mModel.register(account,password,userName,imgUrl)
                 .compose(RxUtils.applySchedulers(mRootView))
-                .subscribe(new ErrorHandleSubscriber<BaseResponse<LoginUserResult>>(mErrorHandler) {
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<ResponseUserInfo>>(mErrorHandler) {
                     @Override
-                    public void onNext(BaseResponse<LoginUserResult> userBeanBaseResponse) {
-                        if(userBeanBaseResponse.getCode() == 0) {
-                            mRootView.registerResult(userBeanBaseResponse);
+                    public void onNext(BaseResponse<ResponseUserInfo> userInfoBaseResponse) {
+                        if(userInfoBaseResponse.getCode() == 0) {
+                            mRootView.registerResult(userInfoBaseResponse.getData());
                         }else{
-                            mRootView.showMessage(userBeanBaseResponse.getMsg());
+                            mRootView.showMessage(userInfoBaseResponse.getMsg());
                         }
                     }
 

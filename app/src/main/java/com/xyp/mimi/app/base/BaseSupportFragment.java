@@ -41,7 +41,7 @@ public abstract class BaseSupportFragment<P extends IPresenter> extends BaseFrag
     protected FragmentActivity _mActivity;
 
     protected Activity mActivity;
-    private Handler handler = new Handler();
+    protected Handler handler = new Handler();
     private Unbinder mUnbinder;
     protected ImmersionBar mImmersionBar;
 

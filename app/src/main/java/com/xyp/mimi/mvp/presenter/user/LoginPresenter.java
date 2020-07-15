@@ -42,17 +42,12 @@ public class LoginPresenter extends BasePresenter<UserContract.Model, UserContra
                 if(userBeanBaseResponse.getCode() == Api.RequestSuccess) {
                     final ResponseUserInfo userInfo = userBeanBaseResponse.getData().getUser();
                     if (userInfo.getId() != null) {
-                        String token = "s+3bqXLcrSbr0wDr5piVhR4B4wF2jeGy@zegh.cn.rongnav.com;zegh.cn.rongcfg.com";//73
-                        if (userInfo.getId().equals("74")) {
-                            token = "aFCpDkUQ1w7r0wDr5piVhZARhmSB1Z+Q@zegh.cn.rongnav.com;zegh.cn.rongcfg.com";
-                        }
-
-                        UserCache.getInstance().putString(UserCache.KEY_USER_TOKEN, token);
+                        final String token =  UserCache.getInstance().getString(UserCache.KEY_USER_TOKEN+userInfo.getId(),"");
                         IMManager.getInstance().connectIM(token, true, new ResultCallback<String>() {
                             @Override
                             public void onSuccess(String s) {
                                 // 存储当前登录成功的用户信息
-                                UserCacheInfo info = new UserCacheInfo(userInfo.getId(), UserCache.getInstance().getString(UserCache.KEY_USER_TOKEN, ""),
+                                UserCacheInfo info = new UserCacheInfo(userInfo.getId(),token,
                                         userInfo.getAccount(), userInfo.getPassword(), userInfo.getCountr());
                                 UserCache.getInstance().saveUserCache(info);
                             }

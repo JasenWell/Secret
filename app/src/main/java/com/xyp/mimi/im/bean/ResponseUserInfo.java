@@ -29,6 +29,20 @@ public class ResponseUserInfo implements Serializable {
     private String userName;//"hjh"
     private String imgUrl;
 
+//             "saccount": null,
+//             "parentId": null,
+//             "invCode": null,
+//             "cardNum": null,
+//             "oldCardNum": null,
+//             "oldPayPassword": null,
+//             "oldpassword": null,
+//             "moneys": null,
+//             "cardName": null,
+//             "bank": null,
+//             "ruanjianTime": null,
+//             "rjtime": null,
+//             "idcard": null,
+
     public String getImgUrl() {
         return imgUrl;
     }

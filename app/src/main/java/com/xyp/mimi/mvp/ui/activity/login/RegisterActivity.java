@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +20,7 @@ import com.github.baseclass.rx.IOCallBack;
 import com.github.customview.MyEditText;
 import com.github.customview.MyImageView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.gson.Gson;
 import com.gyf.barlibrary.ImmersionBar;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
@@ -26,6 +29,13 @@ import com.xyp.mimi.R;
 import com.xyp.mimi.app.base.BaseSupportActivity;
 import com.xyp.mimi.di.component.user.DaggerUserComponent;
 import com.xyp.mimi.di.module.user.UserModule;
+import com.xyp.mimi.im.bean.HashKit;
+import com.xyp.mimi.im.bean.ResponseIMTokenInfo;
+import com.xyp.mimi.im.bean.ResponseUserInfo;
+import com.xyp.mimi.im.net.hjh.callback.IBaseCallBack;
+import com.xyp.mimi.im.net.hjh.imp.AsynModelImp;
+import com.xyp.mimi.im.sp.UserCache;
+import com.xyp.mimi.im.net.hjh.OkHttpUtils;
 import com.xyp.mimi.mvp.contract.user.UserContract;
 import com.xyp.mimi.mvp.http.entity.BaseResponse;
 import com.xyp.mimi.mvp.http.entity.user.UserRegisterImgResult;
@@ -47,17 +57,23 @@ import org.devio.takephoto.permission.PermissionManager;
 import org.devio.takephoto.permission.TakePhotoInvocationHandler;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.Response;
 import rx.Subscriber;
 
-public class RegisterActivity extends BaseSupportActivity<RegisterPresenter> implements UserContract.RegisterView, TakePhoto.TakeResultListener, InvokeListener {
+public class RegisterActivity extends BaseSupportActivity<RegisterPresenter> implements UserContract.RegisterView, TakePhoto.TakeResultListener, InvokeListener, IBaseCallBack {
 
     @BindView(R.id.app_title)
     TextView appTitle;
@@ -86,6 +102,21 @@ public class RegisterActivity extends BaseSupportActivity<RegisterPresenter> imp
     private BottomSheetDialog selectPhotoDialog;
     private TakePhoto takePhoto;
     private InvokeParam invokeParam;
+    private Handler handler =  new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if(msg.what == 1901){
+                ResponseIMTokenInfo tokenInfo = (ResponseIMTokenInfo) msg.obj;
+                showLoadSuccess();
+                showMsg("注册成功");
+                UserCache.getInstance().putString(UserCache.KEY_USER_TOKEN+tokenInfo.getUserId(),tokenInfo.getToken());
+                finish();
+            }
+        }
+    };
+
+    private AsynModelImp asynModelImp;
     int size;
 
     @Override
@@ -105,6 +136,7 @@ public class RegisterActivity extends BaseSupportActivity<RegisterPresenter> imp
                 .appComponent(appComponent)
                 .userModule(new UserModule(this))
                 .build().injectRegister(RegisterActivity.this);
+        asynModelImp = new AsynModelImp(this);
     }
 
     @Override
@@ -283,11 +315,61 @@ public class RegisterActivity extends BaseSupportActivity<RegisterPresenter> imp
 
     }
 
+    public static Map addTokenMap() {
+        Map<String, String> map = new HashMap<String, String>();
+        String key = "pvxdm17jpe5cr";
+        String secret = "pbPDAAqPawQFq";
+        String nonce = ""+System.currentTimeMillis();
+        String timestamp = ""+System.currentTimeMillis();
+        String  signature = HashKit.hexSHA1(secret+nonce+timestamp);
+        map.put("RC-App-Key", key);
+        map.put("RC-Nonce", nonce);
+        map.put("RC-Timestamp",timestamp);
+        map.put("RC-Signature",signature);
+        return map;
+    }
+
+    private void getToken(ResponseUserInfo userInfo){
+        Map<String,String> map = new HashMap<>();
+        map.put("userId",userInfo.getId());
+        map.put("name",userInfo.getUserName());
+        map.put("portraitUri",userUrl);
+        OkHttpUtils.getInstance().post(map,"http://api-cn.ronghub.com/user/getToken.json",addTokenMap()).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String json = null;
+                try {
+                    json = response.body().string();
+                    if(json != null){
+                        ResponseIMTokenInfo tokenInfo  = new Gson().fromJson(json,ResponseIMTokenInfo.class);
+                        if(tokenInfo != null){
+                            Message message = handler.obtainMessage();
+                            message.obj = tokenInfo;
+                            message.what = 1901;
+                            handler.sendMessage(message);
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+
+        @Override
+    public void registerResult(ResponseUserInfo userInfo) {
+        getToken(userInfo);
+    }
+
     @Override
-    public void registerResult(BaseResponse baseResponse) {
-        showLoadSuccess();
-        showMsg("注册成功");
-        finish();
+    public void getImTokenResult(ResponseIMTokenInfo tokenInfo) {
+
     }
 
     @Override
@@ -400,6 +482,21 @@ public class RegisterActivity extends BaseSupportActivity<RegisterPresenter> imp
             this.invokeParam = invokeParam;
         }
         return type;
+    }
+
+    @Override
+    public void showErrorInfo(int code, String devMsg) {
+
+    }
+
+    @Override
+    public void onSuccess(Object object, int type) {
+
+    }
+
+    @Override
+    public BaseSupportActivity getCallBackActivity() {
+        return this;
     }
 
 }

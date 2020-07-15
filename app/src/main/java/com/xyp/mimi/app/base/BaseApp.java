@@ -26,6 +26,7 @@ import com.xyp.mimi.R;
 import com.xyp.mimi.im.common.ErrorCode;
 import com.xyp.mimi.im.contact.PhoneContactManager;
 import com.xyp.mimi.im.im.IMManager;
+import com.xyp.mimi.im.net.hjh.NetworkUtil;
 import com.xyp.mimi.im.utils.SearchUtils;
 import com.xyp.mimi.mvp.ui.activity.MainActivity;
 import com.xyp.mimi.mvp.ui.adapter.SpecialAdapter;
@@ -99,6 +100,7 @@ public class BaseApp extends MultiDexApplication implements App {
 
 
         //------------rongyun_sdk by hjh ------------------
+        NetworkUtil.getInstance().setContext(this);
         ErrorCode.init(this);
 
         if (!getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext()))) {

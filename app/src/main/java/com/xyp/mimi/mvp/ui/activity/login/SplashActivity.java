@@ -15,7 +15,9 @@ import com.xyp.mimi.mvp.utils.AppConstant;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+
 import me.jessyan.retrofiturlmanager.RetrofitUrlManager;
+import okhttp3.HttpUrl;
 
 public class SplashActivity extends BaseSupportActivity  {
 
@@ -33,9 +35,7 @@ public class SplashActivity extends BaseSupportActivity  {
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         RetrofitUrlManager.getInstance().setGlobalDomain(Api.APP_DOMAIN);
-
         new Handler().postDelayed(this::enterHomeActivity, 1000);
-
 //        RetrofitUrlManager.getInstance().setGlobalDomain(Api.APP_CHECK);//获取check
 //        mPresenter.getCheck();
 //        // 判断是否是第一次开启应用
@@ -48,7 +48,6 @@ public class SplashActivity extends BaseSupportActivity  {
 //        }
 
         // 如果不是第一次启动app，则正常显示启动屏
-
     }
 
     private void enterHomeActivity() {

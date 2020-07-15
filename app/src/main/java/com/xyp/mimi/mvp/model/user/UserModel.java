@@ -10,6 +10,8 @@ import com.jess.arms.di.scope.ActivityScope;
 
 import javax.inject.Inject;
 
+import com.xyp.mimi.im.bean.ResponseIMTokenInfo;
+import com.xyp.mimi.im.bean.ResponseUserInfo;
 import com.xyp.mimi.mvp.contract.user.UserContract;
 import com.xyp.mimi.mvp.http.api.service.member.MemberService;
 import com.xyp.mimi.mvp.http.api.service.setting.SettingService;
@@ -115,9 +117,15 @@ public class UserModel extends BaseModel implements UserContract.Model {
     }
 
     @Override
-    public Observable<BaseResponse<LoginUserResult>> register(String phone, String password,String userName, String imgUrl) {
+    public Observable<BaseResponse<ResponseUserInfo>> register(String phone, String password, String userName, String imgUrl) {
         return mRepositoryManager.obtainRetrofitService(UserService.class)
                 .register(phone,password,userName,imgUrl);
+    }
+
+    @Override
+    public Observable<ResponseIMTokenInfo> getImToken(Map<String,String> header,String userId, String name, String imageUrl) {
+        return mRepositoryManager.obtainRetrofitService(UserService.class)
+                .getImToken(header,userId,name,imageUrl);
     }
 
     @Override

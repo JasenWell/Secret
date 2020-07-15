@@ -68,7 +68,7 @@ public class SearchFriendActivity extends TitleBaseActivity implements OnSearchF
             public void onChanged(Resource<ResponseSearchFriendInfo> searchFriendInfoResource) {
                 if (searchFriendInfoResource.status == Status.SUCCESS) {
                     ArmsUtils.snackbarText("添加好友请求已发送");
-                    EventBus.getDefault().post(new MessageEvent("添加好友成功",MessageEvent.EventType.REFRESH_FRIEND_LIST));
+                    EventBus.getDefault().post(new MessageEvent("添加好友请求成功",MessageEvent.EventType.REFRESH_FRIEND_LIST));
                     finish();
 //                    ResponseSearchFriendInfo friendInfo = searchFriendInfoResource.data;
 //                    searchFriendResultFragment = new SearchFriendResultFragment();
