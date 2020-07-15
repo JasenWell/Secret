@@ -1403,6 +1403,7 @@ public class IMManager {
      */
     public void logout() {
         RongIM.getInstance().logout();
+        userCache.logoutClear();
     }
 
     /**

@@ -68,7 +68,7 @@ public class SearchFriendNetFragment extends Fragment implements View.OnClickLis
                         ArmsUtils.snackbarText("电话号码不能为空");
                         return;
                     }
-                    if (StringTools.isPhone(phone)) {
+                    if (!StringTools.isPhone(phone)) {
                         ArmsUtils.snackbarText("电话号码格式不正确");
                         return;
                     }

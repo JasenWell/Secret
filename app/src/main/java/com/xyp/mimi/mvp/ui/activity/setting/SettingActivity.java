@@ -14,6 +14,7 @@ import com.xyp.mimi.R;
 import com.xyp.mimi.app.base.BaseSupportActivity;
 import com.xyp.mimi.di.component.setting.DaggerSettingComponent;
 import com.xyp.mimi.di.module.setting.SettingModule;
+import com.xyp.mimi.im.im.IMManager;
 import com.xyp.mimi.mvp.contract.setting.SettingContract;
 import com.xyp.mimi.mvp.http.entity.BaseResponse;
 import com.xyp.mimi.mvp.http.entity.setting.UserPasswordResult;
@@ -106,7 +107,7 @@ public class SettingActivity  extends BaseSupportActivity <SettingPresenter> imp
     }
 
     private void exitLogin() {
-
+        IMManager.getInstance().logout();
     }
 
     @Override

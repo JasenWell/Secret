@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer;
 
 import java.util.List;
 
+import com.xyp.mimi.im.bean.ResponseSearchFriendInfo;
 import com.xyp.mimi.im.db.model.FriendShipInfo;
 import com.xyp.mimi.im.db.model.FriendStatus;
 import com.xyp.mimi.im.model.AddFriendResult;
@@ -25,7 +26,7 @@ import com.xyp.mimi.im.utils.log.SLog;
 public class SearchFriendNetViewModel extends AndroidViewModel {
     private static final String TAG = "SearchFriendNetViewModel";
     private FriendTask friendTask;
-    private SingleSourceLiveData<Resource<SearchFriendInfo>> searchFriend;
+    private SingleSourceLiveData<Resource<ResponseSearchFriendInfo>> searchFriend;
     private SingleSourceMapLiveData<FriendShipInfo, Boolean> isFriend;
     private SingleSourceMapLiveData<Resource<AddFriendResult>, Resource<AddFriendResult>> addFriend;
 
@@ -62,7 +63,7 @@ public class SearchFriendNetViewModel extends AndroidViewModel {
         searchFriend.setSource(friendTask.searchFriendFromServer(stAccount, region, phone));
     }
 
-    public LiveData<Resource<SearchFriendInfo>> getSearchFriend() {
+    public LiveData<Resource<ResponseSearchFriendInfo>> getSearchFriend() {
         return searchFriend;
     }
 

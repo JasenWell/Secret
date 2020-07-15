@@ -9,5 +9,5 @@ public class NetConstant {
     public final static String API_SP_KEY_NET_COOKIE_SET = "cookie_set";
     public final static String API_SP_KEY_NET_HEADER_AUTH = "header_auth";
 
-    public final static int REQUEST_SUCCESS_CODE = 200;
+    public final static int REQUEST_SUCCESS_CODE = 0;//200
 }
