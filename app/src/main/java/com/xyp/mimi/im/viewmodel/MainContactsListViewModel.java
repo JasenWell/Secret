@@ -22,6 +22,7 @@ import com.xyp.mimi.im.db.model.UserInfo;
 import com.xyp.mimi.im.im.IMManager;
 import com.xyp.mimi.im.model.Resource;
 import com.xyp.mimi.im.model.Status;
+import com.xyp.mimi.im.net.hjh.imp.AsynModelImp;
 import com.xyp.mimi.im.task.FriendTask;
 import com.xyp.mimi.im.task.UserTask;
 import com.xyp.mimi.im.ui.adapter.models.FunctionInfo;
@@ -36,6 +37,7 @@ public class MainContactsListViewModel extends CommonListBaseViewModel {
     private static final String TAG = "MainContactsListFragmentViewModel";
     private final UserTask userTask;
     private FriendTask friendTask;
+    AsynModelImp asynModelImp;
     private List<ListItemModel> functionList;
     private FriendShipInfo mySelfInfo;
     private List<FriendShipInfo> friendList = new ArrayList<>();
@@ -53,6 +55,14 @@ public class MainContactsListViewModel extends CommonListBaseViewModel {
             }
         }
     };
+
+    public AsynModelImp getAsynModelImp() {
+        return asynModelImp;
+    }
+
+    public void setAsynModelImp(AsynModelImp asynModelImp) {
+        this.asynModelImp = asynModelImp;
+    }
 
     public MainContactsListViewModel(@NonNull Application application) {
         super(application);

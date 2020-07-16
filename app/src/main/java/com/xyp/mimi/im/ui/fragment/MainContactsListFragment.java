@@ -76,6 +76,8 @@ public class MainContactsListFragment extends CommonListBaseFragment implements 
     @Override
     protected CommonListBaseViewModel createViewModel() {
         viewModel = ViewModelProviders.of(MainContactsListFragment.this).get(MainContactsListViewModel.class);
+        asynModelImp = new AsynModelImp(this);
+        viewModel.setAsynModelImp(asynModelImp);
         viewModel.getRefreshItem().observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
@@ -257,12 +259,12 @@ public class MainContactsListFragment extends CommonListBaseFragment implements 
 
     @Override
     public void setupFragmentComponent(@NonNull AppComponent appComponent) {
-        asynModelImp = new AsynModelImp(this);
+
     }
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        asynModelImp.searchFriendRequest(HttpHelper.BUSINESS.REQUEST_SEARCH_FRIEND_REQUEST, UserCache.getInstance().getCurrentUserId());
+//        asynModelImp.searchFriendRequest(HttpHelper.BUSINESS.REQUEST_SEARCH_FRIEND_REQUEST, UserCache.getInstance().getCurrentUserId());
     }
 
     @Override

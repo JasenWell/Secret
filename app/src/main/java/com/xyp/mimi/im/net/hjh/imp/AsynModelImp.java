@@ -220,4 +220,8 @@ public class AsynModelImp implements IAsynModel {
 
         return true;
     }
+
+    public void loadData(){
+
+    }
 }
