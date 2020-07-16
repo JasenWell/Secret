@@ -28,12 +28,13 @@ import com.xyp.mimi.im.task.GroupTask;
 import com.xyp.mimi.im.task.UserTask;
 import com.xyp.mimi.im.utils.SingleSourceLiveData;
 import com.xyp.mimi.im.utils.SingleSourceMapLiveData;
+import com.xyp.mimi.mvp.http.entity.login.LoginUserResult;
 
 /**
  * 用户详细视图模型
  */
 public class UserDetailViewModel extends AndroidViewModel {
-    private MediatorLiveData<Resource<UserInfo>> userInfoLiveData = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<LoginUserResult>> userInfoLiveData = new MediatorLiveData<>();
     private SingleSourceMapLiveData<Resource<AddFriendResult>, Resource<AddFriendResult>> inviteResult;
     private SingleSourceMapLiveData<Resource<Void>, Resource<Void>> addBlackListResult;
     private SingleSourceMapLiveData<Resource<Void>, Resource<Void>> removeBlackListResult;
@@ -62,12 +63,14 @@ public class UserDetailViewModel extends AndroidViewModel {
         groupTask = new GroupTask(application);
 
         // 获取用于信息前先获取好友信息
-        LiveData<Resource<FriendShipInfo>> friendInfo = friendTask.getFriendInfo(userId);
+//        LiveData<Resource<FriendShipInfo>> friendInfo = friendTask.getFriendInfo(userId);
+        LiveData<Resource<LoginUserResult>> friendInfo = userTask.hjhGetUserInfo(userId);
+
         userInfoLiveData.addSource(friendInfo, friendShipInfoResource -> {
             // 当有结果时，获取用户信息。此前有好友信息则会更新用户表，没有则只获取用户信息
             if (friendShipInfoResource.status != Status.LOADING) {
                 userInfoLiveData.removeSource(friendInfo);
-                userInfoLiveData.addSource(userTask.getUserInfo(userId), resource -> userInfoLiveData.setValue(resource));
+                userInfoLiveData.addSource(friendInfo, resource -> userInfoLiveData.setValue(resource));
             }
         });
         LiveData<Resource<UserSimpleInfo>> blackListUser = userTask.getInBlackListUser(userId);
@@ -118,7 +121,7 @@ public class UserDetailViewModel extends AndroidViewModel {
      *
      * @return
      */
-    public LiveData<Resource<UserInfo>> getUserInfo() {
+    public LiveData<Resource<LoginUserResult>> getUserInfo() {
         return userInfoLiveData;
     }
 

@@ -37,6 +37,7 @@ public class EConfig {
     public static final int CHAT_SINGLE_RECORD_SUCCESS                                 = CHAT_SINGLE_FAILED + 1;
     public static final int CHAT_SINGLE_RECORD_FAILED                              = CHAT_SINGLE_RECORD_SUCCESS + 1;
 
+
    public interface HttpResult{
        //系统错误
        int SYSTEM_ERROR = -1;

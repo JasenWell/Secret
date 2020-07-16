@@ -50,6 +50,8 @@ import com.xyp.mimi.im.utils.NetworkOnlyResource;
 import com.xyp.mimi.im.utils.RongGenerate;
 import com.xyp.mimi.im.utils.SearchUtils;
 import com.xyp.mimi.im.utils.log.SLog;
+import com.xyp.mimi.mvp.http.entity.login.LoginUserResult;
+
 import io.rong.imlib.model.Conversation;
 import okhttp3.RequestBody;
 
@@ -221,6 +223,17 @@ public class UserTask {
             @Override
             protected LiveData<Result<ResponseWrapperInfo>> createCall() {
                 return userService.selectAddFriendsRequestlist(userId);
+            }
+        }.asLiveData();
+    }
+
+    public LiveData<Resource<LoginUserResult>> hjhGetUserInfo(final String userId) {
+        return new NetworkOnlyResource<LoginUserResult, Result<LoginUserResult>>() {
+
+            @NonNull
+            @Override
+            protected LiveData<Result<LoginUserResult>> createCall() {
+                return userService.hjhGetUserInfo(userId);
             }
         }.asLiveData();
     }

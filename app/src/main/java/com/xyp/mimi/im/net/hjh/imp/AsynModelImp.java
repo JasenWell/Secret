@@ -18,6 +18,7 @@ import com.xyp.mimi.im.net.hjh.param.Params;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -73,6 +74,13 @@ public class AsynModelImp implements IAsynModel {
 
     public  String readString(InputStream is){
         return new String(readBytes(is));
+    }
+
+    @Override
+    public void sendRequest(HttpHelper.BUSINESS business, Map<String, String> param) {
+        if(checkNetStatus()) {
+            okHttpUtils.post(param, HttpHelper.PostGetUrl(business.getBusiness())).enqueue(new CallbackImp(business));
+        }
     }
 
     @Override

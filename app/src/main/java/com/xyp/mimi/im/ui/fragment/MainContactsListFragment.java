@@ -16,6 +16,7 @@ import com.jess.arms.di.component.AppComponent;
 import com.xyp.mimi.MainActivity;
 import com.xyp.mimi.R;
 import com.xyp.mimi.app.base.BaseSupportActivity;
+import com.xyp.mimi.im.bean.ResponseAddingFriendInfo;
 import com.xyp.mimi.im.bean.ResponseWrapperInfo;
 import com.xyp.mimi.im.db.model.FriendShipInfo;
 import com.xyp.mimi.im.db.model.FriendStatus;
@@ -165,8 +166,8 @@ public class MainContactsListFragment extends CommonListBaseFragment implements 
                         handleFunItemClick(functionInfo);
                         break;
                     case FRIEND:
-                        FriendShipInfo friendShipInfo = (FriendShipInfo) data.getData();
-                        handleFriendItemClick(friendShipInfo);
+                        ResponseAddingFriendInfo friendInfo = (ResponseAddingFriendInfo) data.getData();
+                        handleFriendItemClick(friendInfo);
                         break;
                     default:
                         //Do nothing
@@ -196,13 +197,13 @@ public class MainContactsListFragment extends CommonListBaseFragment implements 
      *
      * @param friendShipInfo
      */
-    private void handleFriendItemClick(FriendShipInfo friendShipInfo) {
-        if (friendShipInfo.getUser().getId().equals(IMManager.getInstance().getCurrentId())) {
-            String title = TextUtils.isEmpty(friendShipInfo.getDisplayName()) ? friendShipInfo.getUser().getNickname() : friendShipInfo.getDisplayName();
-            RongIM.getInstance().startConversation(getActivity(), Conversation.ConversationType.PRIVATE, friendShipInfo.getUser().getId(), title);
+    private void handleFriendItemClick(ResponseAddingFriendInfo friendShipInfo) {
+        if (friendShipInfo.getId().equals(IMManager.getInstance().getCurrentId())) {
+            String title = friendShipInfo.getUsername();
+            RongIM.getInstance().startConversation(getActivity(), Conversation.ConversationType.PRIVATE, friendShipInfo.getId(), title);
         } else {
             Intent intent = new Intent(getContext(), UserDetailActivity.class);
-            intent.putExtra(STR_TARGET_ID, friendShipInfo.getUser().getId());
+            intent.putExtra(STR_TARGET_ID, friendShipInfo.getViceUid());
             startActivity(intent);
         }
     }

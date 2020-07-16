@@ -8,6 +8,12 @@ import java.util.Map;
 
 public class Params {
 
+    public static Map<String,String> getUserInfoParams(String userId){
+        Map<String,String> map = new HashMap<>();
+        map.put("userId",userId);
+        return map;
+    }
+
     public static Map<String,String> searchfriendListParams(String userId){
         Map<String,String> map = new HashMap<>();
         map.put("userId",userId);

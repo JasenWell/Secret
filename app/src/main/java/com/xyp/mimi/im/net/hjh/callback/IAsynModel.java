@@ -3,6 +3,8 @@ package com.xyp.mimi.im.net.hjh.callback;
 
 import com.xyp.mimi.im.net.hjh.HttpHelper;
 
+import java.util.Map;
+
 public interface IAsynModel {
 
     void addFriendRequest(HttpHelper.BUSINESS business, String mianUid, String phone);//mianUid 登录用户id
@@ -17,7 +19,7 @@ public interface IAsynModel {
 
     void searchFriendList(HttpHelper.BUSINESS business,String userId);
 
-
+    void sendRequest(HttpHelper.BUSINESS business, Map<String,String> param);
 
 
 }

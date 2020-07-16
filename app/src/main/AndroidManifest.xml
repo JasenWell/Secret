@@ -73,9 +73,30 @@
         <activity android:name=".im.ui.activity.SealPicturePagerActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
-        <activity android:name=".im.ui.activity.ConversationActivity"
+
+            android:screenOrientation="portrait"/>
+        <activity android:name=".im.ui.activity.UserDetailActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name="com.xyp.mimi.im.ui.activity.ConversationActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <!---->
+                <data
+                    android:host="com.xyp.mimi"
+                    android:pathPrefix="/conversation/"
+                    android:scheme="rong" />
+            </intent-filter>
+
+        </activity>
+
+
         <!-- add by hjh end-->
         <!-- 适配华为（huawei）刘海屏 -->
         <meta-data

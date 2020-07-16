@@ -7,6 +7,7 @@ import com.google.gson.reflect.TypeToken;
 import com.xyp.mimi.im.bean.ResponseSearchFriendInfo;
 import com.xyp.mimi.im.bean.ResponseWrapperInfo;
 import com.xyp.mimi.mvp.http.api.Api;
+import com.xyp.mimi.mvp.http.entity.login.LoginUserResult;
 
 import java.io.File;
 import java.lang.reflect.Type;
@@ -50,6 +51,10 @@ public class HttpHelper {
         REQUEST_SEARCH_FRIEND_REQUEST("/mall/interface/selectcahts", Method.POST,true, ResponseWrapperInfo.class,EConfig.SEARCH_FRIEND_REQUEST_SUCCESS),
         REQUEST_FRIEND_LIST("/mall/interface/selectFriendslist", Method.POST,true,Object.class,EConfig.SEARCH_FRIEND_LIST_SUCCESS),
 //        REQUEST_GET_RECHARGE_LIST("api/user.html", Method.POST,true,Object.class,new TypeToken<List<Object>>(){}.getType()),
+
+        REQUEST_GET_USER_INFO("/mall/interface/selectuserid", Method.POST,true, LoginUserResult.class,EConfig.ADD_FRIEND_REQUEST_SUCCESS),
+
+
         REQUEST_CHAT_SINGLE("/mall/interface/caht", Method.POST,true,Object.class,EConfig.CHAT_SINGLE_SUCCESS),
         REQUEST_CHAT_SINGLE_RECORD("/mall/interface/cahtlist", Method.POST,true,Object.class,EConfig.CHAT_SINGLE_RECORD_SUCCESS)
 
