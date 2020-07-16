@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.xyp.mimi.R;
+import com.xyp.mimi.im.bean.ResponseAddingFriendInfo;
 import com.xyp.mimi.im.bean.ResponseWrapperInfo;
 import com.xyp.mimi.im.db.model.FriendDetailInfo;
 import com.xyp.mimi.im.db.model.FriendShipInfo;
@@ -23,6 +24,7 @@ import com.xyp.mimi.im.im.IMManager;
 import com.xyp.mimi.im.model.Resource;
 import com.xyp.mimi.im.model.Status;
 import com.xyp.mimi.im.net.hjh.imp.AsynModelImp;
+import com.xyp.mimi.im.sp.UserCache;
 import com.xyp.mimi.im.task.FriendTask;
 import com.xyp.mimi.im.task.UserTask;
 import com.xyp.mimi.im.ui.adapter.models.FunctionInfo;
@@ -37,15 +39,15 @@ public class MainContactsListViewModel extends CommonListBaseViewModel {
     private static final String TAG = "MainContactsListFragmentViewModel";
     private final UserTask userTask;
     private FriendTask friendTask;
-    AsynModelImp asynModelImp;
+
     private List<ListItemModel> functionList;
     private FriendShipInfo mySelfInfo;
-    private List<FriendShipInfo> friendList = new ArrayList<>();
+    private List<ResponseAddingFriendInfo> friendList = new ArrayList<>();
     private Map<String, Integer> dotNumMap = new HashMap<>();
 
     private SingleSourceMapLiveData<Message, Integer> refreshItem;
     private SingleSourceLiveData<Integer> dotNumData = new SingleSourceLiveData<>();
-    private SingleSourceLiveData<Resource<List<FriendShipInfo>>> allFriendInfo = new SingleSourceLiveData<>();
+    private SingleSourceLiveData<Resource<ResponseWrapperInfo>> allFriendInfo = new SingleSourceLiveData<>();
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(android.os.Message msg) {
@@ -55,14 +57,6 @@ public class MainContactsListViewModel extends CommonListBaseViewModel {
             }
         }
     };
-
-    public AsynModelImp getAsynModelImp() {
-        return asynModelImp;
-    }
-
-    public void setAsynModelImp(AsynModelImp asynModelImp) {
-        this.asynModelImp = asynModelImp;
-    }
 
     public MainContactsListViewModel(@NonNull Application application) {
         super(application);
@@ -76,7 +70,7 @@ public class MainContactsListViewModel extends CommonListBaseViewModel {
                     ContactNotificationMessage contactNotificationMessage = (ContactNotificationMessage) message.getContent();
                     if (contactNotificationMessage.getOperation().equals("Request") ||
                             contactNotificationMessage.getOperation().equals("AcceptResponse")) {
-                        loadAllFriendInfo();
+                        loadHjhAllFriendInfo();
                         //return setFunctionShowRedDot("1", true);
                         return 0;
                     }
@@ -89,11 +83,11 @@ public class MainContactsListViewModel extends CommonListBaseViewModel {
         refreshItem.setSource(IMManager.getInstance().getMessageRouter());
     }
 
-    public void loadAllFriendInfo() {
-        allFriendInfo.setSource(friendTask.getAllFriends());
+    public void loadHjhAllFriendInfo() {
+        allFriendInfo.setSource(friendTask.getHjhAllFriends(UserCache.getInstance().getCurrentUserId()));
     }
 
-    public LiveData<Resource<List<FriendShipInfo>>> getLoadAllFriendInfoResult() {
+    public LiveData<Resource<ResponseWrapperInfo>> getLoadHjhAllFriendInfoResult() {
         return allFriendInfo;
     }
 
@@ -131,26 +125,16 @@ public class MainContactsListViewModel extends CommonListBaseViewModel {
             @Override
             public void onChanged(Resource<ResponseWrapperInfo> resource) {
                 if (resource.status != Status.LOADING) {
-//                    handler.sendEmptyMessageDelayed(1092,5000);
+                    handler.sendEmptyMessageDelayed(1092,5000);
                     if (resource != null && resource.data != null) {
+                        post(getFunctionList(), mySelfInfo, friendList);
                         if(resource.data.getFriendslist()!= null && resource.data.getFriendslist().size() > 0) {
                             setFunRedDotShowStatus("1", true);
+                        }else{
+                            setFunRedDotShowStatus("1", false);
                         }
-//                        UserInfo data = resource.data;
-//                        FriendShipInfo info = new FriendShipInfo();
-//                        info.setDisplayName(data.getAlias());
-//                        info.setDisPlayNameSpelling(data.getAliasSpelling());
-//                        FriendDetailInfo friendDetailInfo = new FriendDetailInfo();
-//                        friendDetailInfo.setNickname(data.getName());
-//                        friendDetailInfo.setId(data.getId());
-//                        friendDetailInfo.setPhone(data.getPhoneNumber());
-//                        friendDetailInfo.setNameSpelling(data.getNameSpelling());
-//                        friendDetailInfo.setOrderSpelling(data.getOrderSpelling());
-//                        friendDetailInfo.setPortraitUri(data.getPortraitUri());
-//                        friendDetailInfo.setRegion(data.getRegion());
-//                        info.setUser(friendDetailInfo);
-//                        mySelfInfo = info;
-//                        post(getFunctionList(), mySelfInfo, friendList);
+                    }else{
+                        setFunRedDotShowStatus("1", false);
                     }
                 }
             }
@@ -188,19 +172,19 @@ public class MainContactsListViewModel extends CommonListBaseViewModel {
 
         selectAddFriendsRequestlist();
 
-        LiveData<Resource<List<FriendShipInfo>>> allFriends = friendTask.getAllFriends();
+        LiveData<Resource<ResponseWrapperInfo>> allFriends = friendTask.getHjhAllFriends(UserCache.getInstance().getCurrentUserId());
         allFriendInfo.setSource(allFriends);
-        conversationLiveData.addSource(allFriends, new Observer<Resource<List<FriendShipInfo>>>() {
+        conversationLiveData.addSource(allFriends, new Observer<Resource<ResponseWrapperInfo>>() {
             @Override
-            public void onChanged(Resource<List<FriendShipInfo>> listResource) {
+            public void onChanged(Resource<ResponseWrapperInfo> listResource) {
                 if (listResource.status != Status.LOADING) {
-                    List<FriendShipInfo> dataList = listResource.data;
-                    if (dataList != null) {
+                    ResponseWrapperInfo wrapperInfo = listResource.data;
+                    if (wrapperInfo != null) {
                         friendList.clear();
-                        for(FriendShipInfo data : dataList){
-                            if(data.getStatus() == FriendStatus.IS_FRIEND.getStatusCode()) {
+                        for(ResponseAddingFriendInfo data : wrapperInfo.getFriendslist()){
+//                            if(data.getStatus() == FriendStatus.IS_FRIEND.getStatusCode()) {
                                 friendList.add(data);
-                            }
+//                            }
                         }
                         post(getFunctionList(), mySelfInfo, friendList);
                     }
@@ -210,9 +194,9 @@ public class MainContactsListViewModel extends CommonListBaseViewModel {
     }
 
 
-    private void post(List<ListItemModel> funs, FriendShipInfo myself, List<FriendShipInfo> friendShipInfos) {
+    private void post(List<ListItemModel> funs, FriendShipInfo myself, List<ResponseAddingFriendInfo> friendShipInfos) {
         ModelBuilder builder = new ModelBuilder();
-        builder.addFriendList(friendShipInfos);
+        builder.addHjhFriendList(friendShipInfos);
         builder.buildFirstChar();
         if (myself != null) {
             builder.addFriend(0, myself);

@@ -43,7 +43,11 @@ public class AsynModelImp implements IAsynModel {
                 iBaseCallBack.showErrorInfo(business.getCode()+1,business.getErrorMsg());
             }else if(msg.what == 1234){
                 HttpHelper.BUSINESS business = (HttpHelper.BUSINESS) msg.obj;
-                iBaseCallBack.onSuccess(business.getResponseJson(), business.getCode());
+                if(business.getResponseJson().getStatus() != 0){
+                    iBaseCallBack.showErrorInfo(business.getCode()+1,business.getResponseJson().getInfo());
+                }else {
+                    iBaseCallBack.onSuccess(business.getResponseJson(), business.getCode());
+                }
             }else if(msg.what == 1235){
                 MessageEvent event = (MessageEvent) msg.obj;
                 iBaseCallBack.showErrorInfo(event.getType(),event.getDes());

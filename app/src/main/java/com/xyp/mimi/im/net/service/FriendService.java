@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.xyp.mimi.im.bean.ResponseSearchFriendInfo;
+import com.xyp.mimi.im.bean.ResponseWrapperInfo;
 import com.xyp.mimi.im.db.model.FriendDescription;
 import com.xyp.mimi.im.db.model.FriendShipInfo;
 import com.xyp.mimi.im.model.AddFriendResult;
@@ -45,7 +46,12 @@ public interface FriendService {
     );
 
 
-
+    //获取好友列表
+    @FormUrlEncoded
+    @POST("/mall/interface/selectFriendslist")
+    LiveData<Result<ResponseWrapperInfo>> getAllFriendList(
+            @Field("userId") String username//用户id
+    );
 
 
 

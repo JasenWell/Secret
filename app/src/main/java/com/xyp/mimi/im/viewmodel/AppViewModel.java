@@ -16,6 +16,7 @@ import java.util.List;
 import com.xyp.mimi.im.model.ChatRoomResult;
 import com.xyp.mimi.im.model.Resource;
 import com.xyp.mimi.im.model.VersionInfo;
+import com.xyp.mimi.im.net.hjh.imp.AsynModelImp;
 import com.xyp.mimi.im.task.AppTask;
 import com.xyp.mimi.im.utils.SingleSourceLiveData;
 import com.xyp.mimi.im.utils.SingleSourceMapLiveData;
@@ -31,6 +32,7 @@ public class AppViewModel extends AndroidViewModel {
     private SingleSourceLiveData<Resource<List<ChatRoomResult>>> chatRoomResultList = new SingleSourceLiveData<>();
     private MutableLiveData<LangUtils.RCLocale> languageLocal = new MutableLiveData<>();
     private MutableLiveData<Boolean> debugMode = new MutableLiveData<>();
+    AsynModelImp asynModelImp;
 
     public AppViewModel(@NonNull Application application) {
         super(application);
@@ -177,5 +179,14 @@ public class AppViewModel extends AndroidViewModel {
 
     public LiveData<Boolean> getDebugMode() {
         return debugMode;
+    }
+
+
+    public AsynModelImp getAsynModelImp() {
+        return asynModelImp;
+    }
+
+    public void setAsynModelImp(AsynModelImp asynModelImp) {
+        this.asynModelImp = asynModelImp;
     }
 }

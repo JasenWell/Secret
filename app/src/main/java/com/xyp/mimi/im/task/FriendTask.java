@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.xyp.mimi.im.bean.ResponseSearchFriendInfo;
+import com.xyp.mimi.im.bean.ResponseWrapperInfo;
 import com.xyp.mimi.im.common.ThreadManager;
 import com.xyp.mimi.im.contact.PhoneContactManager;
 import com.xyp.mimi.im.db.DbManager;
@@ -63,6 +64,17 @@ public class FriendTask {
         friendService = HttpClientManager.getInstance(this.context).getClient().createService(FriendService.class);
         dbManager = DbManager.getInstance(this.context);
         fileManager = new FileManager(context);
+    }
+
+    public LiveData<Resource<ResponseWrapperInfo>> getHjhAllFriends(final String userId) {
+        return new NetworkOnlyResource<ResponseWrapperInfo, Result<ResponseWrapperInfo>>() {
+
+            @NonNull
+            @Override
+            protected LiveData<Result<ResponseWrapperInfo>> createCall() {
+                return friendService.getAllFriendList(userId);
+            }
+        }.asLiveData();
     }
 
     /**

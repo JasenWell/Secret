@@ -58,7 +58,7 @@ public class MainContactsListFragment extends CommonListBaseFragment implements 
     public void onEventMainThread(MessageEvent event){
         //接收到发布者发布的事件后，进行相应的处理操作
         if(event.getType() == MessageEvent.EventType.REFRESH_FRIEND_LIST){
-
+            asynModelImp.searchFriendList(HttpHelper.BUSINESS.REQUEST_FRIEND_LIST,UserCache.getInstance().getCurrentUserId());
         }
     }
 
@@ -84,16 +84,17 @@ public class MainContactsListFragment extends CommonListBaseFragment implements 
                 //getAdapter().notifyItemChanged(integer);
             }
         });
-        viewModel.getLoadAllFriendInfoResult().observe(this, new Observer<Resource<List<FriendShipInfo>>>() {
+        viewModel.getLoadHjhAllFriendInfoResult().observe(this, new Observer<Resource<ResponseWrapperInfo>>() {
             @Override
-            public void onChanged(Resource<List<FriendShipInfo>> listResource) {
+            public void onChanged(Resource<ResponseWrapperInfo> listResource) {
                 if (listResource.status == Status.SUCCESS) {
-                    if (listResource.data != null && listResource.data.size() > 0) {
-                        updateDotNum(listResource.data);
+                    if (listResource.data != null && listResource.data.getFriendslist().size() > 0) {
+                        updateDotNum(listResource.data.getFriendslist());
                     }
                 }
             }
         });
+        asynModelImp.searchFriendList(HttpHelper.BUSINESS.REQUEST_FRIEND_LIST,UserCache.getInstance().getCurrentUserId());
         return viewModel;
     }
 
@@ -279,11 +280,14 @@ public class MainContactsListFragment extends CommonListBaseFragment implements 
 
     @Override
     public void onSuccess(Object object, int type) {
+        ResponseJson responseJson = (ResponseJson) object;
         if(type == HttpHelper.BUSINESS.REQUEST_SEARCH_FRIEND_REQUEST.getCode()){
-            ResponseWrapperInfo wrapperInfo = (ResponseWrapperInfo) ((ResponseJson) object).getData();
+            ResponseWrapperInfo wrapperInfo = (ResponseWrapperInfo) responseJson.getData();
             if(wrapperInfo != null){
 
             }
+        }else if(type == HttpHelper.BUSINESS.REQUEST_FRIEND_LIST.getCode()){
+
         }
     }
 

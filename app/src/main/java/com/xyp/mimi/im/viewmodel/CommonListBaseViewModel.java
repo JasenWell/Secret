@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.xyp.mimi.R;
+import com.xyp.mimi.im.bean.ResponseAddingFriendInfo;
 import com.xyp.mimi.im.db.model.FriendShipInfo;
 import com.xyp.mimi.im.db.model.GroupEntity;
 import com.xyp.mimi.im.ui.adapter.CommonListAdapter;
@@ -142,6 +143,20 @@ public abstract class CommonListBaseViewModel extends AppViewModel {
     }
 
     /**
+     * 还有类型转化为展示数据
+     *
+     * @param friendShipInfos
+     * @return
+     */
+    private List<ListItemModel> convertHjhFriends(List<ResponseAddingFriendInfo> friendShipInfos) {
+        List<ListItemModel> out = new ArrayList<>();
+        for (ResponseAddingFriendInfo info : friendShipInfos) {
+            out.add(createHjhFriendModel(info));
+        }
+        return out;
+    }
+
+    /**
      * 好友首字母排序
      *
      * @param models
@@ -191,6 +206,31 @@ public abstract class CommonListBaseViewModel extends AppViewModel {
         model.setPortraitUrl(entity.getPortraitUri());
         model.setFirstChar(entity.getNameSpelling());
         return model;
+    }
+
+    /**
+     * 创建联系人对象.
+     *
+     * @param info
+     * @return
+     */
+    protected ListItemModel createHjhFriendModel(ResponseAddingFriendInfo info) {
+        String name = info.getUsername();
+        ListItemModel.ItemView itemView = new ListItemModel
+                .ItemView(R.layout.item_common_conversation, ListItemModel.ItemView.Type.FRIEND, CommonFriendItemViewHolder.class);
+        ListItemModel<ResponseAddingFriendInfo> model = new ListItemModel<ResponseAddingFriendInfo>(info.getId(), name, info, itemView);
+        model.setPortraitUrl(info.getImgUrl());
+        model.setFirstChar(getFirstCharacter(info.getUsername()));
+        return model;
+    }
+
+
+    public String getFirstCharacter(String orderSpelling) {
+        String firstCharacter = "";
+        if (!TextUtils.isEmpty(orderSpelling)) {
+            firstCharacter = orderSpelling.substring(0, 1).toUpperCase();
+        }
+        return firstCharacter;
     }
 
     /**
@@ -405,6 +445,16 @@ public abstract class CommonListBaseViewModel extends AppViewModel {
          */
         public ModelBuilder addFriendList(List<FriendShipInfo> infos) {
             out.addAll(convertFriends(infos));
+            return this;
+        }
+
+        /**
+         * 添加好友对象列表
+         *
+         * @param infos
+         */
+        public ModelBuilder addHjhFriendList(List<ResponseAddingFriendInfo> infos) {
+            out.addAll(convertHjhFriends(infos));
             return this;
         }
 

@@ -40,9 +40,12 @@ import com.github.baseclass.rx.IOCallBack;
 import com.gyf.barlibrary.ImmersionBar;
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.mvp.IPresenter;
+import com.jess.arms.utils.ArmsUtils;
 import com.xyp.mimi.R;
 import com.xyp.mimi.im.common.IntentExtra;
 import com.xyp.mimi.im.im.IMManager;
+import com.xyp.mimi.im.net.hjh.callback.IBaseCallBack;
+import com.xyp.mimi.im.net.hjh.imp.AsynModelImp;
 import com.xyp.mimi.im.utils.ToastUtils;
 import com.xyp.mimi.im.utils.log.SLog;
 import com.xyp.mimi.mvp.event.ResponseErrorEvent;
@@ -69,7 +72,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
-public  abstract  class  BaseSupportActivity<P extends IPresenter> extends BaseActivity<P> implements ISupportActivity {
+public  abstract  class  BaseSupportActivity<P extends IPresenter> extends BaseActivity<P> implements ISupportActivity, IBaseCallBack {
 
     final SupportActivityDelegate mDelegate = new SupportActivityDelegate(this);
     public BaseSupportActivity mContext;
@@ -85,7 +88,7 @@ public  abstract  class  BaseSupportActivity<P extends IPresenter> extends BaseA
     protected ImageView app_right_iv;
     boolean istoolbar=true;
     protected ImmersionBar mImmersionBar;
-
+    protected AsynModelImp asynModelImp;
     protected Gloading.Holder mHolder;
 
     private CompositeSubscription mCSubscription;
@@ -130,7 +133,7 @@ public  abstract  class  BaseSupportActivity<P extends IPresenter> extends BaseA
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         mContext = this;
         mDelegate.onCreate(savedInstanceState);
-
+        asynModelImp = new AsynModelImp(this);
         /*
          * 修复部分 Android 8.0 手机在TargetSDK 大于 26 时，在透明主题时指定 Activity 方向时崩溃的问题
          */
@@ -804,6 +807,22 @@ public  abstract  class  BaseSupportActivity<P extends IPresenter> extends BaseA
         }
         lastClickTime = time;
         return false;
+    }
+
+    @Override
+    public void showErrorInfo(int code, String devMsg) {
+//        ArmsUtils.snackbarText(devMsg);
+        showToast(devMsg);
+    }
+
+    @Override
+    public void onSuccess(Object object, int type) {
+
+    }
+
+    @Override
+    public BaseSupportActivity getCallBackActivity() {
+        return this;
     }
 
     //----------------------------hjh------------------------
