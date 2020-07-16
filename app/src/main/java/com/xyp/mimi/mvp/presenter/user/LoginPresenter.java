@@ -42,20 +42,6 @@ public class LoginPresenter extends BasePresenter<UserContract.Model, UserContra
                 if(userBeanBaseResponse.getCode() == Api.RequestSuccess) {
                     final ResponseUserInfo userInfo = userBeanBaseResponse.getData().getUser();
                     if (userInfo.getId() != null) {
-                        final String token =  UserCache.getInstance().getString(UserCache.KEY_USER_TOKEN+userInfo.getId(),"");
-                        IMManager.getInstance().connectIM(token, true, new ResultCallback<String>() {
-                            @Override
-                            public void onSuccess(String s) {
-                                // 存储当前登录成功的用户信息
-                                UserCacheInfo info = new UserCacheInfo(userInfo.getId(),token,
-                                        userInfo.getAccount(), userInfo.getPassword(), userInfo.getCountr());
-                                UserCache.getInstance().saveUserCache(info);
-                            }
-
-                            @Override
-                            public void onFail(int errorCode) {
-                            }
-                        });
                         mRootView.loginResult(userBeanBaseResponse.getData());
                     } else {
                         mRootView.showMessage(userBeanBaseResponse.getMsg());

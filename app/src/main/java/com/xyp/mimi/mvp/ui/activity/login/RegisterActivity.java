@@ -315,7 +315,7 @@ public class RegisterActivity extends BaseSupportActivity<RegisterPresenter> imp
 
     }
 
-    public static Map addTokenMap() {
+    public  Map addTokenMap() {
         Map<String, String> map = new HashMap<String, String>();
         String key = "pvxdm17jpe5cr";
         String secret = "pbPDAAqPawQFq";

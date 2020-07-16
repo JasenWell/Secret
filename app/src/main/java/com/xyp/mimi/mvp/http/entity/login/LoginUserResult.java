@@ -1,5 +1,6 @@
 package com.xyp.mimi.mvp.http.entity.login;
 
+import com.xyp.mimi.im.bean.ResponseIMTokenInfo;
 import com.xyp.mimi.im.bean.ResponseUserInfo;
 
 import java.io.Serializable;
@@ -21,7 +22,7 @@ public class LoginUserResult implements Serializable {
 
     private String sessionId;
     private ResponseUserInfo user;
-
+    private ResponseIMTokenInfo tokenInfo;
 
 
     public String getUserId() {
@@ -78,5 +79,13 @@ public class LoginUserResult implements Serializable {
 
     public void setUser(ResponseUserInfo user) {
         this.user = user;
+    }
+
+    public ResponseIMTokenInfo getTokenInfo() {
+        return tokenInfo;
+    }
+
+    public void setTokenInfo(ResponseIMTokenInfo tokenInfo) {
+        this.tokenInfo = tokenInfo;
     }
 }
