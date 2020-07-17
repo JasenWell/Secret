@@ -49,7 +49,7 @@ public class HttpHelper {
         REQUEST_ADD_FRIEND("/mall/interface/insertFriendslist", Method.POST,true, ResponseSearchFriendInfo.class,EConfig.ADD_FRIEND_REQUEST_SUCCESS),
         REQUEST_AGREE_FRIEND("/mall/interface/updateFriendslist", Method.POST,true,Object.class,EConfig.AGREE_FRIEND_REQUEST_SUCCESS),
         REQUEST_SEARCH_FRIEND_REQUEST("/mall/interface/selectcahts", Method.POST,true, ResponseWrapperInfo.class,EConfig.SEARCH_FRIEND_REQUEST_SUCCESS),
-        REQUEST_FRIEND_LIST("/mall/interface/selectFriendslist", Method.POST,true,Object.class,EConfig.SEARCH_FRIEND_LIST_SUCCESS),
+        REQUEST_FRIEND_LIST("/mall/interface/selectFriendslist", Method.POST,true,ResponseWrapperInfo.class,EConfig.SEARCH_FRIEND_LIST_SUCCESS),
 //        REQUEST_GET_RECHARGE_LIST("api/user.html", Method.POST,true,Object.class,new TypeToken<List<Object>>(){}.getType()),
 
         REQUEST_GET_USER_INFO("/mall/interface/selectuserid", Method.POST,true, LoginUserResult.class,EConfig.ADD_FRIEND_REQUEST_SUCCESS),

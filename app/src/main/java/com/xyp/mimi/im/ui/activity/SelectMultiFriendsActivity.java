@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProviders;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.Gson;
 import com.xyp.mimi.R;
 import com.xyp.mimi.im.bean.ResponseAddingFriendInfo;
 import com.xyp.mimi.im.bean.ResponseFriendInfo;
@@ -69,8 +70,6 @@ public class SelectMultiFriendsActivity extends SelectBaseActivity implements Vi
         asynModelImp = new AsynModelImp(this);
 
         asynModelImp.searchFriendList(HttpHelper.BUSINESS.REQUEST_FRIEND_LIST, UserCache.getInstance().getCurrentUserId());
-
-
     }
 
     /**
@@ -158,8 +157,9 @@ public class SelectMultiFriendsActivity extends SelectBaseActivity implements Vi
 
             }
         }else if(type == HttpHelper.BUSINESS.REQUEST_FRIEND_LIST.getCode()){
-            ResponseFriendInfo wrapperInfo = (ResponseFriendInfo) responseJson.getData();
-            Log.d("SelectMultiFriendsActivity",wrapperInfo.getData().getFriendslist().get(0).getImgUrl());
+            ResponseWrapperInfo wrapperInfo = (ResponseWrapperInfo) responseJson.getData();
+
+            Log.d("SelectMultiFriendsActivity",wrapperInfo.getFriendslist().get(0).getImgUrl());
         }
     }
 
