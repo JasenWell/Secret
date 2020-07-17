@@ -180,7 +180,7 @@ public class MainActivity extends BaseSupportActivity implements MorePopWindow.O
                 if(currentIndex == 0) {
                     MorePopWindow morePopWindow = new MorePopWindow(MainActivity.this, MainActivity.this);
                     morePopWindow.showChildView(R.id.btn_start_chat);
-                    morePopWindow.hideChildView(R.id.btn_create_group);
+                    morePopWindow.showChildView(R.id.btn_create_group);
                     morePopWindow.hideChildView(R.id.btn_scan);
                     morePopWindow.showPopupWindow(v);
                 }else {

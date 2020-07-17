@@ -1,6 +1,7 @@
 package com.xyp.mimi.mvp.ui.activity.login;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -50,6 +51,8 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.UserInfo;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -175,6 +178,22 @@ public class LoginActivity extends BaseSupportActivity<LoginPresenter> implement
 
     private void switchPage(LoginUserResult loginUserResult){
         showLoadSuccess();
+
+
+        RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
+
+            /**
+             * 获取设置用户信息. 通过返回的 userId 来封装生产用户信息.
+             * @param userId 用户 ID
+             */
+            @Override
+            public UserInfo getUserInfo(String userId) {
+                UserInfo userInfo = new UserInfo(userId, loginUserResult.getUser().getId(), Uri.parse(loginUserResult.getUser().getImgUrl()));
+                return userInfo;
+            }
+
+        }, true);
+
         SPUtils.getInstance().put(AppConstant.User.USER_ID, loginUserResult.getUser().getId());//
         SPUtils.getInstance().put(AppConstant.User.PHONE, loginUserResult.getUser().getAccount());//
         SPUtils.getInstance().put(AppConstant.User.TOKEN, loginUserResult.getToken());//
