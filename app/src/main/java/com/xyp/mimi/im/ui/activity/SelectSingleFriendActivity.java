@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentTransaction;
 import java.util.ArrayList;
 
 import com.xyp.mimi.R;
+import com.xyp.mimi.im.bean.CheckedItem;
 import com.xyp.mimi.im.common.IntentExtra;
 import com.xyp.mimi.im.ui.fragment.SelectSingleFragment;
 import com.xyp.mimi.im.ui.view.SealTitleBar;
@@ -39,6 +40,18 @@ public class SelectSingleFriendActivity extends SelectBaseActivity implements Vi
     @Override
     protected void onConfirmClick() {
         onConfirmClicked(selectSingleFragment.getCheckedList(),selectSingleFragment.getCheckedInitGroupList());
+    }
+
+    @Override
+    protected void onConfirmClicked(CheckedItem checkedItem, ArrayList<String> selectGroups) {
+        super.onConfirmClicked(checkedItem, selectGroups);
+        if(checkedItem.getFriendInfoList().size() != 0){
+            Intent intent = new Intent();
+            intent.putExtra("checked_user",checkedItem.getFriendInfoList().get(0));
+//            intent.putExtra(IntentExtra.STR_TARGET_ID, selectIds.get(0));
+            setResult(RESULT_OK, intent);
+        }
+        finish();
     }
 
     @Override

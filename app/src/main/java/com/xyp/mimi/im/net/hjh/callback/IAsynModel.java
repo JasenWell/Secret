@@ -21,5 +21,5 @@ public interface IAsynModel {
 
     void sendRequest(HttpHelper.BUSINESS business, Map<String,String> param);
 
-
+    void sendRYRequest(HttpHelper.BUSINESS business, Map<String,String> param);
 }

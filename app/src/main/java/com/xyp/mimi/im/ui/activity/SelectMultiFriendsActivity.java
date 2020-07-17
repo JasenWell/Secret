@@ -97,7 +97,7 @@ public class SelectMultiFriendsActivity extends SelectBaseActivity implements Vi
      */
     @Override
     public void onClick(View v) {
-        onConfirmClicked(selectMultiFriendFragment.getCheckedList(), selectMultiFriendFragment.getCheckedInitGroupList());
+        onConfirmClicked(selectMultiFriendFragment.getCheckedFriendList(), selectMultiFriendFragment.getCheckedInitGroupList());
     }
 
     /**

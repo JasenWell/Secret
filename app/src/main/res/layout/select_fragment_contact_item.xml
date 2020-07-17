@@ -25,7 +25,7 @@
             android:paddingBottom="10dp"
             android:src="@drawable/seal_cb_select_contact_pic_btn_unselected" />
 
-        <cn.rongcloud.im.ui.widget.SelectableRoundedImageView
+        <com.xyp.mimi.im.ui.widget.SelectableRoundedImageView
             android:id="@+id/iv_portrait"
             android:layout_width="@dimen/seal_contact_item_portrait_width"
             android:layout_height="@dimen/seal_contact_item_portrait_height"

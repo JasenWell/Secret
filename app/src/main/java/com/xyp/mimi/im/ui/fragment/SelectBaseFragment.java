@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.xyp.mimi.R;
+import com.xyp.mimi.im.bean.CheckedItem;
 import com.xyp.mimi.im.ui.adapter.SelectContactAdapter;
 import com.xyp.mimi.im.ui.adapter.models.CheckableContactModel;
 import com.xyp.mimi.im.ui.adapter.models.ContactModel;
@@ -46,8 +47,8 @@ public class SelectBaseFragment extends BaseContactFragment implements OnCheckCo
         checkedInitIdList = intent.getStringArrayListExtra(LIST_ALREADY_CHECKED_USER_ID_LIST);    //已经选择的列表
         checkedInitGroupList = intent.getStringArrayListExtra(LIST_ALREADY_CHECKED_GROUP_ID_LIST); //已经选择的群组
         viewModel.getFriendShipLiveData().observe(this, observable);
-        viewModel.getGroupFriendsLiveData().observe(this, observable);
-        viewModel.getExcludeGroupLiveData().observe(this, observable);
+//        viewModel.getGroupFriendsLiveData().observe(this, observable);
+//        viewModel.getExcludeGroupLiveData().observe(this, observable);
         viewModel.getAllGroupMemberLiveData().observe(this, observable);
         onLoadData(viewModel);
     }
@@ -99,8 +100,8 @@ public class SelectBaseFragment extends BaseContactFragment implements OnCheckCo
         recyclerView.scrollToPosition(viewModel.getIndex(s));
     }
 
-    public ArrayList<String> getCheckedList() {
-        return viewModel.getCheckedList();
+    public CheckedItem getCheckedList() {
+        return viewModel.getCheckedItem();
     }
 
     public ArrayList<String> getCheckedInitGroupList() {

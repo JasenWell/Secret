@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import com.jess.arms.di.component.AppComponent;
 import com.xyp.mimi.R;
+import com.xyp.mimi.im.bean.CheckedItem;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -62,6 +63,10 @@ public class SelectBaseActivity extends TitleAndSearchBaseActivity {
      * @param selectIds
      */
     protected void onConfirmClicked(ArrayList<String> selectIds, ArrayList<String> selectGroups) {
+
+    }
+
+    protected void onConfirmClicked(CheckedItem checkedItem, ArrayList<String> selectGroups) {
 
     }
 

@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import java.util.List;
 
 import com.xyp.mimi.R;
+import com.xyp.mimi.im.bean.ResponseGroupInfo;
 import com.xyp.mimi.im.db.model.GroupEntity;
 import com.xyp.mimi.im.ui.adapter.models.CheckType;
 import com.xyp.mimi.im.ui.adapter.models.SearchGroupModel;
@@ -73,13 +74,13 @@ public class ForwardSearchGroupViewHolder extends ForwardCheckViewHolder<SearchG
             }
         }
 
-        GroupEntity groupEntity = searchGroupModel.getBean();
+        ResponseGroupInfo groupEntity = searchGroupModel.getBean();
         if (searchGroupModel.getGroupNameStart() == -1) {
-            tvNickName.setText(groupEntity.getName());
+            tvNickName.setText(groupEntity.getContext());
         } else {
-            tvNickName.setText(CharacterParser.getSpannable(groupEntity.getName(), searchGroupModel.getGroupNameStart(), searchGroupModel.getGroupNameEnd()));
+            tvNickName.setText(CharacterParser.getSpannable(groupEntity.getContext(), searchGroupModel.getGroupNameStart(), searchGroupModel.getGroupNameEnd()));
         }
-        ImageLoaderUtils.displayUserPortraitImage(groupEntity.getPortraitUri(), portrait);
+        ImageLoaderUtils.displayUserPortraitImage(groupEntity.getId(), portrait);
         List<SearchGroupModel.GroupMemberMatch> memberMatches = searchGroupModel.getMatchedMemberlist();
         if (memberMatches == null || memberMatches.size() == 0) {
             llDescription.setVisibility(View.GONE);

@@ -65,6 +65,7 @@
 
 
     <!-- hjh -->
+    <color name="main_theme_color">#0195ff</color>
     <color name="color_black_38">#383838</color>
     <color name="color_gray_d8">#D8D8D8</color>
     <color name="color_gray_97">#979797</color>

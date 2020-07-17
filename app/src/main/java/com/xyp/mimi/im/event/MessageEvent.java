@@ -32,5 +32,6 @@ public class MessageEvent {
 
     public  interface EventType{
         int REFRESH_FRIEND_LIST = 0;
+        int SWITCH_GROUP_LIST = 1;
     }
 }

@@ -24,6 +24,7 @@ import com.jaeger.library.StatusBarUtil;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
 import com.tbruyelle.rxpermissions2.RxPermissions;
+import com.xyp.mimi.im.bean.ResponseAddingFriendInfo;
 import com.xyp.mimi.im.common.IntentExtra;
 import com.xyp.mimi.im.db.model.FriendShipInfo;
 import com.xyp.mimi.im.event.MessageEvent;
@@ -32,6 +33,7 @@ import com.xyp.mimi.im.model.Status;
 import com.xyp.mimi.im.model.VersionInfo;
 import com.xyp.mimi.app.base.BaseSupportActivity;
 import com.xyp.mimi.im.ui.activity.AddFriendActivity;
+import com.xyp.mimi.im.ui.activity.CreateGroupActivity;
 import com.xyp.mimi.im.ui.activity.SelectCreateGroupActivity;
 import com.xyp.mimi.im.ui.activity.SelectSingleFriendActivity;
 import com.xyp.mimi.im.ui.dialog.MorePopWindow;
@@ -386,13 +388,13 @@ public class MainActivity extends BaseSupportActivity implements MorePopWindow.O
             }
         });
 
-        mainViewModel.getPrivateChatLiveData().observe(this, new Observer<FriendShipInfo>() {
+        mainViewModel.getPrivateChatLiveData().observe(this, new Observer<ResponseAddingFriendInfo>() {
             @Override
-            public void onChanged(FriendShipInfo friendShipInfo) {
+            public void onChanged(ResponseAddingFriendInfo friendShipInfo) {
                 RongIM.getInstance().startPrivateChat(MainActivity.this,
-                        friendShipInfo.getUser().getId(),
-                        TextUtils.isEmpty(friendShipInfo.getDisplayName()) ?
-                                friendShipInfo.getUser().getNickname() : friendShipInfo.getDisplayName());
+                        friendShipInfo.getViceUid(),
+                        TextUtils.isEmpty(friendShipInfo.getUsername()) ?
+                                friendShipInfo.getUsername() : friendShipInfo.getUsername());
             }
         });
 
@@ -479,14 +481,15 @@ public class MainActivity extends BaseSupportActivity implements MorePopWindow.O
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case REQUEST_START_CHAT:
-                    mainViewModel.startPrivateChat(data.getStringExtra(IntentExtra.STR_TARGET_ID));
+                    mainViewModel.startPrivateChat((ResponseAddingFriendInfo) data.getSerializableExtra("checked_user"));
+//                    mainViewModel.startPrivateChat(data.getStringExtra(IntentExtra.STR_TARGET_ID));
                     break;
                 case REQUEST_START_GROUP:
-//                    ArrayList<String> memberList = data.getStringArrayListExtra(IntentExtra.LIST_STR_ID_LIST);
-//                    SLog.i(TAG, "memberList.size = " + memberList.size());
-//                    Intent intent = new Intent(this, CreateGroupActivity.class);
-//                    intent.putExtra(IntentExtra.LIST_STR_ID_LIST, memberList);
-//                    startActivity(intent);
+                    ArrayList<String> memberList = data.getStringArrayListExtra(IntentExtra.LIST_STR_ID_LIST);
+                    SLog.i(TAG, "memberList.size = " + memberList.size());
+                    Intent intent = new Intent(this, CreateGroupActivity.class);
+                    intent.putExtra(IntentExtra.LIST_STR_ID_LIST, memberList);
+                    startActivity(intent);
                     break;
                 default:
                     break;

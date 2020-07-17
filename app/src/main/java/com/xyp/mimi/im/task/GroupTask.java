@@ -49,6 +49,7 @@ import com.xyp.mimi.im.model.UserSimpleInfo;
 import com.xyp.mimi.im.net.HttpClientManager;
 import com.xyp.mimi.im.net.RetrofitUtil;
 import com.xyp.mimi.im.net.service.GroupService;
+import com.xyp.mimi.im.sp.UserCache;
 import com.xyp.mimi.im.ui.adapter.models.SearchGroupMember;
 import com.xyp.mimi.im.utils.NetworkBoundResource;
 import com.xyp.mimi.im.utils.NetworkOnlyResource;
@@ -84,12 +85,23 @@ public class GroupTask {
             @NonNull
             @Override
             protected LiveData<Result<GroupResult>> createCall() {
-                HashMap<String, Object> bodyMap = new HashMap<>();
-                bodyMap.put("name", groupName);
-                bodyMap.put("memberIds", memberList);
-                return groupService.createGroup(RetrofitUtil.createJsonRequest(bodyMap));
+//                HashMap<String, Object> bodyMap = new HashMap<>();
+//                bodyMap.put("name", groupName);
+//                bodyMap.put("memberIds", memberList);
+//                return groupService.createGroup(RetrofitUtil.createJsonRequest(bodyMap));
+                return groupService.createGroup(UserCache.getInstance().getCurrentUserId(),listToString(memberList),groupName);
             }
         }.asLiveData();
+    }
+
+    private String listToString(List<String> memberList){
+        String idStr = "";
+        for (String id :memberList){
+            idStr += id;
+            idStr += ",";
+        }
+        idStr = idStr.substring(0,idStr.length()-1);
+        return idStr;
     }
 
     /**

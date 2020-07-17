@@ -3,7 +3,7 @@ package com.xyp.mimi.im.bean;
 import java.io.Serializable;
 
 /**
- * Description:搜索好友结果
+ * Description:请求添加好友结果
  * Created by hjh on 2020/7/14.
  */
 public class ResponseSearchFriendInfo implements Serializable {

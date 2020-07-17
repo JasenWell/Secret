@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.xyp.mimi.R;
+import com.xyp.mimi.im.bean.ResponseGroupInfo;
 import com.xyp.mimi.im.db.model.FriendShipInfo;
 import com.xyp.mimi.im.db.model.GroupEntity;
 import com.xyp.mimi.im.task.FriendTask;
@@ -185,7 +186,7 @@ public class ForwardSearchViewModel extends AndroidViewModel {
 
     private List<SearchModel> convertGroupSearch(List<SearchGroupMember> input) {
         List<SearchModel> output = new ArrayList<>();
-        HashMap<GroupEntity, List<SearchGroupModel.GroupMemberMatch>> groupEntityListHashMap = new HashMap<>();
+        HashMap<ResponseGroupInfo, List<SearchGroupModel.GroupMemberMatch>> groupEntityListHashMap = new HashMap<>();
         for (SearchGroupMember info : input) {
             int start = -1;
             int end = -1;
@@ -203,10 +204,10 @@ public class ForwardSearchViewModel extends AndroidViewModel {
         }
 
         SearchGroupModel searchGroupModel = null;
-        for (Map.Entry<GroupEntity, List<SearchGroupModel.GroupMemberMatch>> entry : groupEntityListHashMap.entrySet()) {
+        for (Map.Entry<ResponseGroupInfo, List<SearchGroupModel.GroupMemberMatch>> entry : groupEntityListHashMap.entrySet()) {
             int start = -1;
             int end = -1;
-            SearchUtils.Range range = SearchUtils.rangeOfKeyword(entry.getKey().getName(), groupMatch);
+            SearchUtils.Range range = SearchUtils.rangeOfKeyword(entry.getKey().getContext(), groupMatch);
             if (range != null) {
                 start = range.getStart();
                 end = range.getEnd() + 1;
@@ -221,7 +222,7 @@ public class ForwardSearchViewModel extends AndroidViewModel {
         return searchAll;
     }
 
-    protected SearchGroupModel createSearchGroupModel(GroupEntity entity, int start, int end, List<SearchGroupModel.GroupMemberMatch> matchs) {
+    protected SearchGroupModel createSearchGroupModel(ResponseGroupInfo entity, int start, int end, List<SearchGroupModel.GroupMemberMatch> matchs) {
         SearchGroupModel searchGroupModel = new SearchGroupModel(entity, R.layout.serach_fragment_forward_recycler_group_item, start, end, matchs);
         searchGroupModel.setId(entity.getId());
         if (isSelect) {

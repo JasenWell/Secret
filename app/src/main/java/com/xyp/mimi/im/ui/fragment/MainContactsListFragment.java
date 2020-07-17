@@ -29,6 +29,7 @@ import com.xyp.mimi.im.net.hjh.ResponseJson;
 import com.xyp.mimi.im.net.hjh.callback.IBaseCallBack;
 import com.xyp.mimi.im.net.hjh.imp.AsynModelImp;
 import com.xyp.mimi.im.sp.UserCache;
+import com.xyp.mimi.im.ui.activity.GroupListActivity;
 import com.xyp.mimi.im.ui.activity.NewFriendListActivity;
 import com.xyp.mimi.im.ui.activity.UserDetailActivity;
 import com.xyp.mimi.im.ui.adapter.CommonListAdapter;
@@ -198,7 +199,7 @@ public class MainContactsListFragment extends CommonListBaseFragment implements 
      * @param friendShipInfo
      */
     private void handleFriendItemClick(ResponseAddingFriendInfo friendShipInfo) {
-        if (friendShipInfo.getId().equals(IMManager.getInstance().getCurrentId())) {
+        if (friendShipInfo.getId().equals(IMManager.getInstance().getCurrentId())) {//点击自己
             String title = friendShipInfo.getUsername();
             RongIM.getInstance().startConversation(getActivity(), Conversation.ConversationType.PRIVATE, friendShipInfo.getId(), title);
         } else {
@@ -246,8 +247,8 @@ public class MainContactsListFragment extends CommonListBaseFragment implements 
                 break;
             case "2":
                 //群组
-//                intent = new Intent(getActivity(), GroupListActivity.class);
-//                startActivity(intent);
+                intent = new Intent(getActivity(), GroupListActivity.class);
+                startActivity(intent);
                 break;
             case "3":
                 //公众号

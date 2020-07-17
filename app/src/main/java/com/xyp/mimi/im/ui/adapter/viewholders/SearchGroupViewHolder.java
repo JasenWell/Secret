@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import java.util.List;
 
 import com.xyp.mimi.R;
+import com.xyp.mimi.im.bean.ResponseGroupInfo;
 import com.xyp.mimi.im.db.model.GroupEntity;
 import com.xyp.mimi.im.ui.adapter.models.SearchGroupModel;
 import com.xyp.mimi.im.ui.interfaces.OnGroupItemClickListener;
@@ -22,7 +23,7 @@ public class SearchGroupViewHolder extends BaseViewHolder<SearchGroupModel> {
     private ImageView portrait;
     private View llDescription;
     private OnGroupItemClickListener groupItemClickListener;
-    private GroupEntity groupEntity;
+    private ResponseGroupInfo groupEntity;
 
     public SearchGroupViewHolder(@NonNull View itemView, OnGroupItemClickListener l) {
         super(itemView);
@@ -45,11 +46,11 @@ public class SearchGroupViewHolder extends BaseViewHolder<SearchGroupModel> {
     public void update(SearchGroupModel searchGroupModel) {
         groupEntity = searchGroupModel.getBean();
         if (searchGroupModel.getGroupNameStart() == -1) {
-            tvNickName.setText(groupEntity.getName());
+            tvNickName.setText(groupEntity.getContext());
         } else {
-            tvNickName.setText(CharacterParser.getSpannable(groupEntity.getName(), searchGroupModel.getGroupNameStart(), searchGroupModel.getGroupNameEnd()));
+            tvNickName.setText(CharacterParser.getSpannable(groupEntity.getContext(), searchGroupModel.getGroupNameStart(), searchGroupModel.getGroupNameEnd()));
         }
-        ImageLoaderUtils.displayGroupPortraitImage(groupEntity.getPortraitUri(), portrait);
+        ImageLoaderUtils.displayGroupPortraitImage(groupEntity.getId(), portrait);
         List<SearchGroupModel.GroupMemberMatch> memberMatches = searchGroupModel.getMatchedMemberlist();
         if (memberMatches == null || memberMatches.size() == 0) {
             llDescription.setVisibility(View.GONE);

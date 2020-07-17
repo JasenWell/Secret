@@ -840,12 +840,23 @@ public class UserTask {
         }.asLiveData();
     }
 
+    public LiveData<Resource<ResponseWrapperInfo>> getContactGroupList() {
+        return new NetworkOnlyResource<ResponseWrapperInfo, Result<ResponseWrapperInfo>>() {
+
+            @NonNull
+            @Override
+            protected LiveData<Result<ResponseWrapperInfo>> createCall() {
+                return userService.getGroupList(UserCache.getInstance().getCurrentUserId());
+            }
+        }.asLiveData();
+    }
+
     /**
      * 获取通讯录群组列表
      *
      * @return
      */
-    public LiveData<Resource<List<GroupEntity>>> getContactGroupList() {
+    public LiveData<Resource<List<GroupEntity>>> getContactGroupList2() {
         return new NetworkBoundResource<List<GroupEntity>, Result<ContactGroupResult>>() {
             @Override
             protected void saveCallResult(@NonNull Result<ContactGroupResult> item) {

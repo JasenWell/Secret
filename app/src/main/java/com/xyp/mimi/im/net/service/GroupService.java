@@ -18,6 +18,8 @@ import com.xyp.mimi.im.model.Result;
 import com.xyp.mimi.im.net.SealTalkUrl;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.HTTP;
 import retrofit2.http.POST;
@@ -25,6 +27,26 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface GroupService {
+    //---------------hjh start----------------
+
+    //创建群
+    @FormUrlEncoded
+    @POST("/mall/interface/Group")
+    LiveData<Result<GroupResult>> createGroup(
+            @Field("uid") String userId,//用户id
+            @Field("idList") String idList,//拉入好友群聊id(多个用逗号隔开,):
+            @Field("context") String groupName
+    );
+
+
+
+
+
+
+
+
+
+    //---------------hjh end----------------
 
     @POST(SealTalkUrl.GROUP_CREATE)
     LiveData<Result<GroupResult>> createGroup(@Body RequestBody body);

@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import com.xyp.mimi.im.bean.HashKit;
 import com.xyp.mimi.im.net.hjh.EConfig;
 import com.xyp.mimi.im.net.hjh.HttpHelper;
 import com.xyp.mimi.im.net.hjh.MessageEvent;
@@ -18,6 +19,7 @@ import com.xyp.mimi.im.net.hjh.param.Params;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.Map;
 
 import okhttp3.Call;
@@ -44,7 +46,7 @@ public class AsynModelImp implements IAsynModel {
                 iBaseCallBack.showErrorInfo(business.getCode()+1,business.getErrorMsg());
             }else if(msg.what == 1234){
                 HttpHelper.BUSINESS business = (HttpHelper.BUSINESS) msg.obj;
-                if(business.getResponseJson().getStatus() != 0){
+                if(business.getResponseJson().getStatus() != 0 && !business.isRongyun()){
                     iBaseCallBack.showErrorInfo(business.getCode()+1,business.getResponseJson().getInfo());
                 }else {
                     iBaseCallBack.onSuccess(business.getResponseJson(), business.getCode());
@@ -81,6 +83,28 @@ public class AsynModelImp implements IAsynModel {
         if(checkNetStatus()) {
             okHttpUtils.post(param, HttpHelper.PostGetUrl(business.getBusiness())).enqueue(new CallbackImp(business));
         }
+    }
+
+    @Override
+    public void sendRYRequest(HttpHelper.BUSINESS business, Map<String, String> param) {
+        if(checkNetStatus()) {
+            business.setRongyun(true);
+            okHttpUtils.post(param, HttpHelper.PostGetRYUrl(business.getBusiness()),addTokenMap()).enqueue(new CallbackImp(business));
+        }
+    }
+
+    private Map addTokenMap() {
+        Map<String, String> map = new HashMap<String, String>();
+        String key = "pvxdm17jpe5cr";
+        String secret = "pbPDAAqPawQFq";
+        String nonce = ""+System.currentTimeMillis();
+        String timestamp = ""+System.currentTimeMillis();
+        String  signature = HashKit.hexSHA1(secret+nonce+timestamp);
+        map.put("RC-App-Key", key);
+        map.put("RC-Nonce", nonce);
+        map.put("RC-Timestamp",timestamp);
+        map.put("RC-Signature",signature);
+        return map;
     }
 
     @Override

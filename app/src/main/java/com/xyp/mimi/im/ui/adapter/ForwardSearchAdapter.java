@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.xyp.mimi.R;
+import com.xyp.mimi.im.bean.ResponseGroupInfo;
 import com.xyp.mimi.im.db.model.FriendShipInfo;
 import com.xyp.mimi.im.db.model.GroupEntity;
 import com.xyp.mimi.im.ui.adapter.models.SearchModel;
@@ -81,7 +82,7 @@ public class ForwardSearchAdapter extends RecyclerView.Adapter<ForwardCheckViewH
             case R.layout.serach_fragment_forward_recycler_group_item:
                 viewHolder = new ForwardSearchGroupViewHolder(itemView, new OnGroupItemClickListener() {
                     @Override
-                    public void onGroupClicked(GroupEntity groupEntity) {
+                    public void onGroupClicked(ResponseGroupInfo groupEntity) {
                         if (selectedGroupIds.contains(groupEntity.getId())) {
                             selectedGroupIds.remove(groupEntity.getId());
                         } else {

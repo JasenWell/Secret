@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.xyp.mimi.R;
+import com.xyp.mimi.im.bean.ResponseUserInfo;
 import com.xyp.mimi.im.model.SearchFriendInfo;
 import com.xyp.mimi.im.ui.interfaces.OnSearchFriendItemClickListener;
 import com.xyp.mimi.im.utils.ImageLoaderUtils;
@@ -20,13 +21,13 @@ import com.xyp.mimi.im.utils.RongGenerate;
 
 public class SearchFriendResultFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = "SearchFriendResultFragment";
-    private SearchFriendInfo searchFriendInfo;
+    private ResponseUserInfo searchFriendInfo;
     private ImageView ivPortrait;
     private TextView tvName;
     private TextView tvStAccount;
     private OnSearchFriendItemClickListener searchFriendItemClickListener;
 
-    public void setData(OnSearchFriendItemClickListener listener, SearchFriendInfo searchFriendInfo){
+    public void setData(OnSearchFriendItemClickListener listener, ResponseUserInfo searchFriendInfo){
         this.searchFriendInfo = searchFriendInfo;
         searchFriendItemClickListener = listener;
     }
@@ -44,14 +45,14 @@ public class SearchFriendResultFragment extends Fragment implements View.OnClick
     }
 
     private void initView() {
-        tvName.setText(searchFriendInfo.getNickname());
-        String stAccount = searchFriendInfo.getStAccount();
+        tvName.setText(searchFriendInfo.getUserName());
+        String stAccount = "";
         if (!TextUtils.isEmpty(stAccount)) {
             tvStAccount.setText(getString(R.string.seal_st_account_content_format, stAccount));
         }
-        String portraitUri = searchFriendInfo.getPortraitUri();
+        String portraitUri = searchFriendInfo.getImgUrl();
         if (TextUtils.isEmpty(portraitUri)) {
-            String generateDefaultAvatar = RongGenerate.generateDefaultAvatar(getContext(), searchFriendInfo.getId(), searchFriendInfo.getNickname());
+            String generateDefaultAvatar = RongGenerate.generateDefaultAvatar(getContext(), searchFriendInfo.getId(), searchFriendInfo.getUserName());
             ImageLoaderUtils.displayUserPortraitImage(generateDefaultAvatar, ivPortrait);
         } else {
             ImageLoaderUtils.displayUserPortraitImage(portraitUri, ivPortrait);

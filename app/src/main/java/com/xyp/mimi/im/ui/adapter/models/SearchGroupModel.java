@@ -2,14 +2,15 @@ package com.xyp.mimi.im.ui.adapter.models;
 
 import java.util.List;
 
+import com.xyp.mimi.im.bean.ResponseGroupInfo;
 import com.xyp.mimi.im.db.model.GroupEntity;
 
-public class SearchGroupModel extends SearchModel<GroupEntity> {
+public class SearchGroupModel extends SearchModel<ResponseGroupInfo> {
     private int groupNameStart;
     private int groupNameEnd;
     private List<GroupMemberMatch> matchedMemberlist;
 
-    public SearchGroupModel(GroupEntity bean, int type, int groupNameStart, int groupNameEnd, List<GroupMemberMatch> memberMatches) {
+    public SearchGroupModel(ResponseGroupInfo bean, int type, int groupNameStart, int groupNameEnd, List<GroupMemberMatch> memberMatches) {
         super(bean, type);
         priority = SHOW_PRIORITY_GROUP;
         matchedMemberlist = memberMatches;

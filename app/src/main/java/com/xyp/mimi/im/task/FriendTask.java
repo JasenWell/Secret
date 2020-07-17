@@ -49,6 +49,8 @@ import com.xyp.mimi.im.utils.NetworkOnlyResource;
 import com.xyp.mimi.im.utils.RongGenerate;
 import com.xyp.mimi.im.utils.SearchUtils;
 import com.xyp.mimi.im.utils.log.SLog;
+import com.xyp.mimi.mvp.http.entity.login.LoginUserResult;
+
 import io.rong.imlib.model.Conversation;
 import okhttp3.RequestBody;
 
@@ -458,7 +460,7 @@ public class FriendTask {
         return dbManager.getFriendDao().searchFriendsIncludeGroup(includeGroupId, matchSearch);
     }
 
-    public LiveData<Resource<ResponseSearchFriendInfo>> searchFriendFromServer(final  String stAccount, String region, String phone) {
+    public LiveData<Resource<ResponseSearchFriendInfo>> addFriendRequest(final  String stAccount,String phone) {
         return new NetworkOnlyResource<ResponseSearchFriendInfo, Result<ResponseSearchFriendInfo>>() {
 
             @NonNull
@@ -467,7 +469,18 @@ public class FriendTask {
                 HashMap<String, String> queryMap = new HashMap<>();
                 queryMap.put("mianUid", stAccount);
                 queryMap.put("phone", phone);
-                return friendService.searchFriend(queryMap);
+                return friendService.addFriendRequest(queryMap);
+            }
+        }.asLiveData();
+    }
+
+    public LiveData<Resource<LoginUserResult>> searchFriendFromServer(String userId) {
+        return new NetworkOnlyResource<LoginUserResult, Result<LoginUserResult>>() {
+
+            @NonNull
+            @Override
+            protected LiveData<Result<LoginUserResult>> createCall() {
+                return friendService.searchFriendFromServer(userId);
             }
         }.asLiveData();
     }

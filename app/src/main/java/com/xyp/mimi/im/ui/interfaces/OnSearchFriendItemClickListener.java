@@ -1,5 +1,6 @@
 package com.xyp.mimi.im.ui.interfaces;
 
+import com.xyp.mimi.im.bean.ResponseUserInfo;
 import com.xyp.mimi.im.model.SearchFriendInfo;
 
 public interface OnSearchFriendItemClickListener {
@@ -8,5 +9,5 @@ public interface OnSearchFriendItemClickListener {
      *
      * @param searchFriendInfo
      */
-    void onSearchFriendItemClick(SearchFriendInfo searchFriendInfo);
+    void onSearchFriendItemClick(ResponseUserInfo searchFriendInfo);
 }

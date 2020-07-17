@@ -8,6 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.xyp.mimi.R;
+import com.xyp.mimi.im.bean.ResponseAddingFriendInfo;
 import com.xyp.mimi.im.db.model.FriendDetailInfo;
 import com.xyp.mimi.im.db.model.FriendShipInfo;
 import com.xyp.mimi.im.model.GroupMember;
@@ -44,19 +45,18 @@ public class CheckableContactViewHolder extends CheckableBaseViewHolder<Checkabl
         model = contactModel;
         String name = null;
         String portraitUrl = null;
-        if (contactModel.getBean() instanceof FriendShipInfo) {
-            FriendShipInfo friendShipInfo = (FriendShipInfo) contactModel.getBean();
-            FriendDetailInfo info = friendShipInfo.getUser();
-            String groupDisplayName = friendShipInfo.getGroupDisplayName();
-            String displayName = friendShipInfo.getDisplayName();
+        if (contactModel.getBean() instanceof ResponseAddingFriendInfo) {
+            ResponseAddingFriendInfo friendShipInfo = (ResponseAddingFriendInfo) contactModel.getBean();
+            String groupDisplayName = "";
+            String displayName = friendShipInfo.getUsername();
             if (!TextUtils.isEmpty(groupDisplayName)) {
                 name = groupDisplayName;
             } else if (!TextUtils.isEmpty(displayName)) {
                 name = displayName;
             } else {
-                name = info.getNickname();
+                name = "****";
             }
-            portraitUrl = info.getPortraitUri();
+            portraitUrl = friendShipInfo.getImgUrl();
         } else if (contactModel.getBean() instanceof GroupMember) {
             GroupMember groupMember = (GroupMember) contactModel.getBean();
             name = groupMember.getGroupNickName();

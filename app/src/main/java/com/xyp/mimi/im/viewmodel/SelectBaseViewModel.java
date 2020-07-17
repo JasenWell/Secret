@@ -18,11 +18,15 @@ import java.util.Comparator;
 import java.util.List;
 
 import com.xyp.mimi.R;
+import com.xyp.mimi.im.bean.CheckedItem;
+import com.xyp.mimi.im.bean.ResponseAddingFriendInfo;
+import com.xyp.mimi.im.bean.ResponseWrapperInfo;
 import com.xyp.mimi.im.db.model.FriendShipInfo;
 import com.xyp.mimi.im.db.model.FriendStatus;
 import com.xyp.mimi.im.model.GroupMember;
 import com.xyp.mimi.im.model.Resource;
 import com.xyp.mimi.im.model.Status;
+import com.xyp.mimi.im.sp.UserCache;
 import com.xyp.mimi.im.task.FriendTask;
 import com.xyp.mimi.im.task.GroupTask;
 import com.xyp.mimi.im.ui.adapter.models.CharacterTitleInfo;
@@ -38,7 +42,7 @@ public class SelectBaseViewModel extends AndroidViewModel {
     private static final String TAG = "SelectBaseViewModel";
     private FriendTask friendTask;
     private GroupTask groupTask;
-    protected SingleSourceMapLiveData<Resource<List<FriendShipInfo>>, List<ContactModel>> friendsLiveData;
+    protected SingleSourceMapLiveData<Resource<ResponseWrapperInfo>, List<ContactModel>> friendsLiveData;
     protected SingleSourceMapLiveData<List<FriendShipInfo>, List<ContactModel>> groupFriendsLiveData;
     protected SingleSourceMapLiveData<List<FriendShipInfo>, List<ContactModel>> excludeGroupLiveData;
     protected SingleSourceMapLiveData<List<GroupMember>, List<ContactModel>> allGroupMemberLiveData;
@@ -53,27 +57,31 @@ public class SelectBaseViewModel extends AndroidViewModel {
         super(application);
         friendTask = new FriendTask(application);
         groupTask = new GroupTask(application);
-        friendsLiveData = new SingleSourceMapLiveData<>(new Function<Resource<List<FriendShipInfo>>, List<ContactModel>>() {
+        friendsLiveData = new SingleSourceMapLiveData<>(new Function<Resource<ResponseWrapperInfo>, List<ContactModel>>() {
             @Override
-            public List<ContactModel> apply(Resource<List<FriendShipInfo>> input) {
-                return convert(input.data);
+            public List<ContactModel> apply(Resource<ResponseWrapperInfo> input) {
+                if(input.status == Status.LOADING){
+                    return null;
+                }else {
+                    return convert(input.data.getFriendslist());
+                }
             }
         });
 
-        groupFriendsLiveData = new SingleSourceMapLiveData<>(new Function<List<FriendShipInfo>, List<ContactModel>>() {
-            @Override
-            public List<ContactModel> apply(List<FriendShipInfo> input) {
-                return convert(input);
-            }
-        });
-
-
-        excludeGroupLiveData = new SingleSourceMapLiveData<>(new Function<List<FriendShipInfo>, List<ContactModel>>() {
-            @Override
-            public List<ContactModel> apply(List<FriendShipInfo> input) {
-                return convert(input);
-            }
-        });
+//        groupFriendsLiveData = new SingleSourceMapLiveData<>(new Function<List<FriendShipInfo>, List<ContactModel>>() {
+//            @Override
+//            public List<ContactModel> apply(List<FriendShipInfo> input) {
+//                return convert(input);
+//            }
+//        });
+//
+//
+//        excludeGroupLiveData = new SingleSourceMapLiveData<>(new Function<List<FriendShipInfo>, List<ContactModel>>() {
+//            @Override
+//            public List<ContactModel> apply(List<FriendShipInfo> input) {
+//                return convert(input);
+//            }
+//        });
 
         allGroupMemberLiveData = new SingleSourceMapLiveData<>(new Function<List<GroupMember>, List<ContactModel>>() {
             @Override
@@ -92,12 +100,12 @@ public class SelectBaseViewModel extends AndroidViewModel {
         } else {
             selectedCount.setValue(0);
         }
-        friendsLiveData.setSource(friendTask.getAllFriends());
+        friendsLiveData.setSource(friendTask.getHjhAllFriends(UserCache.getInstance().getCurrentUserId()));
         currentLiveData = friendsLiveData;
     }
 
     public void loadFriendShip() {
-        friendsLiveData.setSource(friendTask.getAllFriends());
+        friendsLiveData.setSource(friendTask.getHjhAllFriends(UserCache.getInstance().getCurrentUserId()));
         currentLiveData = friendsLiveData;
     }
 
@@ -108,15 +116,15 @@ public class SelectBaseViewModel extends AndroidViewModel {
      */
     public void searchFriend(String keyword) {
         LiveData<List<FriendShipInfo>> searchDbLiveData = friendTask.searchFriendsFromDB(keyword);
-        // 转换数据库搜索结果
-        LiveData<Resource<List<FriendShipInfo>>> resourceLiveData = Transformations.switchMap(searchDbLiveData,
-                new Function<List<FriendShipInfo>, LiveData<Resource<List<FriendShipInfo>>>>() {
-                    @Override
-                    public LiveData<Resource<List<FriendShipInfo>>> apply(List<FriendShipInfo> input) {
-                        return new MutableLiveData<>(Resource.success(input));
-                    }
-                });
-        friendsLiveData.setSource(resourceLiveData);
+//        // 转换数据库搜索结果
+//        LiveData<Resource<List<FriendShipInfo>>> resourceLiveData = Transformations.switchMap(searchDbLiveData,
+//                new Function<List<FriendShipInfo>, LiveData<Resource<List<FriendShipInfo>>>>() {
+//                    @Override
+//                    public LiveData<Resource<List<FriendShipInfo>>> apply(List<FriendShipInfo> input) {
+//                        return new MutableLiveData<>(Resource.success(input));
+//                    }
+//                });
+//        friendsLiveData.setSource(resourceLiveData);
     }
 
 
@@ -228,21 +236,21 @@ public class SelectBaseViewModel extends AndroidViewModel {
      * @param input
      * @return
      */
-    private List<ContactModel> convert(List<FriendShipInfo> input) {
+    private List<ContactModel> convert(List<ResponseAddingFriendInfo> input) {
         if (input == null) return null;
         SLog.i(TAG, "convert input.size()" + input.size());
         List<ContactModel> output = new ArrayList<>();
         ContactModel model = null;
         String temp = "";
         sortByFirstChar(input);
-        for (FriendShipInfo friendShipInfo : input) {
+        for (ResponseAddingFriendInfo friendShipInfo : input) {
             if (excludeContactIdList != null) {
-                if (excludeContactIdList.contains(friendShipInfo.getUser().getId())) {
+                if (excludeContactIdList.contains(friendShipInfo.getViceUid())) {
                     continue;
                 }
             }
             // 非好友不添加入列表
-            if (friendShipInfo.getStatus() != FriendStatus.IS_FRIEND.getStatusCode()) {
+            if (Integer.parseInt(friendShipInfo.getStatus()) != 1) {
                 continue;
             }
 
@@ -256,12 +264,12 @@ public class SelectBaseViewModel extends AndroidViewModel {
                 temp = firstChar;
                 output.add(model);
             }
-            CheckableContactModel<FriendShipInfo> checkableContactModel = new CheckableContactModel(friendShipInfo, R.layout.select_fragment_contact_item);
-            if (uncheckableContactIdList != null && uncheckableContactIdList.contains(checkableContactModel.getBean().getUser().getId())) {
+            CheckableContactModel<ResponseAddingFriendInfo> checkableContactModel = new CheckableContactModel(friendShipInfo, R.layout.select_fragment_contact_item);
+            if (uncheckableContactIdList != null && uncheckableContactIdList.contains(checkableContactModel.getBean().getViceUid())) {
                 checkableContactModel.setCheckType(CheckType.DISABLE);
             }
-            SLog.i(TAG, "checkableContactModel.getBean().getUser().getId(): " + checkableContactModel.getBean().getUser().getId());
-            if (checkedContactIdList != null && checkedContactIdList.contains(checkableContactModel.getBean().getUser().getId())) {
+            SLog.i(TAG, "checkableContactModel.getBean().getUser().getId(): " + checkableContactModel.getBean().getViceUid());
+            if (checkedContactIdList != null && checkedContactIdList.contains(checkableContactModel.getBean().getViceUid())) {
                 checkableContactModel.setCheckType(CheckType.CHECKED);
             }
             output.add(checkableContactModel);
@@ -319,27 +327,27 @@ public class SelectBaseViewModel extends AndroidViewModel {
         return checkedGroupList;
     }
 
-    public ArrayList<String> getCheckedList() {
-        ArrayList<String> strings = new ArrayList<>();
+    public CheckedItem getCheckedItem() {
+        CheckedItem checkedItem = new CheckedItem();
         List<ContactModel> contactModels = currentLiveData.getValue();
 
-        if (contactModels == null) return strings;
+        if (contactModels == null) return checkedItem;
 
         for (ContactModel model : contactModels) {
             if (model.getType() == R.layout.select_fragment_contact_item) {
                 CheckableContactModel checkableContactModel = (CheckableContactModel) model;
                 if (checkableContactModel.getCheckType() == CheckType.CHECKED) {
-                    if (checkableContactModel.getBean() instanceof FriendShipInfo) {
-                        FriendShipInfo info = (FriendShipInfo) checkableContactModel.getBean();
-                        strings.add(info.getUser().getId());
+                    if (checkableContactModel.getBean() instanceof ResponseAddingFriendInfo) {
+                        ResponseAddingFriendInfo info = (ResponseAddingFriendInfo) checkableContactModel.getBean();
+                        checkedItem.getFriendInfoList().add(info);
                     } else if (checkableContactModel.getBean() instanceof GroupMember) {
                         GroupMember groupMember = (GroupMember) checkableContactModel.getBean();
-                        strings.add(groupMember.getUserId());
+                        checkedItem.getGroupMemberList().add(groupMember);
                     }
                 }
             }
         }
-        return strings;
+        return checkedItem;
     }
 
     /**
@@ -384,9 +392,9 @@ public class SelectBaseViewModel extends AndroidViewModel {
             checkedContactIdList = new ArrayList<>();
         }
         Object bean = contactModel.getBean();
-        if (bean instanceof FriendShipInfo) {
-            FriendShipInfo friendShipInfo = (FriendShipInfo) bean;
-            String id = friendShipInfo.getUser().getId();
+        if (bean instanceof ResponseAddingFriendInfo) {
+            ResponseAddingFriendInfo friendShipInfo = (ResponseAddingFriendInfo) bean;
+            String id = friendShipInfo.getViceUid();
             if (!checkedContactIdList.contains(id)) {
                 checkedContactIdList.add(id);
                 selectedCount.setValue(checkedContactIdList.size());
@@ -408,9 +416,9 @@ public class SelectBaseViewModel extends AndroidViewModel {
         if (checkedContactIdList == null) return;
 
         Object bean = contactModel.getBean();
-        if (bean instanceof FriendShipInfo) {
-            FriendShipInfo friendShipInfo = (FriendShipInfo) bean;
-            String id = friendShipInfo.getUser().getId();
+        if (bean instanceof ResponseAddingFriendInfo) {
+            ResponseAddingFriendInfo friendShipInfo = (ResponseAddingFriendInfo) bean;
+            String id = friendShipInfo.getViceUid();
             boolean removed = checkedContactIdList.remove(id);
             if (removed) {
                 selectedCount.setValue(checkedContactIdList.size());
@@ -439,10 +447,10 @@ public class SelectBaseViewModel extends AndroidViewModel {
      *
      * @param models
      */
-    private void sortByFirstChar(List<FriendShipInfo> models) {
-        Collections.sort(models, new Comparator<FriendShipInfo>() {
+    private void sortByFirstChar(List<ResponseAddingFriendInfo> models) {
+        Collections.sort(models, new Comparator<ResponseAddingFriendInfo>() {
             @Override
-            public int compare(FriendShipInfo lhs, FriendShipInfo rhs) {
+            public int compare(ResponseAddingFriendInfo lhs, ResponseAddingFriendInfo rhs) {
                 if (TextUtils.isEmpty(getFirstChar(lhs))) {
                     return -1;
                 }
@@ -470,11 +478,11 @@ public class SelectBaseViewModel extends AndroidViewModel {
     }
 
     // 获取首字母
-    private String getFirstChar(FriendShipInfo info) {
+    private String getFirstChar(ResponseAddingFriendInfo info) {
         String firstChar;
-        String groupDisplayName = info.getGroupDisplayName();
-        String displayName = info.getDisplayName();
-        String nameFirstChar = info.getUser().getFirstCharacter();
+        String groupDisplayName = "";
+        String displayName = info.getUsername();
+        String nameFirstChar = "";
         if (!TextUtils.isEmpty(groupDisplayName)) {
             firstChar = CharacterParser.getInstance().getSpelling(groupDisplayName).substring(0, 1).toUpperCase();
         } else if (!TextUtils.isEmpty(displayName)) {

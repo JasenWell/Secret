@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer;
 import java.util.List;
 
 import com.xyp.mimi.im.bean.ResponseSearchFriendInfo;
+import com.xyp.mimi.im.bean.ResponseUserInfo;
 import com.xyp.mimi.im.db.model.FriendShipInfo;
 import com.xyp.mimi.im.db.model.FriendStatus;
 import com.xyp.mimi.im.model.AddFriendResult;
@@ -21,22 +22,23 @@ import com.xyp.mimi.im.task.FriendTask;
 import com.xyp.mimi.im.utils.SingleSourceLiveData;
 import com.xyp.mimi.im.utils.SingleSourceMapLiveData;
 import com.xyp.mimi.im.utils.log.SLog;
+import com.xyp.mimi.mvp.http.entity.login.LoginUserResult;
 
 
 public class SearchFriendNetViewModel extends AndroidViewModel {
     private static final String TAG = "SearchFriendNetViewModel";
     private FriendTask friendTask;
-    private SingleSourceLiveData<Resource<ResponseSearchFriendInfo>> searchFriend;
-    private SingleSourceMapLiveData<FriendShipInfo, Boolean> isFriend;
-    private SingleSourceMapLiveData<Resource<AddFriendResult>, Resource<AddFriendResult>> addFriend;
+    private SingleSourceLiveData<Resource<LoginUserResult>> searchFriend;
+    private SingleSourceMapLiveData<ResponseUserInfo, Boolean> isFriend;
+    private SingleSourceMapLiveData<Resource<ResponseSearchFriendInfo>, Resource<ResponseSearchFriendInfo>> addFriend;
 
     public SearchFriendNetViewModel(@NonNull Application application) {
         super(application);
         friendTask = new FriendTask(application);
         searchFriend = new SingleSourceLiveData<>();
-        addFriend = new SingleSourceMapLiveData<>(new Function<Resource<AddFriendResult>, Resource<AddFriendResult>>() {
+        addFriend = new SingleSourceMapLiveData<>(new Function<Resource<ResponseSearchFriendInfo>, Resource<ResponseSearchFriendInfo>>() {
             @Override
-            public Resource<AddFriendResult> apply(Resource<AddFriendResult> input) {
+            public Resource<ResponseSearchFriendInfo> apply(Resource<ResponseSearchFriendInfo> input) {
                 if(input.status == Status.SUCCESS){
                     // 邀请后刷新好友列表
                     updateFriendList();
@@ -45,12 +47,15 @@ public class SearchFriendNetViewModel extends AndroidViewModel {
                 return input;
             }
         });
-        isFriend = new SingleSourceMapLiveData<FriendShipInfo, Boolean>(new Function<FriendShipInfo, Boolean>() {
+        isFriend = new SingleSourceMapLiveData<ResponseUserInfo, Boolean>(new Function<ResponseUserInfo, Boolean>() {
             @Override
-            public Boolean apply(FriendShipInfo input) {
+            public Boolean apply(ResponseUserInfo input) {
                 if(input != null){
-                    return FriendStatus.getStatus(input.getStatus()) == FriendStatus.IS_FRIEND
-                            || FriendStatus.getStatus(input.getStatus()) == FriendStatus.IN_BLACK_LIST;
+                    if(input.getStatus().equals("1")){
+                        return true;
+                    }else{
+                        return false;
+                    }
                 } else {
                     return false;
                 }
@@ -58,12 +63,17 @@ public class SearchFriendNetViewModel extends AndroidViewModel {
         });
     }
 
-    public void searchFriendFromServer(String stAccount, String region, String phone) {
-        SLog.i(TAG, "searchFriendFromServer region: " + region + " phoneSearchFr: " + phone);
-        searchFriend.setSource(friendTask.searchFriendFromServer(stAccount, region, phone));
+    public void searchFriendFromServer(String userId) {
+        SLog.i(TAG, "searchFriendFromServer userid " + userId);
+        searchFriend.setSource(friendTask.searchFriendFromServer(userId));
     }
 
-    public LiveData<Resource<ResponseSearchFriendInfo>> getSearchFriend() {
+    public void addFriendRequest(String userId,String phone) {
+        SLog.i(TAG, "searchFriendFromServer userid " + userId);
+        addFriend.setSource(friendTask.addFriendRequest(userId,phone));
+    }
+
+    public LiveData<Resource<LoginUserResult>> getSearchFriend() {
         return searchFriend;
     }
 
@@ -71,15 +81,15 @@ public class SearchFriendNetViewModel extends AndroidViewModel {
         return isFriend;
     }
 
-    public void isFriend(String userId) {
-        isFriend.setSource(friendTask.getFriendShipInfoFromDB(userId));
+    public void isFriend(ResponseUserInfo userInfo) {
+        SingleSourceLiveData<ResponseUserInfo> source = new SingleSourceLiveData<ResponseUserInfo>(){
+
+        } ;
+        source.setValue(userInfo);
+        isFriend.setSource(source);
     }
 
-    public void inviteFriend(String userId, String message) {
-        addFriend.setSource(friendTask.inviteFriend(userId, message));
-    }
-
-    public LiveData<Resource<AddFriendResult>> getAddFriend() {
+    public LiveData<Resource<ResponseSearchFriendInfo>> getAddFriend() {
         return addFriend;
     }
 

@@ -19,6 +19,7 @@ import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
 import com.xyp.mimi.R;
 import com.xyp.mimi.im.bean.ResponseSearchFriendInfo;
+import com.xyp.mimi.im.bean.ResponseUserInfo;
 import com.xyp.mimi.im.common.IntentExtra;
 import com.xyp.mimi.im.event.MessageEvent;
 import com.xyp.mimi.im.im.IMManager;
@@ -33,6 +34,7 @@ import com.xyp.mimi.im.ui.fragment.SearchFriendResultFragment;
 import com.xyp.mimi.im.ui.interfaces.OnSearchFriendClickListener;
 import com.xyp.mimi.im.ui.interfaces.OnSearchFriendItemClickListener;
 import com.xyp.mimi.im.viewmodel.SearchFriendNetViewModel;
+import com.xyp.mimi.mvp.http.entity.login.LoginUserResult;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -63,18 +65,15 @@ public class SearchFriendActivity extends TitleBaseActivity implements OnSearchF
         searchFriendFragment.setOnSearchFriendClickListener(this);
         getSupportFragmentManager().beginTransaction() .add(containerId, searchFriendFragment).commit();
         viewModel = ViewModelProviders.of(this).get(SearchFriendNetViewModel.class);
-        viewModel.getSearchFriend().observe(this, new Observer<Resource<ResponseSearchFriendInfo>>() {
+        viewModel.getSearchFriend().observe(this, new Observer<Resource<LoginUserResult>>() {
             @Override
-            public void onChanged(Resource<ResponseSearchFriendInfo> searchFriendInfoResource) {
+            public void onChanged(Resource<LoginUserResult> searchFriendInfoResource) {
                 if (searchFriendInfoResource.status == Status.SUCCESS) {
-                    ArmsUtils.snackbarText("添加好友请求已发送");
-                    EventBus.getDefault().post(new MessageEvent("添加好友请求成功",MessageEvent.EventType.REFRESH_FRIEND_LIST));
-                    finish();
-//                    ResponseSearchFriendInfo friendInfo = searchFriendInfoResource.data;
-//                    searchFriendResultFragment = new SearchFriendResultFragment();
-//                    searchFriendResultFragment.setData(SearchFriendActivity.this, searchFriendInfoResource.data);
-//                    pushFragment(searchFriendResultFragment);
-//                    viewModel.isFriend(friendInfo.getId());
+                    LoginUserResult friendInfo = searchFriendInfoResource.data;
+                    searchFriendResultFragment = new SearchFriendResultFragment();
+                    searchFriendResultFragment.setData(SearchFriendActivity.this, friendInfo.getUser());
+                    pushFragment(searchFriendResultFragment);
+                    viewModel.isFriend(friendInfo.getUser());
                 } else if (searchFriendInfoResource.status == Status.ERROR) {
                     Toast.makeText(SearchFriendActivity.this, R.string.seal_account_not_exist, Toast.LENGTH_SHORT).show();
                 }
@@ -87,11 +86,14 @@ public class SearchFriendActivity extends TitleBaseActivity implements OnSearchF
                 isFriend = aBoolean;
             }
         });
-        viewModel.getAddFriend().observe(this, new Observer<Resource<AddFriendResult>>() {
+        viewModel.getAddFriend().observe(this, new Observer<Resource<ResponseSearchFriendInfo>>() {
             @Override
-            public void onChanged(Resource<AddFriendResult> addFriendResultResource) {
+            public void onChanged(Resource<ResponseSearchFriendInfo> addFriendResultResource) {
                 if (addFriendResultResource.status == Status.SUCCESS) {
-                    Toast.makeText(SearchFriendActivity.this, R.string.common_request_success, Toast.LENGTH_SHORT).show();
+                    showToast(R.string.common_request_success);
+                    ArmsUtils.snackbarText("添加好友请求已发送");
+                    EventBus.getDefault().post(new MessageEvent("添加好友请求成功",MessageEvent.EventType.REFRESH_FRIEND_LIST));
+                    finish();
                 } else if (addFriendResultResource.status == Status.ERROR) {
                     Toast.makeText(SearchFriendActivity.this,
                             String.format(getString(R.string.seal_quest_failed_error_code), addFriendResultResource.code),
@@ -118,18 +120,18 @@ public class SearchFriendActivity extends TitleBaseActivity implements OnSearchF
     @Override
     public void onSearchClick(String region, String searchContent) {
         if(TextUtils.isDigitsOnly(searchContent)){
-            viewModel.searchFriendFromServer(UserCache.getInstance().getUserCache().getId(), region, searchContent);
+            viewModel.searchFriendFromServer(searchContent);
         } else {
-            viewModel.searchFriendFromServer(searchContent, null, null);
+            viewModel.searchFriendFromServer(searchContent);
         }
     }
 
     @Override
-    public void onSearchFriendItemClick(SearchFriendInfo searchFriendInfo) {
+    public void onSearchFriendItemClick(ResponseUserInfo searchFriendInfo) {
         if (isFriend || searchFriendInfo.getId().equals(RongIM.getInstance().getCurrentUserId())) {
             toDetailActivity(searchFriendInfo.getId());
         } else {
-            showAddFriendDialog(searchFriendInfo.getId());
+            showAddFriendDialog(searchFriendInfo.getAccount());
         }
     }
 
@@ -139,7 +141,7 @@ public class SearchFriendActivity extends TitleBaseActivity implements OnSearchF
         startActivity(intent);
     }
 
-    private void showAddFriendDialog(String userId) {
+    private void showAddFriendDialog(String phone) {
         final EditText et = new EditText(this);
         SimpleInputDialog dialog = new SimpleInputDialog();
         dialog.setInputHint(getString(R.string.profile_add_friend_hint));
@@ -153,7 +155,7 @@ public class SearchFriendActivity extends TitleBaseActivity implements OnSearchF
                     // 当有附带群组名时显示来自哪个群组，没有时仅带自己的昵称
                     inviteMsg = getString(R.string.profile_invite_friend_description_format, userInfo.getName());
                 }
-                viewModel.inviteFriend(userId, inviteMsg);
+                viewModel.addFriendRequest(UserCache.getInstance().getCurrentUserId(), phone);
                 return true;
             }
         });

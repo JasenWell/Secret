@@ -10,6 +10,7 @@ import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
+import com.xyp.mimi.im.bean.ResponseAddingFriendInfo;
 import com.xyp.mimi.im.db.model.FriendShipInfo;
 import com.xyp.mimi.im.im.IMManager;
 import com.xyp.mimi.im.task.FriendTask;
@@ -22,7 +23,7 @@ public class MainViewModel extends AndroidViewModel {
     private MutableLiveData<Integer> unReadNum = new MutableLiveData<>();
     private MutableLiveData<Integer> newFriendNum = new MutableLiveData<>();
     private LiveData<String> userId = new MutableLiveData<>();
-    private MediatorLiveData<FriendShipInfo> privateChatLiveData = new MediatorLiveData<>();
+    private MediatorLiveData<ResponseAddingFriendInfo> privateChatLiveData = new MediatorLiveData<>();
     private FriendTask friendTask;
     /**
      * 群通知数
@@ -108,19 +109,20 @@ public class MainViewModel extends AndroidViewModel {
         imManager.clearMessageUnreadStatus(conversationTypes);
     }
 
-    public void startPrivateChat(String userId) {
-        if (TextUtils.isEmpty(userId)) return;
-        LiveData<FriendShipInfo> friendShipInfoLiveData = friendTask.getFriendShipInfoFromDB(userId);
-        privateChatLiveData.addSource(friendShipInfoLiveData, new Observer<FriendShipInfo>() {
-            @Override
-            public void onChanged(FriendShipInfo friendShipInfo) {
-                privateChatLiveData.removeSource(friendShipInfoLiveData);
-                privateChatLiveData.setValue(friendShipInfo);
-            }
-        });
+    public void startPrivateChat(ResponseAddingFriendInfo friendInfo) {
+//        if (TextUtils.isEmpty(userId)) return;
+//        LiveData<FriendShipInfo> friendShipInfoLiveData = friendTask.getFriendShipInfoFromDB(userId);
+//        privateChatLiveData.addSource(friendShipInfoLiveData, new Observer<ResponseAddingFriendInfo>() {
+//            @Override
+//            public void onChanged(ResponseAddingFriendInfo friendShipInfo) {
+//                privateChatLiveData.removeSource(friendShipInfoLiveData);
+//                privateChatLiveData.setValue(friendShipInfo);
+//            }
+//        });
+        privateChatLiveData.setValue(friendInfo);
     }
 
-    public MediatorLiveData<FriendShipInfo> getPrivateChatLiveData() {
+    public MediatorLiveData<ResponseAddingFriendInfo> getPrivateChatLiveData() {
         return privateChatLiveData;
     }
 

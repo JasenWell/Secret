@@ -23,6 +23,7 @@ public class HttpHelper {
 
     public static String WEB_HOST = "http://148.70.97.197:9088";//139.199.165.130,//192.168.1.102//112.74.218.80//a.wushangxiupin.com//120.25.74.232
     public static final int PORT  = 9092;
+    private static String RY_HOST = "http://api-cn.ronghub.com";
 
     public static String getURl(){
         StringBuilder sb = new StringBuilder(Api.APP_DOMAIN);//内网
@@ -35,6 +36,16 @@ public class HttpHelper {
 
     public static String PostGetUrl(String url){
         StringBuilder sb = new StringBuilder(getURl());
+        return sb.append(url).toString();
+    }
+
+    public static String getRYURl(){
+        StringBuilder sb = new StringBuilder(RY_HOST);
+        return sb.append("").toString();
+    }
+
+    public static String PostGetRYUrl(String url){
+        StringBuilder sb = new StringBuilder(getRYURl());
         return sb.append(url).toString();
     }
 
@@ -54,6 +65,7 @@ public class HttpHelper {
 
         REQUEST_GET_USER_INFO("/mall/interface/selectuserid", Method.POST,true, LoginUserResult.class,EConfig.ADD_FRIEND_REQUEST_SUCCESS),
 
+        REQUEST_CREATE_GROUP("/group/create.json",Method.POST,true,Object.class,EConfig.CREATE_GROUP_SUCCESS),
 
         REQUEST_CHAT_SINGLE("/mall/interface/caht", Method.POST,true,Object.class,EConfig.CHAT_SINGLE_SUCCESS),
         REQUEST_CHAT_SINGLE_RECORD("/mall/interface/cahtlist", Method.POST,true,Object.class,EConfig.CHAT_SINGLE_RECORD_SUCCESS)
@@ -72,6 +84,7 @@ public class HttpHelper {
         private Response response;
         private String errorMsg;
         private ResponseJson responseJson;
+        private boolean rongyun; // 是否为融云请求
         /**
          *
          * @param business 具体业务
@@ -85,9 +98,18 @@ public class HttpHelper {
             setCode(code);
             setObject(object);
             setClazz(clazz);
+            setRongyun(false);
             if(args != null && args.length > 0) {
                 setType(args[0]);
             }
+        }
+
+        public boolean isRongyun() {
+            return rongyun;
+        }
+
+        public void setRongyun(boolean rongyun) {
+            this.rongyun = rongyun;
         }
 
         public void setErrorMsg(String errorMsg) {

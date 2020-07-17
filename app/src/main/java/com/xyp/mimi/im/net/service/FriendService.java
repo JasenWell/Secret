@@ -15,6 +15,7 @@ import com.xyp.mimi.im.model.Result;
 import com.xyp.mimi.im.model.SearchFriendInfo;
 import com.xyp.mimi.im.net.SealTalkUrl;
 import com.xyp.mimi.mvp.http.entity.BaseResponse;
+import com.xyp.mimi.mvp.http.entity.login.LoginUserResult;
 
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
@@ -29,15 +30,16 @@ import retrofit2.http.QueryMap;
 public interface FriendService {
     //-------------------add by hjh start-----------------
     /**
-     * 搜索好友
+     * 添加好友请求
      *
      * @param queryMap
      * @return
      */
     @POST("/mall/interface/insertFriendslist")
-    LiveData<Result<ResponseSearchFriendInfo>> searchFriend(@QueryMap(encoded = true) Map<String, String> queryMap);
+    LiveData<Result<ResponseSearchFriendInfo>> addFriendRequest(@QueryMap(encoded = true) Map<String, String> queryMap);
 
     //添加好友
+    @Deprecated
     @FormUrlEncoded
     @POST("/mall/interface/insertFriendslist")
     Observable<BaseResponse<Object>> insertFriendslist(
@@ -45,6 +47,12 @@ public interface FriendService {
             @Field("phone") String friendPhone  //好友电话
     );
 
+    //查询好友信息
+    @FormUrlEncoded
+    @POST("/mall/interface/selectuserid")
+    LiveData<Result<LoginUserResult>> searchFriendFromServer(
+            @Field("userId") String userId//用户id
+    );
 
     //获取好友列表
     @FormUrlEncoded

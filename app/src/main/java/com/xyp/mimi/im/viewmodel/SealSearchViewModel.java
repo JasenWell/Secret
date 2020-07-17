@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.xyp.mimi.R;
+import com.xyp.mimi.im.bean.ResponseGroupInfo;
+import com.xyp.mimi.im.bean.ResponseWrapperInfo;
 import com.xyp.mimi.im.common.ThreadManager;
 import com.xyp.mimi.im.db.model.FriendShipInfo;
 import com.xyp.mimi.im.db.model.GroupEntity;
@@ -47,9 +49,8 @@ public class SealSearchViewModel extends AndroidViewModel {
     private static final String TAG = "SealSearchViewModel";
     private SingleSourceMapLiveData<List<FriendShipInfo>, List<SearchModel>> friendSearch;
     private SingleSourceMapLiveData<List<SearchGroupMember>, List<SearchModel>> groupSearch;
-    private SingleSourceMapLiveData<List<GroupEntity>, List<SearchModel>> groupSearhByName;
-    private SingleSourceMapLiveData<List<GroupEntity>, List<SearchModel>> groupContactSearhByName;
-    private SingleSourceLiveData<Resource<List<GroupEntity>>> groupContactList = new SingleSourceLiveData<>();
+    private SingleSourceMapLiveData<List<ResponseGroupInfo>, List<SearchModel>> groupSearhByName;
+    private SingleSourceLiveData<Resource<ResponseWrapperInfo>> groupContactList = new SingleSourceLiveData<>();
     private MutableLiveData<List<SearchModel>> conversationSearch;
     private MutableLiveData<List<SearchModel>> messageSearch;
     private MediatorLiveData searchAll;
@@ -84,19 +85,13 @@ public class SealSearchViewModel extends AndroidViewModel {
             }
         });
 
-        groupSearhByName = new SingleSourceMapLiveData<>(new Function<List<GroupEntity>, List<SearchModel>>() {
+        groupSearhByName = new SingleSourceMapLiveData<>(new Function<List<ResponseGroupInfo>, List<SearchModel>>() {
             @Override
-            public List<SearchModel> apply(List<GroupEntity> input) {
+            public List<SearchModel> apply(List<ResponseGroupInfo> input) {
                 return convertGroupSearchByName(input);
             }
         });
 
-        groupContactSearhByName = new SingleSourceMapLiveData<>(new Function<List<GroupEntity>, List<SearchModel>>() {
-            @Override
-            public List<SearchModel> apply(List<GroupEntity> input) {
-                return convertGroupSearchByName(input);
-            }
-        });
         conversationSearch = new MutableLiveData<>();
         messageSearch = new MutableLiveData<>();
         initSearchAllLiveData();
@@ -114,10 +109,10 @@ public class SealSearchViewModel extends AndroidViewModel {
         groupSearch.setSource(groupTask.searchGroup(match));
     }
 
-    public void searchGroupByName(String match) {
+    public List<SearchModel> wrapModels(String match,List<ResponseGroupInfo> groupInfoList) {
         SLog.i(TAG, "searchGroupContactByName match: " + match);
         groupContactMatchByName = match;
-        groupContactSearhByName.setSource(groupTask.searchGroupByName(match));
+        return convertGroupSearchByName(groupInfoList);
     }
 
     /**
@@ -383,7 +378,7 @@ public class SealSearchViewModel extends AndroidViewModel {
         output.add(new SearchTitleModel(R.string.seal_ac_search_group, R.layout.search_fragment_recycler_title_layout, SearchModel.SHOW_PRIORITY_GROUP));
 
         HashMap<String, List<SearchGroupModel.GroupMemberMatch>> groupEntityListHashMap = new HashMap<>();
-        HashMap<String, GroupEntity> entityHashMap = new HashMap<>();
+        HashMap<String, ResponseGroupInfo> entityHashMap = new HashMap<>();
         for (SearchGroupMember info : input) {
             int start = -1;
             int end = -1;
@@ -406,8 +401,8 @@ public class SealSearchViewModel extends AndroidViewModel {
         for (Map.Entry<String, List<SearchGroupModel.GroupMemberMatch>> entry : groupEntityListHashMap.entrySet()) {
             int start = -1;
             int end = -1;
-            GroupEntity entity = entityHashMap.get(entry.getKey());
-            SearchUtils.Range range = SearchUtils.rangeOfKeyword(entity.getName(), groupMatch);
+            ResponseGroupInfo entity = entityHashMap.get(entry.getKey());
+            SearchUtils.Range range = SearchUtils.rangeOfKeyword(entity.getContext(), groupMatch);
             if (range != null) {
                 start = range.getStart();
                 end = range.getEnd() + 1;
@@ -418,13 +413,13 @@ public class SealSearchViewModel extends AndroidViewModel {
         return output;
     }
 
-    private List<SearchModel> convertGroupSearchByName(List<GroupEntity> input) {
+    private List<SearchModel> convertGroupSearchByName(List<ResponseGroupInfo> input) {
         List<SearchModel> output = new ArrayList<>();
         SearchGroupModel model = null;
-        for (GroupEntity info : input) {
+        for (ResponseGroupInfo info : input) {
             int start = -1;
             int end = -1;
-            SearchUtils.Range range = SearchUtils.rangeOfKeyword(info.getName(), groupMatchbyName);
+            SearchUtils.Range range = SearchUtils.rangeOfKeyword(info.getContext(), groupMatchbyName);
             if (range != null) {
                 start = range.getStart();
                 end = range.getEnd() + 1;
@@ -434,6 +429,7 @@ public class SealSearchViewModel extends AndroidViewModel {
         }
         return output;
     }
+
 
     public LiveData<List<SearchModel>> getSearchFriend() {
         return friendSearch;
@@ -445,10 +441,6 @@ public class SealSearchViewModel extends AndroidViewModel {
 
     public LiveData<List<SearchModel>> getGroupSearhByName() {
         return groupSearhByName;
-    }
-
-    public LiveData<List<SearchModel>> getGroupContactSearhByName() {
-        return groupContactSearhByName;
     }
 
     public LiveData<List<SearchModel>> getConversationSearch() {
@@ -467,7 +459,7 @@ public class SealSearchViewModel extends AndroidViewModel {
         groupContactList.setSource(userTask.getContactGroupList());
     }
 
-    public LiveData<Resource<List<GroupEntity>>> getGroupContactList() {
+    public LiveData<Resource<ResponseWrapperInfo>> getGroupContactList() {
         return groupContactList;
     }
 }

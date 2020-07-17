@@ -56,4 +56,11 @@ public class Params {
         return map;
     }
 
+    public static  Map<String,String> createGroupParam(String userId, String groupId,String groupName){
+        Map<String,String> map = new HashMap<>();
+        map.put("userId",userId);
+        map.put("groupId",groupId);
+        map.put("groupName",groupName);
+        return map;
+    }
 }

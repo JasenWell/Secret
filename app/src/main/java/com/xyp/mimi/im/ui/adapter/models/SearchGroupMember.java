@@ -3,12 +3,13 @@ package com.xyp.mimi.im.ui.adapter.models;
 import androidx.room.ColumnInfo;
 import androidx.room.Embedded;
 
+import com.xyp.mimi.im.bean.ResponseGroupInfo;
 import com.xyp.mimi.im.db.model.GroupEntity;
 
 public class SearchGroupMember {
 
     @Embedded
-    private GroupEntity groupEntity;
+    private ResponseGroupInfo groupEntity;
 
     @ColumnInfo(name = "member_id")
     private String memberId;
@@ -16,11 +17,11 @@ public class SearchGroupMember {
     @ColumnInfo(name = "nickname")
     private String nickName;
 
-    public GroupEntity getGroupEntity() {
+    public ResponseGroupInfo getGroupEntity() {
         return groupEntity;
     }
 
-    public void setGroupEntity(GroupEntity groupEntity) {
+    public void setGroupEntity(ResponseGroupInfo groupEntity) {
         this.groupEntity = groupEntity;
     }
 

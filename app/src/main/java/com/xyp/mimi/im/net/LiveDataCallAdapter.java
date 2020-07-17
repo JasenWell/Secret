@@ -1,11 +1,14 @@
 package com.xyp.mimi.im.net;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 
 import java.lang.reflect.Type;
 import java.net.ConnectException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import com.google.gson.Gson;
 import com.xyp.mimi.im.common.ApiErrorCodeMap;
 import com.xyp.mimi.im.common.ErrorCode;
 import com.xyp.mimi.im.common.LogTag;
@@ -44,7 +47,7 @@ public class LiveDataCallAdapter<R> implements CallAdapter<R, LiveData<R>> {
                         public void onResponse(Call<R> call, Response<R> response) {
                             R body = response.body();
                             String path = call.request().url().encodedPath();
-
+                            String jsonStr = new Gson().toJson(body);
                             // 当没有信息体时通过 http code 判断业务错误
                             if (body == null && !response.isSuccessful()) {
                                 Result result = new Result();
@@ -62,6 +65,7 @@ public class LiveDataCallAdapter<R> implements CallAdapter<R, LiveData<R>> {
 ////                                    int errorCode = ApiErrorCodeMap.getApiErrorCode(path, result.code);
 ////                                    result.setCode(errorCode);
 ////                                }
+                                Log.d(getClass().toString(), jsonStr);
                             }
                             postValue(body);
                         }
