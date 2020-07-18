@@ -12,9 +12,10 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
+<!--    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />-->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+        tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -78,7 +79,6 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
 
-            android:screenOrientation="portrait"/>
         <activity android:name=".im.ui.activity.UserDetailActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
@@ -132,25 +132,25 @@
         <meta-data
             android:name="EASEMOB_APPKEY"
             android:value="zpxxgd#mimi" /> <!-- 声明SDK所需的service SDK核心功能 -->
-        <service
-            android:name="com.hyphenate.chat.EMChatService"
-            android:exported="true" />
-        <service
-            android:name="com.hyphenate.chat.EMJobService"
-            android:exported="true"
-            android:permission="android.permission.BIND_JOB_SERVICE" /> <!-- 声明SDK所需的receiver -->
-        <receiver android:name="com.hyphenate.chat.EMMonitorReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+<!--        <service-->
+<!--            android:name="com.hyphenate.chat.EMChatService"-->
+<!--            android:exported="true" />-->
+<!--        <service-->
+<!--            android:name="com.hyphenate.chat.EMJobService"-->
+<!--            android:exported="true"-->
+<!--            android:permission="android.permission.BIND_JOB_SERVICE" /> &lt;!&ndash; 声明SDK所需的receiver &ndash;&gt;-->
+<!--        <receiver android:name="com.hyphenate.chat.EMMonitorReceiver">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.PACKAGE_REMOVED" />-->
 
-                <data android:scheme="package" />
-            </intent-filter>
-            <!-- 可选filter -->
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.USER_PRESENT" />
-            </intent-filter>
-        </receiver>
+<!--                <data android:scheme="package" />-->
+<!--            </intent-filter>-->
+<!--            &lt;!&ndash; 可选filter &ndash;&gt;-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.BOOT_COMPLETED" />-->
+<!--                <action android:name="android.intent.action.USER_PRESENT" />-->
+<!--            </intent-filter>-->
+<!--        </receiver>-->
 
         <activity
             android:name=".mvp.ui.activity.login.SplashActivity"
@@ -304,8 +304,8 @@
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity android:name=".mvp.ui.activity.market.GoodsDetailActivity" />
-        <activity android:name=".mvp.ui.activity.ProblemActivity" />
-        <activity android:name=".mvp.ui.activity.user.RegisterActivity" />
+<!--        <activity android:name=".mvp.ui.activity.ProblemActivity" />-->
+<!--        <activity android:name=".mvp.ui.activity.user.RegisterActivity" />-->
         <activity android:name=".mvp.ui.activity.user.UserInformationActivity" />
         <activity android:name=".mvp.ui.activity.user.UserNameActivity" />
         <activity android:name=".mvp.ui.activity.user.RetrievePasswordActivity" />
