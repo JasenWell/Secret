@@ -3,8 +3,9 @@ package com.xyp.mimi.im.net.hjh.param;
 
 
 import java.util.HashMap;
+import java.util.IdentityHashMap;
+import java.util.List;
 import java.util.Map;
-
 
 public class Params {
 
@@ -56,11 +57,22 @@ public class Params {
         return map;
     }
 
+    @Deprecated
     public static  Map<String,String> createGroupParam(String userId, String groupId,String groupName){
         Map<String,String> map = new HashMap<>();
         map.put("userId",userId);
         map.put("groupId",groupId);
         map.put("groupName",groupName);
         return map;
+    }
+
+    public static  Map<String,String> createGroupParam(List<String> memList, String groupId, String groupName){
+        Map<String,String> identityHashMap = new IdentityHashMap<>();
+        for(String id: memList){
+            identityHashMap.put(new String("userId"),id);
+        }
+        identityHashMap.put("groupId",groupId);
+        identityHashMap.put("groupName",groupName);
+        return identityHashMap;
     }
 }

@@ -139,6 +139,30 @@ public class OkHttpUtils {
         return post(map,url,null);
     }
 
+    public Call postIdentityHashMapByheader(String data,String url,Map<String,String> header){
+        Call call;
+        MediaType MEDIA_TYPE_NORAML_FORM = MediaType.parse("application/x-www-form-urlencoded;charset=utf-8");
+        RequestBody requestBody=RequestBody.create(MEDIA_TYPE_NORAML_FORM,data);
+        Request.Builder reBuilder = new Request.Builder().url(url).post(requestBody);
+        if(header != null) {
+            for (String key : header.keySet()) {
+                reBuilder.addHeader(key, header.get(key));
+            }
+        }
+        Request requestPost = reBuilder.build();
+        call =  mOkHttpClient.newBuilder()
+                .connectTimeout(60 * 1000, TimeUnit.SECONDS)
+                .readTimeout(60 * 1000, TimeUnit.SECONDS)
+                .writeTimeout(60 * 1000, TimeUnit.SECONDS)
+                .build()
+                .newCall(requestPost);
+        return call;
+    }
+
+    public Call postIdentityHashMap(Map<String,String> map,String url,Map<String,String> header){
+        return postIdentityHashMapByheader(pingPostParams(map),url,header);
+    }
+
     /**
      * post带参数请求数据
      * @param map 参数

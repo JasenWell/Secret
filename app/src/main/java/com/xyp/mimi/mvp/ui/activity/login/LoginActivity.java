@@ -16,6 +16,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.SPUtils;
 import com.github.customview.MyEditText;
@@ -33,10 +36,15 @@ import com.xyp.mimi.im.bean.HashKit;
 import com.xyp.mimi.im.bean.ResponseIMTokenInfo;
 import com.xyp.mimi.im.bean.ResponseUserInfo;
 import com.xyp.mimi.im.common.ResultCallback;
+import com.xyp.mimi.im.common.ThreadManager;
 import com.xyp.mimi.im.im.IMManager;
+import com.xyp.mimi.im.model.Resource;
+import com.xyp.mimi.im.model.Status;
 import com.xyp.mimi.im.model.UserCacheInfo;
 import com.xyp.mimi.im.net.hjh.OkHttpUtils;
 import com.xyp.mimi.im.sp.UserCache;
+import com.xyp.mimi.im.task.FriendTask;
+import com.xyp.mimi.im.viewmodel.ConversationViewModel;
 import com.xyp.mimi.mvp.contract.user.UserContract;
 import com.xyp.mimi.mvp.http.entity.login.LoginUserResult;
 import com.xyp.mimi.mvp.http.entity.login.LoginUserPost;
@@ -71,6 +79,8 @@ public class LoginActivity extends BaseSupportActivity<LoginPresenter> implement
     @BindView(R.id.tv_forget_password)
     TextView tvForgetPassword;
 
+    private ConversationViewModel conversationViewModel;
+
     @Override
     public void initImmersionBar() {
         super.initImmersionBar();
@@ -80,6 +90,20 @@ public class LoginActivity extends BaseSupportActivity<LoginPresenter> implement
                 .fitsSystemWindows(true)
                 .init();
     }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        conversationViewModel = ViewModelProviders.of(this).get(ConversationViewModel.class);
+        conversationViewModel.getUserInfoLiveData().observe(this, new Observer<Resource<LoginUserResult>>() {
+            @Override
+            public void onChanged(Resource<LoginUserResult> loginUserResultResource) {
+                UserInfo userInfo = new UserInfo(loginUserResultResource.data.getUser().getId(), loginUserResultResource.data.getUser().getUserName(), Uri.parse(loginUserResultResource.data.getUser().getImgUrl()));
+                RongIM.getInstance().refreshUserInfoCache(userInfo);
+            }
+        });
+    }
+
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
         DaggerUserComponent.builder()
@@ -179,19 +203,24 @@ public class LoginActivity extends BaseSupportActivity<LoginPresenter> implement
     private void switchPage(LoginUserResult loginUserResult){
         showLoadSuccess();
 
-
-        RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
-
-            /**
-             * 获取设置用户信息. 通过返回的 userId 来封装生产用户信息.
-             * @param userId 用户 ID
-             */
-            @Override
-            public UserInfo getUserInfo(String userId) {
-                UserInfo userInfo = new UserInfo(userId, loginUserResult.getUser().getId(), Uri.parse(loginUserResult.getUser().getImgUrl()));
-                return userInfo;
-            }
-
+        /**
+         * 获取设置用户信息. 通过返回的 userId 来封装生产用户信息.
+         * @param userId 用户 ID
+         */
+        RongIM.setUserInfoProvider(userId -> {
+            ThreadManager.getInstance().runOnUIThread(() -> {
+                LiveData<Resource<LoginUserResult>> userSource = new FriendTask(getApplication()).getFriendInfo(userId);
+                conversationViewModel.getUserInfoLiveData().addSource(userSource, resource -> {
+                    if (resource.status == Status.SUCCESS || resource.status == Status.ERROR) {
+                        // 确认成功或失败后，移除数据源
+                        // 在请求成功后，会在插入数据时同步更新缓存
+                        conversationViewModel.getUserInfoLiveData().removeSource(userSource);
+                        conversationViewModel.getUserInfoLiveData().postValue(resource);
+                    }
+                });
+            });
+//                UserInfo userInfo = new UserInfo(userId, loginUserResult.getUser().getId(), Uri.parse(loginUserResult.getUser().getImgUrl()));
+            return null;
         }, true);
 
         SPUtils.getInstance().put(AppConstant.User.USER_ID, loginUserResult.getUser().getId());//

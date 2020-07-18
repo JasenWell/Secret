@@ -62,7 +62,6 @@ public class CreateGroupActivity extends TitleBaseActivity implements View.OnCli
     private boolean isReturnResult;
     private boolean isCreatingGroup;
     String groupId = "";
-    int count = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -210,9 +209,7 @@ public class CreateGroupActivity extends TitleBaseActivity implements View.OnCli
             setResult(RESULT_OK, resultIntent);
             finish();
         } else {
-            for(String id :memberList) {
-                asynModelImp.sendRYRequest(HttpHelper.BUSINESS.REQUEST_CREATE_GROUP, Params.createGroupParam(id, groupResult.getGid(), createGroupName));
-            }
+            asynModelImp.sendRYIdentityHashMapRequest(HttpHelper.BUSINESS.REQUEST_RY_CREATE_GROUP, Params.createGroupParam(memberList, groupResult.getGid(), createGroupName));
         }
     }
 
@@ -245,18 +242,12 @@ public class CreateGroupActivity extends TitleBaseActivity implements View.OnCli
     @Override
     public void onSuccess(Object object, int type) {
         super.onSuccess(object, type);
-        if(type == HttpHelper.BUSINESS.REQUEST_CREATE_GROUP.getCode()){
-            count++;
-            if(count == memberList.size()) {
-                showToast("创建成功");
-
-                //不返回结果时，创建成功后跳转到群组聊天中
-                toGroupChat(groupId);
-//            Intent intent = new Intent(this, GroupListActivity.class);
-//            startActivity(intent);
+        if(type == HttpHelper.BUSINESS.REQUEST_RY_CREATE_GROUP.getCode()){
+            showToast("创建成功");
+            //不返回结果时，创建成功后跳转到群组聊天中
+            toGroupChat(groupId);
 //            EventBus.getDefault().post(new MessageEvent("跳转到群列表",MessageEvent.EventType.SWITCH_GROUP_LIST));
-                finish();
-            }
+            finish();
         }
     }
 

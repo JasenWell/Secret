@@ -27,6 +27,7 @@ import com.xyp.mimi.im.model.AddFriendResult;
 import com.xyp.mimi.im.model.Resource;
 import com.xyp.mimi.im.model.SearchFriendInfo;
 import com.xyp.mimi.im.model.Status;
+import com.xyp.mimi.im.net.hjh.HttpHelper;
 import com.xyp.mimi.im.sp.UserCache;
 import com.xyp.mimi.im.ui.dialog.SimpleInputDialog;
 import com.xyp.mimi.im.ui.fragment.SearchFriendNetFragment;

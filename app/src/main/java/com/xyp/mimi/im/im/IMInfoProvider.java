@@ -14,6 +14,7 @@ import com.google.gson.JsonObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.xyp.mimi.im.bean.ResponseUserInfo;
 import com.xyp.mimi.im.common.ThreadManager;
 import com.xyp.mimi.im.db.DbManager;
 import com.xyp.mimi.im.db.dao.GroupDao;
@@ -32,6 +33,8 @@ import com.xyp.mimi.im.model.Status;
 import com.xyp.mimi.im.task.FriendTask;
 import com.xyp.mimi.im.task.GroupTask;
 import com.xyp.mimi.im.task.UserTask;
+import com.xyp.mimi.mvp.http.entity.login.LoginUserResult;
+
 import io.rong.callkit.RongCallKit;
 import io.rong.contactcard.IContactCardInfoProvider;
 import io.rong.imkit.RongIM;
@@ -122,7 +125,7 @@ public class IMInfoProvider {
      */
     public void updateUserInfo(String userId) {
         ThreadManager.getInstance().runOnUIThread(() -> {
-            LiveData<Resource<UserInfo>> userSource = userTask.getUserInfo(userId);
+            LiveData<Resource<LoginUserResult>> userSource = friendTask.getFriendInfo(userId);
             triggerLiveData.addSource(userSource, resource -> {
                 if (resource.status == Status.SUCCESS || resource.status == Status.ERROR) {
                     // 确认成功或失败后，移除数据源
@@ -255,7 +258,7 @@ public class IMInfoProvider {
      */
     public void updateFriendInfo(String friendId) {
         ThreadManager.getInstance().runOnUIThread(() -> {
-            LiveData<Resource<FriendShipInfo>> friendInfo = friendTask.getFriendInfo(friendId);
+            LiveData<Resource<LoginUserResult>> friendInfo = friendTask.getFriendInfo(friendId);
             triggerLiveData.addSource(friendInfo, resource -> {
                 if (resource.status == Status.SUCCESS || resource.status == Status.ERROR) {
                     // 确认成功或失败后，移除数据源
@@ -311,17 +314,17 @@ public class IMInfoProvider {
      */
     public void getContactUserInfo(String userId, IContactCardInfoProvider.IContactCardInfoCallback contactInfoCallback) {
         ThreadManager.getInstance().runOnUIThread(() -> {
-            LiveData<Resource<FriendShipInfo>> friendInfo = friendTask.getFriendInfo(userId);
+            LiveData<Resource<LoginUserResult>> friendInfo = friendTask.getFriendInfo(userId);
             triggerLiveData.addSource(friendInfo, resource -> {
                 if (resource.status == Status.SUCCESS || resource.status == Status.ERROR) {
                     // 确认成功或失败后，移除数据源
                     triggerLiveData.removeSource(friendInfo);
-                    FriendShipInfo data = resource.data;
+                    LoginUserResult data = resource.data;
                     List<io.rong.imlib.model.UserInfo> userInfoList = new ArrayList<>();
                     if (data != null) {
-                        FriendDetailInfo friendUser = data.getUser();
+                        ResponseUserInfo friendUser = data.getUser();
                         if (friendUser != null) {
-                            io.rong.imlib.model.UserInfo user = new io.rong.imlib.model.UserInfo(friendUser.getId(), friendUser.getNickname(), Uri.parse(friendUser.getPortraitUri()));
+                            io.rong.imlib.model.UserInfo user = new io.rong.imlib.model.UserInfo(friendUser.getId(), friendUser.getUserName(), Uri.parse(friendUser.getImgUrl()));
                             userInfoList.add(user);
                         }
                     }

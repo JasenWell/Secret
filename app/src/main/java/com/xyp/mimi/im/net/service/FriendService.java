@@ -80,6 +80,7 @@ public interface FriendService {
      * @param friendId
      * @return
      */
+    @Deprecated
     @GET(SealTalkUrl.GET_FRIEND_PROFILE)
     LiveData<Result<FriendShipInfo>> getFriendInfo(@Path("friendId") String friendId);
 

@@ -32,6 +32,8 @@ import com.xyp.mimi.im.task.FriendTask;
 import com.xyp.mimi.im.task.GroupTask;
 import com.xyp.mimi.im.task.PrivacyTask;
 import com.xyp.mimi.im.utils.SingleSourceLiveData;
+import com.xyp.mimi.mvp.http.entity.login.LoginUserResult;
+
 import io.rong.imlib.CustomServiceConfig;
 import io.rong.imlib.MessageTag;
 import io.rong.imlib.RongIMClient;
@@ -48,6 +50,7 @@ public class ConversationViewModel extends AndroidViewModel {
     private MutableLiveData<List<EvaluateInfo>> evaluateList = new MutableLiveData<>();
     private MutableLiveData<TypingInfo> typingStatusInfo = new MutableLiveData<>();
     private MediatorLiveData<String> titleStr = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<LoginUserResult>> userInfoLiveData = new MediatorLiveData<>();
 
     private IMManager imManager;
     private FriendTask friendTask;
@@ -134,18 +137,18 @@ public class ConversationViewModel extends AndroidViewModel {
         if (conversationType.equals(Conversation.ConversationType.PRIVATE)) {
             if (!TextUtils.isEmpty(targetId)) {
                 //从好友 task 中获取
-                LiveData<Resource<FriendShipInfo>> friendInfo = friendTask.getFriendInfo(targetId);
-                titleStr.addSource(friendInfo, new Observer<Resource<FriendShipInfo>>() {
+                LiveData<Resource<LoginUserResult>> friendInfo = friendTask.getFriendInfo(targetId);
+                titleStr.addSource(friendInfo, new Observer<Resource<LoginUserResult>>() {
                     @Override
-                    public void onChanged(Resource<FriendShipInfo> friendShipInfoResource) {
+                    public void onChanged(Resource<LoginUserResult> friendShipInfoResource) {
                         if (friendShipInfoResource.status != Status.LOADING) {
                             titleStr.removeSource(friendInfo);
                         }
                         String displayName = "";
                         if (friendShipInfoResource != null && friendShipInfoResource.data != null) {
-                            displayName = friendShipInfoResource.data.getDisplayName();
+                            displayName = friendShipInfoResource.data.getUser().getUserName();
                             if (TextUtils.isEmpty(displayName) && friendShipInfoResource.data.getUser() != null) {
-                                displayName = friendShipInfoResource.data.getUser().getNickname();
+                                displayName = friendShipInfoResource.data.getUser().getUserName();
                             }
                         }
 
@@ -334,4 +337,11 @@ public class ConversationViewModel extends AndroidViewModel {
         return privacyTask.sendScreenShotMessage(conversationType, targetId);
     }
 
+    public MediatorLiveData<Resource<LoginUserResult>> getUserInfoLiveData() {
+        return userInfoLiveData;
+    }
+
+    public void setUserInfoLiveData(MediatorLiveData<Resource<LoginUserResult>> userInfoLiveData) {
+        this.userInfoLiveData = userInfoLiveData;
+    }
 }

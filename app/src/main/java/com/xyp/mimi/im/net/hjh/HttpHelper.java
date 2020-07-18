@@ -65,7 +65,7 @@ public class HttpHelper {
 
         REQUEST_GET_USER_INFO("/mall/interface/selectuserid", Method.POST,true, LoginUserResult.class,EConfig.ADD_FRIEND_REQUEST_SUCCESS),
 
-        REQUEST_CREATE_GROUP("/group/create.json",Method.POST,true,Object.class,EConfig.CREATE_GROUP_SUCCESS),
+        REQUEST_RY_CREATE_GROUP("/group/create.json",Method.POST,true,Object.class,EConfig.CREATE_GROUP_SUCCESS),
 
         REQUEST_CHAT_SINGLE("/mall/interface/caht", Method.POST,true,Object.class,EConfig.CHAT_SINGLE_SUCCESS),
         REQUEST_CHAT_SINGLE_RECORD("/mall/interface/cahtlist", Method.POST,true,Object.class,EConfig.CHAT_SINGLE_RECORD_SUCCESS)

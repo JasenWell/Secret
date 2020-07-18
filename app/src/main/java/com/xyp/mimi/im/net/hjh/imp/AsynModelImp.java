@@ -93,6 +93,14 @@ public class AsynModelImp implements IAsynModel {
         }
     }
 
+    @Override
+    public void sendRYIdentityHashMapRequest(HttpHelper.BUSINESS business, Map<String, String> param) {
+        if(checkNetStatus()) {
+            business.setRongyun(true);
+            okHttpUtils.postIdentityHashMap(param, HttpHelper.PostGetRYUrl(business.getBusiness()),addTokenMap()).enqueue(new CallbackImp(business));
+        }
+    }
+
     private Map addTokenMap() {
         Map<String, String> map = new HashMap<String, String>();
         String key = "pvxdm17jpe5cr";

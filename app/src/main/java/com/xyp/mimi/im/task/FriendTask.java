@@ -79,6 +79,17 @@ public class FriendTask {
         }.asLiveData();
     }
 
+    public LiveData<Resource<LoginUserResult>> getFriendInfo(final String userId) {
+        return new NetworkOnlyResource<LoginUserResult, Result<LoginUserResult>>() {
+
+            @NonNull
+            @Override
+            protected LiveData<Result<LoginUserResult>> createCall() {
+                return friendService.searchFriendFromServer(userId);
+            }
+        }.asLiveData();
+    }
+
     /**
      * 获取所有好友信息
      *
@@ -181,76 +192,77 @@ public class FriendTask {
      * @param userId
      * @return
      */
-    public LiveData<Resource<FriendShipInfo>> getFriendInfo(String userId) {
-        return new NetworkBoundResource<FriendShipInfo, Result<FriendShipInfo>>() {
-            @Override
-            protected void saveCallResult(@NonNull Result<FriendShipInfo> item) {
-                UserDao userDao = dbManager.getUserDao();
-                FriendDao friendDao = dbManager.getFriendDao();
-                if (userDao == null || friendDao == null) return;
-
-                FriendShipInfo friendShipInfo = item.getResult();
-                if (friendShipInfo == null) return;
-
-                UserInfo userInfo = new UserInfo();
-                FriendInfo friendInfo = new FriendInfo();
-                userInfo.setId(friendShipInfo.getUser().getId());
-                userInfo.setName(friendShipInfo.getUser().getNickname());
-                String portraitUri = friendShipInfo.getUser().getPortraitUri();
-                // 若头像为空则生成默认头像
-                if (TextUtils.isEmpty(portraitUri)) {
-                    portraitUri = RongGenerate.generateDefaultAvatar(context, friendShipInfo.getUser().getId(), friendShipInfo.getUser().getNickname());
-                }
-                userInfo.setPortraitUri(portraitUri);
-                userInfo.setAlias(friendShipInfo.getDisplayName());
-                userInfo.setFriendStatus(FriendStatus.IS_FRIEND.getStatusCode());
-                userInfo.setPhoneNumber(friendShipInfo.getUser().getPhone());
-                userInfo.setRegion(friendShipInfo.getUser().getRegion());
-                userInfo.setAliasSpelling(SearchUtils.fullSearchableString(friendShipInfo.getDisplayName()));
-                userInfo.setAliasSpellingInitial(SearchUtils.initialSearchableString(friendShipInfo.getDisplayName()));
-                userInfo.setNameSpelling(SearchUtils.fullSearchableString(friendShipInfo.getUser().getNickname()));
-                userInfo.setNameSpellingInitial(SearchUtils.initialSearchableString(friendShipInfo.getUser().getNickname()));
-                if (!TextUtils.isEmpty(friendShipInfo.getDisplayName())) {
-                    userInfo.setOrderSpelling(CharacterParser.getInstance().getSpelling(friendShipInfo.getDisplayName()));
-                } else {
-                    userInfo.setOrderSpelling(CharacterParser.getInstance().getSpelling(friendShipInfo.getUser().getNickname()));
-                }
-
-                friendInfo.setId(friendShipInfo.getUser().getId());
-                friendInfo.setMessage(friendShipInfo.getMessage());
-                friendInfo.setUpdatedAt(friendShipInfo.getUpdatedAt() == null ? friendShipInfo.getUser().getUpdatedAt() : friendShipInfo.getUpdatedAt());
-
-                userDao.insertUser(userInfo);
-                friendDao.insertFriendShip(friendInfo);
-
-                // 更新 IMKit 显示缓存
-                String name = userInfo.getAlias();
-                if (TextUtils.isEmpty(name)) {
-                    name = userInfo.getName();
-                }
-                IMManager.getInstance().updateUserInfoCache(userInfo.getId(), name, Uri.parse(userInfo.getPortraitUri()));
-            }
-
-            @NonNull
-            @Override
-            protected LiveData<FriendShipInfo> loadFromDb() {
-                FriendDao friendDao = dbManager.getFriendDao();
-                LiveData<FriendShipInfo> friendInfo;
-                if (friendDao == null) {
-                    friendInfo = new MutableLiveData<>();
-                } else {
-                    friendInfo = friendDao.getFriendInfo(userId);
-                }
-                return friendInfo;
-            }
-
-            @NonNull
-            @Override
-            protected LiveData<Result<FriendShipInfo>> createCall() {
-                return friendService.getFriendInfo(userId);
-            }
-        }.asLiveData();
-    }
+//    @Deprecated
+//    public LiveData<Resource<FriendShipInfo>> getFriendInfo(String userId) {
+//        return new NetworkBoundResource<FriendShipInfo, Result<FriendShipInfo>>() {
+//            @Override
+//            protected void saveCallResult(@NonNull Result<FriendShipInfo> item) {
+//                UserDao userDao = dbManager.getUserDao();
+//                FriendDao friendDao = dbManager.getFriendDao();
+//                if (userDao == null || friendDao == null) return;
+//
+//                FriendShipInfo friendShipInfo = item.getResult();
+//                if (friendShipInfo == null) return;
+//
+//                UserInfo userInfo = new UserInfo();
+//                FriendInfo friendInfo = new FriendInfo();
+//                userInfo.setId(friendShipInfo.getUser().getId());
+//                userInfo.setName(friendShipInfo.getUser().getNickname());
+//                String portraitUri = friendShipInfo.getUser().getPortraitUri();
+//                // 若头像为空则生成默认头像
+//                if (TextUtils.isEmpty(portraitUri)) {
+//                    portraitUri = RongGenerate.generateDefaultAvatar(context, friendShipInfo.getUser().getId(), friendShipInfo.getUser().getNickname());
+//                }
+//                userInfo.setPortraitUri(portraitUri);
+//                userInfo.setAlias(friendShipInfo.getDisplayName());
+//                userInfo.setFriendStatus(FriendStatus.IS_FRIEND.getStatusCode());
+//                userInfo.setPhoneNumber(friendShipInfo.getUser().getPhone());
+//                userInfo.setRegion(friendShipInfo.getUser().getRegion());
+//                userInfo.setAliasSpelling(SearchUtils.fullSearchableString(friendShipInfo.getDisplayName()));
+//                userInfo.setAliasSpellingInitial(SearchUtils.initialSearchableString(friendShipInfo.getDisplayName()));
+//                userInfo.setNameSpelling(SearchUtils.fullSearchableString(friendShipInfo.getUser().getNickname()));
+//                userInfo.setNameSpellingInitial(SearchUtils.initialSearchableString(friendShipInfo.getUser().getNickname()));
+//                if (!TextUtils.isEmpty(friendShipInfo.getDisplayName())) {
+//                    userInfo.setOrderSpelling(CharacterParser.getInstance().getSpelling(friendShipInfo.getDisplayName()));
+//                } else {
+//                    userInfo.setOrderSpelling(CharacterParser.getInstance().getSpelling(friendShipInfo.getUser().getNickname()));
+//                }
+//
+//                friendInfo.setId(friendShipInfo.getUser().getId());
+//                friendInfo.setMessage(friendShipInfo.getMessage());
+//                friendInfo.setUpdatedAt(friendShipInfo.getUpdatedAt() == null ? friendShipInfo.getUser().getUpdatedAt() : friendShipInfo.getUpdatedAt());
+//
+//                userDao.insertUser(userInfo);
+//                friendDao.insertFriendShip(friendInfo);
+//
+//                // 更新 IMKit 显示缓存
+//                String name = userInfo.getAlias();
+//                if (TextUtils.isEmpty(name)) {
+//                    name = userInfo.getName();
+//                }
+//                IMManager.getInstance().updateUserInfoCache(userInfo.getId(), name, Uri.parse(userInfo.getPortraitUri()));
+//            }
+//
+//            @NonNull
+//            @Override
+//            protected LiveData<FriendShipInfo> loadFromDb() {
+//                FriendDao friendDao = dbManager.getFriendDao();
+//                LiveData<FriendShipInfo> friendInfo;
+//                if (friendDao == null) {
+//                    friendInfo = new MutableLiveData<>();
+//                } else {
+//                    friendInfo = friendDao.getFriendInfo(userId);
+//                }
+//                return friendInfo;
+//            }
+//
+//            @NonNull
+//            @Override
+//            protected LiveData<Result<FriendShipInfo>> createCall() {
+//                return friendService.getFriendInfo(userId);
+//            }
+//        }.asLiveData();
+//    }
 
     public FriendShipInfo getFriendShipInfoFromDBSync(String userId) {
         return dbManager.getFriendDao().getFriendInfoSync(userId);

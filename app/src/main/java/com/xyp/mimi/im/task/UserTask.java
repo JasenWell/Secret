@@ -138,6 +138,7 @@ public class UserTask {
      * @param userId
      * @return
      */
+    @Deprecated
     public LiveData<Resource<UserInfo>> getUserInfo(final String userId) {
         return new NetworkBoundResource<UserInfo, Result<UserInfo>>() {
             @Override
