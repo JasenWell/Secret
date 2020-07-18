@@ -9,12 +9,17 @@ import java.io.Serializable;
 public class ResponseGroupInfo implements Serializable {
 
 
-    private String id;// "35f4c981374e4976a33cf6a3ee3545ee",群id?
+    private String id;// "35f4c981374e4976a33cf6a3ee3545ee",群id? 查询群列表返回的id
     private String uid;//99,  群主
     private String context;//"ggf", 群名
     private String createTime;// 1595006953000,
     private String uidList;//"99,100,103",
     private String userList;//null
+
+
+    private String groupid;//"75e45443736b42faa00cec761d59dbf3",根据群id查询群信息使用的id
+    private String imgUrl;
+    private String voiceUrl;
 
     public String getId() {
         return id;
@@ -62,5 +67,29 @@ public class ResponseGroupInfo implements Serializable {
 
     public void setUserList(String userList) {
         this.userList = userList;
+    }
+
+    public String getGroupid() {
+        return groupid;
+    }
+
+    public void setGroupid(String groupid) {
+        this.groupid = groupid;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
+    public String getVoiceUrl() {
+        return voiceUrl;
+    }
+
+    public void setVoiceUrl(String voiceUrl) {
+        this.voiceUrl = voiceUrl;
     }
 }

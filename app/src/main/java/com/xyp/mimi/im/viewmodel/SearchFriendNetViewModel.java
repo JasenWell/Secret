@@ -29,6 +29,7 @@ public class SearchFriendNetViewModel extends AndroidViewModel {
     private static final String TAG = "SearchFriendNetViewModel";
     private FriendTask friendTask;
     private SingleSourceLiveData<Resource<LoginUserResult>> searchFriend;
+    private SingleSourceLiveData<Resource<ResponseUserInfo>> searchFriendByphone;
     private SingleSourceMapLiveData<ResponseUserInfo, Boolean> isFriend;
     private SingleSourceMapLiveData<Resource<ResponseSearchFriendInfo>, Resource<ResponseSearchFriendInfo>> addFriend;
 
@@ -36,6 +37,7 @@ public class SearchFriendNetViewModel extends AndroidViewModel {
         super(application);
         friendTask = new FriendTask(application);
         searchFriend = new SingleSourceLiveData<>();
+        searchFriendByphone = new SingleSourceLiveData<>();
         addFriend = new SingleSourceMapLiveData<>(new Function<Resource<ResponseSearchFriendInfo>, Resource<ResponseSearchFriendInfo>>() {
             @Override
             public Resource<ResponseSearchFriendInfo> apply(Resource<ResponseSearchFriendInfo> input) {
@@ -51,7 +53,9 @@ public class SearchFriendNetViewModel extends AndroidViewModel {
             @Override
             public Boolean apply(ResponseUserInfo input) {
                 if(input != null){
-                    if(input.getStatus().equals("1")){
+                    if(input.getStatus() == null){
+                        return false;
+                    }else if(input.getStatus().equals("1")){
                         return true;
                     }else{
                         return false;
@@ -68,6 +72,11 @@ public class SearchFriendNetViewModel extends AndroidViewModel {
         searchFriend.setSource(friendTask.searchFriendFromServer(userId));
     }
 
+    public void searchFriendByphone(String phone) {
+        SLog.i(TAG, "searchFriendFromServer phone " + phone);
+        searchFriendByphone.setSource(friendTask.searchFriendByphone(phone));
+    }
+
     public void addFriendRequest(String userId,String phone) {
         SLog.i(TAG, "searchFriendFromServer userid " + userId);
         addFriend.setSource(friendTask.addFriendRequest(userId,phone));
@@ -75,6 +84,10 @@ public class SearchFriendNetViewModel extends AndroidViewModel {
 
     public LiveData<Resource<LoginUserResult>> getSearchFriend() {
         return searchFriend;
+    }
+
+    public SingleSourceLiveData<Resource<ResponseUserInfo>> getSearchFriendByphone() {
+        return searchFriendByphone;
     }
 
     public LiveData<Boolean> getIsFriend() {

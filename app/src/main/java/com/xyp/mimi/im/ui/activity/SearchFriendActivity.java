@@ -66,15 +66,15 @@ public class SearchFriendActivity extends TitleBaseActivity implements OnSearchF
         searchFriendFragment.setOnSearchFriendClickListener(this);
         getSupportFragmentManager().beginTransaction() .add(containerId, searchFriendFragment).commit();
         viewModel = ViewModelProviders.of(this).get(SearchFriendNetViewModel.class);
-        viewModel.getSearchFriend().observe(this, new Observer<Resource<LoginUserResult>>() {
+        viewModel.getSearchFriendByphone().observe(this, new Observer<Resource<ResponseUserInfo>>() {
             @Override
-            public void onChanged(Resource<LoginUserResult> searchFriendInfoResource) {
+            public void onChanged(Resource<ResponseUserInfo> searchFriendInfoResource) {
                 if (searchFriendInfoResource.status == Status.SUCCESS) {
-                    LoginUserResult friendInfo = searchFriendInfoResource.data;
+                    ResponseUserInfo friendInfo = searchFriendInfoResource.data;
                     searchFriendResultFragment = new SearchFriendResultFragment();
-                    searchFriendResultFragment.setData(SearchFriendActivity.this, friendInfo.getUser());
+                    searchFriendResultFragment.setData(SearchFriendActivity.this, friendInfo);
                     pushFragment(searchFriendResultFragment);
-                    viewModel.isFriend(friendInfo.getUser());
+                    viewModel.isFriend(friendInfo);
                 } else if (searchFriendInfoResource.status == Status.ERROR) {
                     Toast.makeText(SearchFriendActivity.this, R.string.seal_account_not_exist, Toast.LENGTH_SHORT).show();
                 }
@@ -121,16 +121,16 @@ public class SearchFriendActivity extends TitleBaseActivity implements OnSearchF
     @Override
     public void onSearchClick(String region, String searchContent) {
         if(TextUtils.isDigitsOnly(searchContent)){
-            viewModel.searchFriendFromServer(searchContent);
+            viewModel.searchFriendByphone(searchContent);
         } else {
-            viewModel.searchFriendFromServer(searchContent);
+            viewModel.searchFriendByphone(searchContent);
         }
     }
 
     @Override
     public void onSearchFriendItemClick(ResponseUserInfo searchFriendInfo) {
-        if (isFriend || searchFriendInfo.getId().equals(RongIM.getInstance().getCurrentUserId())) {
-            toDetailActivity(searchFriendInfo.getId());
+        if (isFriend || searchFriendInfo.getUid().equals(RongIM.getInstance().getCurrentUserId())) {
+            toDetailActivity(searchFriendInfo.getUid());
         } else {
             showAddFriendDialog(searchFriendInfo.getAccount());
         }

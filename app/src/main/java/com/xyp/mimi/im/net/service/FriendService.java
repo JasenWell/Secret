@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.xyp.mimi.im.bean.ResponseSearchFriendInfo;
+import com.xyp.mimi.im.bean.ResponseUserInfo;
 import com.xyp.mimi.im.bean.ResponseWrapperInfo;
 import com.xyp.mimi.im.db.model.FriendDescription;
 import com.xyp.mimi.im.db.model.FriendShipInfo;
@@ -52,6 +53,13 @@ public interface FriendService {
     @POST("/mall/interface/selectuserid")
     LiveData<Result<LoginUserResult>> searchFriendFromServer(
             @Field("userId") String userId//用户id
+    );
+
+    //查询好友信息
+    @FormUrlEncoded
+    @POST("/mall/interface/selectPhone")
+    LiveData<Result<ResponseUserInfo>> searchFriendByphone(
+            @Field("phone") String phone//用户电话
     );
 
     //获取好友列表

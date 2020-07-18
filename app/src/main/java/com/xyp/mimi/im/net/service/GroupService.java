@@ -85,6 +85,7 @@ public interface GroupService {
     LiveData<Result> setMemberDisplayName(@Body RequestBody body);
 
     @GET(SealTalkUrl.GROUP_GET_INFO)
+    @Deprecated
     LiveData<Result<GroupEntity>> getGroupInfo(@Path("group_id") String groupId);
 
     @GET(SealTalkUrl.GROUP_GET_MEMBER_INFO)

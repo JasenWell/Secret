@@ -517,6 +517,7 @@ public class GroupTask {
      * @param groupId
      * @return
      */
+    @Deprecated
     public LiveData<Resource<GroupEntity>> getGroupInfo(final String groupId) {
         return new NetworkBoundResource<GroupEntity, Result<GroupEntity>>() {
             @Override

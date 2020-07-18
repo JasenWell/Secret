@@ -28,6 +28,7 @@ public class ResponseUserInfo implements Serializable {
     private String status;// 1,
     private String userName;//"hjh"
     private String imgUrl;
+    private String uid;//电话号码查询返回的用户id
 
 //             "saccount": null,
 //             "parentId": null,
@@ -201,5 +202,14 @@ public class ResponseUserInfo implements Serializable {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 }

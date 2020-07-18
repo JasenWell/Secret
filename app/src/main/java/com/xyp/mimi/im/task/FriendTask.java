@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.xyp.mimi.im.bean.ResponseSearchFriendInfo;
+import com.xyp.mimi.im.bean.ResponseUserInfo;
 import com.xyp.mimi.im.bean.ResponseWrapperInfo;
 import com.xyp.mimi.im.common.ThreadManager;
 import com.xyp.mimi.im.contact.PhoneContactManager;
@@ -493,6 +494,17 @@ public class FriendTask {
             @Override
             protected LiveData<Result<LoginUserResult>> createCall() {
                 return friendService.searchFriendFromServer(userId);
+            }
+        }.asLiveData();
+    }
+
+    public LiveData<Resource<ResponseUserInfo>> searchFriendByphone(String phone) {
+        return new NetworkOnlyResource<ResponseUserInfo, Result<ResponseUserInfo>>() {
+
+            @NonNull
+            @Override
+            protected LiveData<Result<ResponseUserInfo>> createCall() {
+                return friendService.searchFriendByphone(phone);
             }
         }.asLiveData();
     }

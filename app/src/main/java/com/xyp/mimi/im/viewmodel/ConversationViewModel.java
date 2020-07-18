@@ -272,8 +272,10 @@ public class ConversationViewModel extends AndroidViewModel {
     @Override
     protected void onCleared() {
         super.onCleared();
-        imManager.setCustomServiceHumanEvaluateListener(null);
-        imManager.setTypingStatusListener(null);
+        if(imManager != null) {
+            imManager.setCustomServiceHumanEvaluateListener(null);
+            imManager.setTypingStatusListener(null);
+        }
     }
 
 
