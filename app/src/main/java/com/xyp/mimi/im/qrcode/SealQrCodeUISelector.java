@@ -11,6 +11,8 @@ import java.util.Date;
 import java.util.List;
 
 import com.xyp.mimi.R;
+import com.xyp.mimi.im.bean.ResponseGroupInfo;
+import com.xyp.mimi.im.bean.ResponseWrapperGroupInfo;
 import com.xyp.mimi.im.common.ErrorCode;
 import com.xyp.mimi.im.common.IntentExtra;
 import com.xyp.mimi.im.db.model.GroupEntity;
@@ -66,18 +68,18 @@ public class SealQrCodeUISelector {
      * @param groupId
      */
     private void checkGroupIsExist(String groupId, MutableLiveData<Resource<String>> result) {
-        LiveData<Resource<GroupEntity>> groupInfo = groupTask.getGroupInfo(groupId);
-        groupInfo.observeForever(new Observer<Resource<GroupEntity>>() {
+        LiveData<Resource<ResponseWrapperGroupInfo>> groupInfo = groupTask.getGroupInfo(groupId);
+        groupInfo.observeForever(new Observer<Resource<ResponseWrapperGroupInfo>>() {
             @Override
-            public void onChanged(Resource<GroupEntity> resource) {
+            public void onChanged(Resource<ResponseWrapperGroupInfo> resource) {
                 if (resource.status != Status.LOADING || resource.data != null) {
                     groupInfo.removeObserver(this);
                 }
 
-                GroupEntity data = resource.data;
+                ResponseGroupInfo data = resource.data.getGroupList();
 
                 if (data != null) {
-                    String groupName = data.getName();
+                    String groupName = data.getContext();
                     checkIsInGroup(groupId, groupName, result);
                 } else if (resource.status == Status.ERROR) {
                     if (resource.code == ErrorCode.API_COMMON_ERROR.getCode()) {

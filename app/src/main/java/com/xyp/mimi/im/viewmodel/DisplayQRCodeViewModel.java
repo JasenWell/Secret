@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.xyp.mimi.im.bean.ResponseWrapperGroupInfo;
 import com.xyp.mimi.im.db.model.GroupEntity;
 import com.xyp.mimi.im.db.model.UserInfo;
 import com.xyp.mimi.im.model.Resource;
@@ -18,7 +19,7 @@ import com.xyp.mimi.im.utils.SingleSourceLiveData;
 
 public class DisplayQRCodeViewModel extends AndroidViewModel {
     private SingleSourceLiveData<Resource<Bitmap>> qrCodeResult = new SingleSourceLiveData<>();
-    private SingleSourceLiveData<Resource<GroupEntity>> groupInfo = new SingleSourceLiveData<>();
+    private SingleSourceLiveData<Resource<ResponseWrapperGroupInfo>> groupInfo = new SingleSourceLiveData<>();
     private SingleSourceLiveData<Resource<String>> saveLocalBitmapResult = new SingleSourceLiveData<>();
     private SingleSourceLiveData<Resource<String>> saveCacheBitmapResult = new SingleSourceLiveData<>();
     private SingleSourceLiveData<Resource<UserInfo>> userInfoResult = new SingleSourceLiveData<>();
@@ -56,7 +57,7 @@ public class DisplayQRCodeViewModel extends AndroidViewModel {
         userInfoResult.setSource(userTask.getUserInfo(userId));
     }
 
-    public LiveData<Resource<GroupEntity>> getGroupInfo() {
+    public LiveData<Resource<ResponseWrapperGroupInfo>> getGroupInfo() {
         return groupInfo;
     }
 

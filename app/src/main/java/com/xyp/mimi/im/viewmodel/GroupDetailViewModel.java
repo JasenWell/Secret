@@ -18,6 +18,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import com.xyp.mimi.im.bean.ResponseWrapperGroupInfo;
 import com.xyp.mimi.im.db.model.GroupEntity;
 import com.xyp.mimi.im.im.IMManager;
 import com.xyp.mimi.im.model.AddMemberResult;
@@ -38,7 +39,7 @@ import io.rong.imlib.model.Conversation;
  * 群组详情视图模型
  */
 public class GroupDetailViewModel extends AndroidViewModel {
-    private SingleSourceLiveData<Resource<GroupEntity>> groupInfoLiveData = new SingleSourceLiveData<>();
+    private SingleSourceLiveData<Resource<ResponseWrapperGroupInfo>> groupInfoLiveData = new SingleSourceLiveData<>();
     private SingleSourceMapLiveData<Resource<List<GroupMember>>, Resource<List<GroupMember>>> groupMemberListLiveData;
     private SingleSourceLiveData<Resource<GroupNoticeResult>> groupNotice = new SingleSourceLiveData<>();
     private SingleSourceLiveData<Resource<Integer>> regularClearState = new SingleSourceLiveData<>();
@@ -234,7 +235,7 @@ public class GroupDetailViewModel extends AndroidViewModel {
      *
      * @return
      */
-    public LiveData<Resource<GroupEntity>> getGroupInfo() {
+    public LiveData<Resource<ResponseWrapperGroupInfo>> getGroupInfo() {
         return groupInfoLiveData;
     }
 
@@ -359,9 +360,9 @@ public class GroupDetailViewModel extends AndroidViewModel {
      * 保存到通讯录
      */
     public void saveToContact() {
-        Resource<GroupEntity> value = groupInfoLiveData.getValue();
-        if (value != null && value.data != null && value.data.getIsInContact() == 1) return;
-        saveToContactResult.setSource(groupTask.saveGroupToContact(groupId));
+//        Resource<GroupEntity> value = groupInfoLiveData.getValue();
+//        if (value != null && value.data != null && value.data.getIsInContact() == 1) return;
+//        saveToContactResult.setSource(groupTask.saveGroupToContact(groupId));
     }
 
     /**
@@ -377,10 +378,10 @@ public class GroupDetailViewModel extends AndroidViewModel {
      * 从通讯录中删除
      */
     public void removeFromContact() {
-        Resource<GroupEntity> value = groupInfoLiveData.getValue();
-        if (value != null && value.data != null && value.data.getIsInContact() == 0) return;
-
-        removeFromContactResult.setSource(groupTask.removeGroupFromContact(groupId));
+//        Resource<GroupEntity> value = groupInfoLiveData.getValue();
+//        if (value != null && value.data != null && value.data.getIsInContact() == 0) return;
+//
+//        removeFromContactResult.setSource(groupTask.removeGroupFromContact(groupId));
     }
 
     /**

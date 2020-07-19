@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.xyp.mimi.im.bean.ResponseWrapperGroupInfo;
 import com.xyp.mimi.im.common.ErrorCode;
 import com.xyp.mimi.im.db.DbManager;
 import com.xyp.mimi.im.db.dao.FriendDao;
@@ -511,63 +512,73 @@ public class GroupTask {
         }.asLiveData();
     }
 
-    /**
-     * 获取群组信息
-     *
-     * @param groupId
-     * @return
-     */
-    @Deprecated
-    public LiveData<Resource<GroupEntity>> getGroupInfo(final String groupId) {
-        return new NetworkBoundResource<GroupEntity, Result<GroupEntity>>() {
-            @Override
-            protected void saveCallResult(@NonNull Result<GroupEntity> item) {
-                if (item.getResult() == null) return;
-
-                GroupEntity groupEntity = item.getResult();
-                GroupDao groupDao = dbManager.getGroupDao();
-                if (groupDao != null) {
-                    // 判断是否在通讯录中
-                    int groupIsContact = groupDao.getGroupIsContactSync(groupId);
-                    int regularClearState = groupDao.getRegularClearSync(groupId);
-
-                    String portraitUri = groupEntity.getPortraitUri();
-                    if (TextUtils.isEmpty(portraitUri)) {
-                        portraitUri = RongGenerate.generateDefaultAvatar(context, groupEntity.getId(), groupEntity.getName());
-                        groupEntity.setPortraitUri(portraitUri);
-                    }
-                    groupEntity.setNameSpelling(SearchUtils.fullSearchableString(groupEntity.getName()));
-                    groupEntity.setNameSpellingInitial(SearchUtils.initialSearchableString(groupEntity.getName()));
-                    groupEntity.setOrderSpelling(CharacterParser.getInstance().getSelling(groupEntity.getName()));
-                    groupEntity.setIsInContact(groupIsContact);
-                    groupEntity.setRegularClearState(regularClearState);
-                    groupDao.insertGroup(groupEntity);
-                }
-
-                // 更新 IMKit 缓存群组数据
-                IMManager.getInstance().updateGroupInfoCache(groupEntity.getId(), groupEntity.getName(), Uri.parse(groupEntity.getPortraitUri()));
-            }
-
+    public LiveData<Resource<ResponseWrapperGroupInfo>> getGroupInfo(String groupId) {
+        return new NetworkOnlyResource<ResponseWrapperGroupInfo, Result<ResponseWrapperGroupInfo>>() {
             @NonNull
             @Override
-            protected LiveData<GroupEntity> loadFromDb() {
-                GroupDao groupDao = dbManager.getGroupDao();
-                LiveData<GroupEntity> groupInfo;
-                if (groupDao != null) {
-                    groupInfo = groupDao.getGroupInfo(groupId);
-                } else {
-                    groupInfo = new MutableLiveData<>();
-                }
-                return groupInfo;
-            }
-
-            @NonNull
-            @Override
-            protected LiveData<Result<GroupEntity>> createCall() {
+            protected LiveData<Result<ResponseWrapperGroupInfo>> createCall() {
                 return groupService.getGroupInfo(groupId);
             }
         }.asLiveData();
     }
+
+//    /**
+//     * 获取群组信息
+//     *
+//     * @param groupId
+//     * @return
+//     */
+//    @Deprecated
+//    public LiveData<Resource<GroupEntity>> getGroupInfo(final String groupId) {
+//        return new NetworkBoundResource<GroupEntity, Result<GroupEntity>>() {
+//            @Override
+//            protected void saveCallResult(@NonNull Result<GroupEntity> item) {
+//                if (item.getResult() == null) return;
+//
+//                GroupEntity groupEntity = item.getResult();
+//                GroupDao groupDao = dbManager.getGroupDao();
+//                if (groupDao != null) {
+//                    // 判断是否在通讯录中
+//                    int groupIsContact = groupDao.getGroupIsContactSync(groupId);
+//                    int regularClearState = groupDao.getRegularClearSync(groupId);
+//
+//                    String portraitUri = groupEntity.getPortraitUri();
+//                    if (TextUtils.isEmpty(portraitUri)) {
+//                        portraitUri = RongGenerate.generateDefaultAvatar(context, groupEntity.getId(), groupEntity.getName());
+//                        groupEntity.setPortraitUri(portraitUri);
+//                    }
+//                    groupEntity.setNameSpelling(SearchUtils.fullSearchableString(groupEntity.getName()));
+//                    groupEntity.setNameSpellingInitial(SearchUtils.initialSearchableString(groupEntity.getName()));
+//                    groupEntity.setOrderSpelling(CharacterParser.getInstance().getSelling(groupEntity.getName()));
+//                    groupEntity.setIsInContact(groupIsContact);
+//                    groupEntity.setRegularClearState(regularClearState);
+//                    groupDao.insertGroup(groupEntity);
+//                }
+//
+//                // 更新 IMKit 缓存群组数据
+//                IMManager.getInstance().updateGroupInfoCache(groupEntity.getId(), groupEntity.getName(), Uri.parse(groupEntity.getPortraitUri()));
+//            }
+//
+//            @NonNull
+//            @Override
+//            protected LiveData<GroupEntity> loadFromDb() {
+//                GroupDao groupDao = dbManager.getGroupDao();
+//                LiveData<GroupEntity> groupInfo;
+//                if (groupDao != null) {
+//                    groupInfo = groupDao.getGroupInfo(groupId);
+//                } else {
+//                    groupInfo = new MutableLiveData<>();
+//                }
+//                return groupInfo;
+//            }
+//
+//            @NonNull
+//            @Override
+//            protected LiveData<Result<GroupEntity>> createCall() {
+//                return groupService.getGroupInfo(groupId);
+//            }
+//        }.asLiveData();
+//    }
 
     /**
      * 获取群组信息 ( 同步方法 )

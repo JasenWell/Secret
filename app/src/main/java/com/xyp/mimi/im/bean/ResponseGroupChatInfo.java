@@ -3,19 +3,18 @@ package com.xyp.mimi.im.bean;
 import java.io.Serializable;
 
 /**
- * Description:
- * Created by hjh on 2020/7/18.
+ * Description:群聊聊天信息
+ * Created by hjh on 2020/7/19.
  */
-public class ResponseGroupInfo implements Serializable {
+public class ResponseGroupChatInfo implements Serializable {
 
-
-    private String id;// "35f4c981374e4976a33cf6a3ee3545ee",群id? 查询群列表返回的id
-    private String uid;//99,  群主
+    private String id;//
+    private String groupid;//"75e45443736b42faa00cec761d59dbf3"
+    private String uid;//99,  发送人？
     private String context;//"ggf", 群名
     private String createTime;// 1595006953000,
-    private String uidList;//"99,100,103",
-    private String userList;//null
-
+    private String imgUrl;
+    private String voiceUrl;
 
 
     public String getId() {
@@ -24,6 +23,14 @@ public class ResponseGroupInfo implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getGroupid() {
+        return groupid;
+    }
+
+    public void setGroupid(String groupid) {
+        this.groupid = groupid;
     }
 
     public String getUid() {
@@ -50,20 +57,19 @@ public class ResponseGroupInfo implements Serializable {
         this.createTime = createTime;
     }
 
-    public String getUidList() {
-        return uidList;
+    public String getImgUrl() {
+        return imgUrl;
     }
 
-    public void setUidList(String uidList) {
-        this.uidList = uidList;
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 
-    public String getUserList() {
-        return userList;
+    public String getVoiceUrl() {
+        return voiceUrl;
     }
 
-    public void setUserList(String userList) {
-        this.userList = userList;
+    public void setVoiceUrl(String voiceUrl) {
+        this.voiceUrl = voiceUrl;
     }
-
 }

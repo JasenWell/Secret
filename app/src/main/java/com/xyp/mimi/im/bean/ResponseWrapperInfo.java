@@ -28,4 +28,5 @@ public class ResponseWrapperInfo implements Serializable {
     public void setGroupList(List<ResponseGroupInfo> groupList) {
         this.groupList = groupList;
     }
+
 }

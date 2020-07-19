@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 
+import com.xyp.mimi.im.bean.ResponseWrapperGroupInfo;
 import com.xyp.mimi.im.common.ThreadManager;
 import com.xyp.mimi.im.db.model.GroupEntity;
 import com.xyp.mimi.im.db.model.GroupNoticeInfo;
@@ -62,7 +63,7 @@ public class GroupNoticeInfoViewModel extends AndroidViewModel {
      * @param groupId
      * @return
      */
-    public LiveData<Resource<GroupEntity>> getGroupInfo(String groupId) {
+    public LiveData<Resource<ResponseWrapperGroupInfo>> getGroupInfo(String groupId) {
         return groupTask.getGroupInfo(groupId);
     }
 

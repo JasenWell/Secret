@@ -79,7 +79,7 @@ public class LoginActivity extends BaseSupportActivity<LoginPresenter> implement
     @BindView(R.id.tv_forget_password)
     TextView tvForgetPassword;
 
-    private ConversationViewModel conversationViewModel;
+//    private ConversationViewModel conversationViewModel;
 
     @Override
     public void initImmersionBar() {
@@ -94,14 +94,14 @@ public class LoginActivity extends BaseSupportActivity<LoginPresenter> implement
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        conversationViewModel = ViewModelProviders.of(this).get(ConversationViewModel.class);
-        conversationViewModel.getUserInfoLiveData().observe(this, new Observer<Resource<LoginUserResult>>() {
-            @Override
-            public void onChanged(Resource<LoginUserResult> loginUserResultResource) {
-                UserInfo userInfo = new UserInfo(loginUserResultResource.data.getUser().getId(), loginUserResultResource.data.getUser().getUserName(), Uri.parse(loginUserResultResource.data.getUser().getImgUrl()));
-                RongIM.getInstance().refreshUserInfoCache(userInfo);
-            }
-        });
+//        conversationViewModel = ViewModelProviders.of(this).get(ConversationViewModel.class);
+//        conversationViewModel.getUserInfoLiveData().observe(this, new Observer<Resource<LoginUserResult>>() {
+//            @Override
+//            public void onChanged(Resource<LoginUserResult> loginUserResultResource) {
+//                UserInfo userInfo = new UserInfo(loginUserResultResource.data.getUser().getId(), loginUserResultResource.data.getUser().getUserName(), Uri.parse(loginUserResultResource.data.getUser().getImgUrl()));
+//                RongIM.getInstance().refreshUserInfoCache(userInfo);
+//            }
+//        });
     }
 
     @Override
@@ -207,21 +207,20 @@ public class LoginActivity extends BaseSupportActivity<LoginPresenter> implement
          * 获取设置用户信息. 通过返回的 userId 来封装生产用户信息.
          * @param userId 用户 ID
          */
-        RongIM.setUserInfoProvider(userId -> {
-            ThreadManager.getInstance().runOnUIThread(() -> {
-                LiveData<Resource<LoginUserResult>> userSource = new FriendTask(getApplication()).getFriendInfo(userId);
-                conversationViewModel.getUserInfoLiveData().addSource(userSource, resource -> {
-                    if (resource.status == Status.SUCCESS || resource.status == Status.ERROR) {
-                        // 确认成功或失败后，移除数据源
-                        // 在请求成功后，会在插入数据时同步更新缓存
-                        conversationViewModel.getUserInfoLiveData().removeSource(userSource);
-                        conversationViewModel.getUserInfoLiveData().postValue(resource);
-                    }
-                });
-            });
-//                UserInfo userInfo = new UserInfo(userId, loginUserResult.getUser().getId(), Uri.parse(loginUserResult.getUser().getImgUrl()));
-            return null;
-        }, true);
+//        RongIM.setUserInfoProvider(userId -> {
+//            ThreadManager.getInstance().runOnUIThread(() -> {
+//                LiveData<Resource<LoginUserResult>> userSource = new FriendTask(getApplication()).getFriendInfo(userId);
+//                conversationViewModel.getUserInfoLiveData().addSource(userSource, resource -> {
+//                    if (resource.status == Status.SUCCESS || resource.status == Status.ERROR) {
+//                        // 确认成功或失败后，移除数据源
+//                        // 在请求成功后，会在插入数据时同步更新缓存
+//                        conversationViewModel.getUserInfoLiveData().removeSource(userSource);
+//                        conversationViewModel.getUserInfoLiveData().postValue(resource);
+//                    }
+//                });
+//            });
+//            return null;
+//        }, true);
 
         SPUtils.getInstance().put(AppConstant.User.USER_ID, loginUserResult.getUser().getId());//
         SPUtils.getInstance().put(AppConstant.User.PHONE, loginUserResult.getUser().getAccount());//

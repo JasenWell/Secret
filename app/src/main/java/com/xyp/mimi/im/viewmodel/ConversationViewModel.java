@@ -20,6 +20,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import com.xyp.mimi.im.bean.ResponseWrapperGroupInfo;
 import com.xyp.mimi.im.db.model.FriendShipInfo;
 import com.xyp.mimi.im.db.model.GroupEntity;
 import com.xyp.mimi.im.im.IMManager;
@@ -168,18 +169,18 @@ public class ConversationViewModel extends AndroidViewModel {
 
         } else if (conversationType.equals(Conversation.ConversationType.GROUP)) {
 
-            LiveData<Resource<GroupEntity>> groupInfo = groupTask.getGroupInfo(targetId);
-            titleStr.addSource(groupInfo, new Observer<Resource<GroupEntity>>() {
+            LiveData<Resource<ResponseWrapperGroupInfo>> groupInfo = groupTask.getGroupInfo(targetId);
+            titleStr.addSource(groupInfo, new Observer<Resource<ResponseWrapperGroupInfo>>() {
                 @Override
-                public void onChanged(Resource<GroupEntity> groupEntityResource) {
+                public void onChanged(Resource<ResponseWrapperGroupInfo> groupEntityResource) {
 
                     if (groupEntityResource.status != Status.LOADING) {
                         titleStr.removeSource(groupInfo);
                     }
 
                     String name = "";
-                    if (groupEntityResource != null && groupEntityResource.data != null) {
-                        name = groupEntityResource.data.getName();
+                    if (groupEntityResource != null && groupEntityResource.data != null && groupEntityResource.data.getGroupList() != null) {
+                        name = groupEntityResource.data.getGroupList().getContext();
                     }
                     if (!TextUtils.isEmpty(name)) {
                         titleStr.postValue(name);

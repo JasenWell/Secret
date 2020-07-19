@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.xyp.mimi.im.bean.ResponseWrapperGroupInfo;
 import com.xyp.mimi.im.db.model.GroupEntity;
 import com.xyp.mimi.im.model.GroupNoticeResult;
 import com.xyp.mimi.im.model.Resource;
@@ -15,7 +16,7 @@ import com.xyp.mimi.im.task.GroupTask;
 import com.xyp.mimi.im.utils.SingleSourceLiveData;
 
 public class GroupNoticeViewModel extends AndroidViewModel {
-    private SingleSourceLiveData<Resource<GroupEntity>> groupInfo = new SingleSourceLiveData<>();
+    private SingleSourceLiveData<Resource<ResponseWrapperGroupInfo>> groupInfo = new SingleSourceLiveData<>();
     private SingleSourceLiveData<Resource<GroupNoticeResult>> groupNotice = new SingleSourceLiveData<>();
     private SingleSourceLiveData<Resource<Void>> publishNoticeResult = new SingleSourceLiveData<>();
 
@@ -52,7 +53,7 @@ public class GroupNoticeViewModel extends AndroidViewModel {
      *
      * @return
      */
-    public LiveData<Resource<GroupEntity>> getGroupInfo(){
+    public LiveData<Resource<ResponseWrapperGroupInfo>> getGroupInfo(){
         return groupInfo;
     }
 

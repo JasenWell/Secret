@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
+import com.xyp.mimi.im.bean.ResponseWrapperGroupInfo;
+import com.xyp.mimi.im.bean.ResponseWrapperInfo;
 import com.xyp.mimi.im.db.model.GroupEntity;
 import com.xyp.mimi.im.db.model.GroupExitedMemberInfo;
 import com.xyp.mimi.im.db.model.GroupMemberInfoDes;
@@ -38,8 +40,10 @@ public interface GroupService {
             @Field("context") String groupName
     );
 
-
-
+    //查询群信息
+    @FormUrlEncoded
+    @POST("/mall/interface/selecrtGroup")
+    LiveData<Result<ResponseWrapperGroupInfo>> getGroupInfo(@Field("gid") String groupId);
 
 
 
@@ -84,9 +88,9 @@ public interface GroupService {
     @POST(SealTalkUrl.GROUP_SET_DISPLAY_NAME)
     LiveData<Result> setMemberDisplayName(@Body RequestBody body);
 
-    @GET(SealTalkUrl.GROUP_GET_INFO)
-    @Deprecated
-    LiveData<Result<GroupEntity>> getGroupInfo(@Path("group_id") String groupId);
+//    @GET(SealTalkUrl.GROUP_GET_INFO)
+//    @Deprecated
+//    LiveData<Result<GroupEntity>> getGroupInfo(@Path("group_id") String groupId);
 
     @GET(SealTalkUrl.GROUP_GET_MEMBER_INFO)
     LiveData<Result<List<GroupMemberInfoResult>>> getGroupMemberList(@Path("group_id") String groupId);

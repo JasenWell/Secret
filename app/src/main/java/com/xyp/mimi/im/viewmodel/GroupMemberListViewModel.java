@@ -15,6 +15,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import com.xyp.mimi.im.bean.ResponseWrapperGroupInfo;
 import com.xyp.mimi.im.db.model.GroupEntity;
 import com.xyp.mimi.im.model.GroupMember;
 import com.xyp.mimi.im.model.Resource;
@@ -30,7 +31,7 @@ public class GroupMemberListViewModel extends AndroidViewModel {
     private String groupId;
 
 //    private SingleSourceLiveData<Resource<List<GroupMember>>> groupMemberList = new SingleSourceLiveData<>();
-    private SingleSourceLiveData<Resource<GroupEntity>> groupInfoLiveData = new SingleSourceLiveData<>();
+    private SingleSourceLiveData<Resource<ResponseWrapperGroupInfo>> groupInfoLiveData = new SingleSourceLiveData<>();
     private SingleSourceMapLiveData<Resource<List<GroupMember>>, Resource<List<GroupMember>>> groupMemberList;
 
     private GroupTask groupTask;
@@ -123,7 +124,7 @@ public class GroupMemberListViewModel extends AndroidViewModel {
      *
      * @return
      */
-    public LiveData<Resource<GroupEntity>> getGroupInfo() {
+    public LiveData<Resource<ResponseWrapperGroupInfo>> getGroupInfo() {
         return groupInfoLiveData;
     }
 

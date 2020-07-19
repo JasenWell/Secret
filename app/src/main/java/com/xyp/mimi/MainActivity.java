@@ -407,48 +407,48 @@ public class MainActivity extends BaseSupportActivity implements MorePopWindow.O
             }
         });
 
-        RongIM.getInstance().getConversationList(new RongIMClient.ResultCallback<List<Conversation>>() {
-            @Override
-            public void onSuccess(List<Conversation> conversations) {
-                if(conversations != null && conversations.size() != 0) {
-                    for (Conversation conversation : conversations) {
-                        if (conversation.getConversationType() == Conversation.ConversationType.PRIVATE) {
-                            RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
-                                @Override
-                                public UserInfo getUserInfo(String userId) {
-                                    ThreadManager.getInstance().runOnUIThread(() -> {
-                                        LiveData<Resource<LoginUserResult>> userSource = new FriendTask(getApplication()).getFriendInfo(userId);
-                                        conversationViewModel.getUserInfoLiveData().addSource(userSource, resource -> {
-                                            if (resource.status == Status.SUCCESS || resource.status == Status.ERROR) {
-                                                // 确认成功或失败后，移除数据源
-                                                // 在请求成功后，会在插入数据时同步更新缓存
-                                                conversationViewModel.getUserInfoLiveData().removeSource(userSource);
-                                                conversationViewModel.getUserInfoLiveData().postValue(resource);
-                                            }
-                                        });
-                                    });
-                                    return null;
-                                }
-                            }, true);
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onError(RongIMClient.ErrorCode errorCode) {
-
-            }
-        });
-
-        conversationViewModel = ViewModelProviders.of(this).get(ConversationViewModel.class);
-        conversationViewModel.getUserInfoLiveData().observe(this, new Observer<Resource<LoginUserResult>>() {
-            @Override
-            public void onChanged(Resource<LoginUserResult> loginUserResultResource) {
-                UserInfo userInfo = new UserInfo(loginUserResultResource.data.getUser().getId(), loginUserResultResource.data.getUser().getUserName(), Uri.parse(loginUserResultResource.data.getUser().getImgUrl()));
-                RongIM.getInstance().refreshUserInfoCache(userInfo);
-            }
-        });
+//        RongIM.getInstance().getConversationList(new RongIMClient.ResultCallback<List<Conversation>>() {
+//            @Override
+//            public void onSuccess(List<Conversation> conversations) {
+//                if(conversations != null && conversations.size() != 0) {
+//                    for (Conversation conversation : conversations) {
+//                        if (conversation.getConversationType() == Conversation.ConversationType.PRIVATE) {
+//                            RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
+//                                @Override
+//                                public UserInfo getUserInfo(String userId) {
+//                                    ThreadManager.getInstance().runOnUIThread(() -> {
+//                                        LiveData<Resource<LoginUserResult>> userSource = new FriendTask(getApplication()).getFriendInfo(userId);
+//                                        conversationViewModel.getUserInfoLiveData().addSource(userSource, resource -> {
+//                                            if (resource.status == Status.SUCCESS || resource.status == Status.ERROR) {
+//                                                // 确认成功或失败后，移除数据源
+//                                                // 在请求成功后，会在插入数据时同步更新缓存
+//                                                conversationViewModel.getUserInfoLiveData().removeSource(userSource);
+//                                                conversationViewModel.getUserInfoLiveData().postValue(resource);
+//                                            }
+//                                        });
+//                                    });
+//                                    return null;
+//                                }
+//                            }, true);
+//                        }
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onError(RongIMClient.ErrorCode errorCode) {
+//
+//            }
+//        });
+//
+//        conversationViewModel = ViewModelProviders.of(this).get(ConversationViewModel.class);
+//        conversationViewModel.getUserInfoLiveData().observe(this, new Observer<Resource<LoginUserResult>>() {
+//            @Override
+//            public void onChanged(Resource<LoginUserResult> loginUserResultResource) {
+//                UserInfo userInfo = new UserInfo(loginUserResultResource.data.getUser().getId(), loginUserResultResource.data.getUser().getUserName(), Uri.parse(loginUserResultResource.data.getUser().getImgUrl()));
+//                RongIM.getInstance().refreshUserInfoCache(userInfo);
+//            }
+//        });
 
     }
 

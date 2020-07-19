@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.xyp.mimi.im.bean.ResponseUserInfo;
+import com.xyp.mimi.im.bean.ResponseWrapperGroupInfo;
 import com.xyp.mimi.im.common.ThreadManager;
 import com.xyp.mimi.im.db.DbManager;
 import com.xyp.mimi.im.db.dao.GroupDao;
@@ -25,7 +26,6 @@ import com.xyp.mimi.im.db.model.FriendStatus;
 import com.xyp.mimi.im.db.model.GroupEntity;
 import com.xyp.mimi.im.db.model.GroupExitedMemberInfo;
 import com.xyp.mimi.im.db.model.GroupNoticeInfo;
-import com.xyp.mimi.im.db.model.UserInfo;
 import com.xyp.mimi.im.model.GetPokeResult;
 import com.xyp.mimi.im.model.GroupMember;
 import com.xyp.mimi.im.model.Resource;
@@ -38,7 +38,9 @@ import com.xyp.mimi.mvp.http.entity.login.LoginUserResult;
 import io.rong.callkit.RongCallKit;
 import io.rong.contactcard.IContactCardInfoProvider;
 import io.rong.imkit.RongIM;
+import io.rong.imkit.model.GroupUserInfo;
 import io.rong.imkit.tools.CharacterParser;
+import io.rong.imlib.model.UserInfo;
 
 public class IMInfoProvider {
     private final MediatorLiveData<Resource> triggerLiveData = new MediatorLiveData<>(); // 同步信息时用于触发事件使用的变量
@@ -131,6 +133,8 @@ public class IMInfoProvider {
                     // 确认成功或失败后，移除数据源
                     // 在请求成功后，会在插入数据时同步更新缓存
                     triggerLiveData.removeSource(userSource);
+                    io.rong.imlib.model.UserInfo userInfo = new UserInfo(resource.data.getUser().getId(), resource.data.getUser().getUserName(), Uri.parse(resource.data.getUser().getImgUrl()));
+                    RongIM.getInstance().refreshUserInfoCache(userInfo);
                 }
             });
         });
@@ -143,12 +147,16 @@ public class IMInfoProvider {
      */
     public void updateGroupInfo(String groupId) {
         ThreadManager.getInstance().runOnUIThread(() -> {
-            LiveData<Resource<GroupEntity>> groupSource = groupTask.getGroupInfo(groupId);
+            LiveData<Resource<ResponseWrapperGroupInfo>> groupSource = groupTask.getGroupInfo(groupId);
             triggerLiveData.addSource(groupSource, resource -> {
                 if (resource.status == Status.SUCCESS || resource.status == Status.ERROR) {
                     // 确认成功或失败后，移除数据源
                     // 在请求成功后，会在插入数据时同步更新缓存
                     triggerLiveData.removeSource(groupSource);
+//                    String[] users =  resource.data.getGroupList().getUidList().split(",");
+//                    for(String userId : users) {
+//                        RongIM.getInstance().refreshGroupUserInfoCache(new GroupUserInfo(groupId, ));
+//                    }
                 }
             });
         });
@@ -236,7 +244,6 @@ public class IMInfoProvider {
                     // 在请求成功后，会在插入数据时同步更新缓存
                     triggerLiveData.removeSource(groupMemberSource);
                     groupMemberIsRequest = false;
-
                 }
 
                 if (resource.status == Status.SUCCESS && resource.data != null && result != null) {

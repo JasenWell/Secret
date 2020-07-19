@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.xyp.mimi.im.bean.ResponseWrapperGroupInfo;
 import com.xyp.mimi.im.db.model.GroupEntity;
 import com.xyp.mimi.im.model.Resource;
 import com.xyp.mimi.im.task.GroupTask;
@@ -20,7 +21,7 @@ public class JoinGroupViewModel extends AndroidViewModel {
     private String groupId;
     private GroupTask groupTask;
 
-    private SingleSourceLiveData<Resource<GroupEntity>> groupInfo = new SingleSourceLiveData<>();
+    private SingleSourceLiveData<Resource<ResponseWrapperGroupInfo>> groupInfo = new SingleSourceLiveData<>();
     private SingleSourceLiveData<Resource<Void>> joinGroupResult = new SingleSourceLiveData<>();
 
     public JoinGroupViewModel(@NonNull Application application) {
@@ -42,7 +43,7 @@ public class JoinGroupViewModel extends AndroidViewModel {
      *
      * @return
      */
-    public LiveData<Resource<GroupEntity>> getGroupInfo() {
+    public LiveData<Resource<ResponseWrapperGroupInfo>> getGroupInfo() {
         return groupInfo;
     }
 
