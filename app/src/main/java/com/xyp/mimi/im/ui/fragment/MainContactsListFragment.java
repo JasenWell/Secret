@@ -69,7 +69,6 @@ public class MainContactsListFragment extends CommonListBaseFragment implements 
         super.onInitView(savedInstanceState, intent);
     }
 
-
     @Override
     protected boolean isUseSideBar() {
         return true;
@@ -144,6 +143,9 @@ public class MainContactsListFragment extends CommonListBaseFragment implements 
     @Override
     public void onResume() {
         super.onResume();
+        if(viewModel != null){
+            viewModel.loadData();
+        }
     }
 
     @Override

@@ -94,6 +94,7 @@ public class MainContactsListViewModel extends CommonListBaseViewModel {
 
     @Override
     public void loadData() {
+//        handler.sendEmptyMessageDelayed(1092,5000);
         loadFriendShip();
     }
 
@@ -125,7 +126,6 @@ public class MainContactsListViewModel extends CommonListBaseViewModel {
             @Override
             public void onChanged(Resource<ResponseWrapperInfo> resource) {
                 if (resource.status != Status.LOADING) {
-                    handler.sendEmptyMessageDelayed(1092,5000);
                     if (resource != null && resource.data != null) {
                         post(getFunctionList(), mySelfInfo, friendList);
                         if(resource.data.getFriendslist()!= null && resource.data.getFriendslist().size() > 0) {
