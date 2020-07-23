@@ -69,7 +69,7 @@ public class SelectMultiFriendsActivity extends SelectBaseActivity implements Vi
         });
         asynModelImp = new AsynModelImp(this);
 
-        asynModelImp.searchFriendList(HttpHelper.BUSINESS.REQUEST_FRIEND_LIST, UserCache.getInstance().getCurrentUserId());
+//        asynModelImp.searchFriendList(HttpHelper.BUSINESS.REQUEST_FRIEND_LIST, UserCache.getInstance().getCurrentUserId());
     }
 
     /**
@@ -159,7 +159,7 @@ public class SelectMultiFriendsActivity extends SelectBaseActivity implements Vi
         }else if(type == HttpHelper.BUSINESS.REQUEST_FRIEND_LIST.getCode()){
             ResponseWrapperInfo wrapperInfo = (ResponseWrapperInfo) responseJson.getData();
 
-            Log.d("SelectMultiFriendsActivity",wrapperInfo.getFriendslist().get(0).getImgUrl());
+
         }
     }
 

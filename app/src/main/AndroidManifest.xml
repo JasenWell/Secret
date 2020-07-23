@@ -48,6 +48,8 @@
             android:screenOrientation="portrait" />
         <activity android:name=".im.ui.activity.GroupListActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".im.ui.activity.GroupDetailActivity"
+            android:screenOrientation="portrait" />
 
         <activity android:name=".im.ui.activity.SearchFriendActivity"
             android:launchMode="singleTask"

@@ -40,6 +40,7 @@ import io.rong.contactcard.IContactCardInfoProvider;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.model.GroupUserInfo;
 import io.rong.imkit.tools.CharacterParser;
+import io.rong.imlib.model.Group;
 import io.rong.imlib.model.UserInfo;
 
 public class IMInfoProvider {
@@ -155,6 +156,7 @@ public class IMInfoProvider {
                     triggerLiveData.removeSource(groupSource);
 //                    String[] users =  resource.data.getGroupList().getUidList().split(",");
 //                    for(String userId : users) {
+                    RongIM.getInstance().refreshGroupInfoCache(new Group(groupId,resource.data.getGroupList().getContext(),Uri.parse("")));
 //                        RongIM.getInstance().refreshGroupUserInfoCache(new GroupUserInfo(groupId, ));
 //                    }
                 }

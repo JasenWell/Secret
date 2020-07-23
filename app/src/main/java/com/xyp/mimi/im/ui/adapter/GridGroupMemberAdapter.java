@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TabHost;
 import android.widget.TextView;
 
 import java.util.List;
@@ -147,6 +148,7 @@ public class GridGroupMemberAdapter extends BaseAdapter {
      */
     public void setAllowDeleteMember(boolean isAllowDelete) {
         this.isAllowDelete = isAllowDelete;
+        this.isAllowDelete = false; //不允许减员 by hjh
         notifyDataSetChanged();
     }
 
@@ -157,6 +159,7 @@ public class GridGroupMemberAdapter extends BaseAdapter {
      */
     public void setAllowAddMember(boolean isAllowAdd) {
         this.isAllowAdd = isAllowAdd;
+        this.isAllowAdd = false;//不允许加员 by hjh
     }
 
     /**

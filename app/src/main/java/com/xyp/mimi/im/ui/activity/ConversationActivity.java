@@ -116,10 +116,10 @@ public class ConversationActivity extends TitleBaseActivity {
         setContentView(R.layout.conversation_activity_conversation);
         // 没有intent 的则直接返回
         Intent intent = getIntent();
-//        if (intent == null || intent.getData() == null) {
-//            finish();
-//            return;
-//        }
+        if (intent == null || intent.getData() == null) {
+            finish();
+            return;
+        }
         try {
             targetId = intent.getData().getQueryParameter("targetId");
             conversationType = Conversation.ConversationType.valueOf(intent.getData()
@@ -544,7 +544,10 @@ public class ConversationActivity extends TitleBaseActivity {
             }
         });
 
-
+        getTitleBar().hideBtnRight();
+        if(conversationType == Conversation.ConversationType.GROUP){
+            getTitleBar().showBtnRight();
+        }
         getTitleBar().getBtnRight().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -579,10 +582,10 @@ public class ConversationActivity extends TitleBaseActivity {
 //            intent.putExtra(IntentExtra.SERIA_CONVERSATION_TYPE, Conversation.ConversationType.PRIVATE);
 //            startActivity(intent);
 //        } else if (conversationType == Conversation.ConversationType.GROUP) {
-//            Intent intent = new Intent(this, GroupDetailActivity.class);
-//            intent.putExtra(IntentExtra.STR_TARGET_ID, targetId);
-//            intent.putExtra(IntentExtra.SERIA_CONVERSATION_TYPE, Conversation.ConversationType.GROUP);
-//            startActivity(intent);
+            Intent intent = new Intent(this, GroupDetailActivity.class);
+            intent.putExtra(IntentExtra.STR_TARGET_ID, targetId);
+            intent.putExtra(IntentExtra.SERIA_CONVERSATION_TYPE, Conversation.ConversationType.GROUP);
+            startActivity(intent);
 //        } else if (conversationType == Conversation.ConversationType.DISCUSSION) {
 //
 //        }

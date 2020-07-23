@@ -218,7 +218,13 @@ public class CreateGroupActivity extends TitleBaseActivity implements View.OnCli
      */
     private void toGroupChat(String groupId) {
         RongIM.getInstance().startConversation(this, Conversation.ConversationType.GROUP, groupId, createGroupName);
-        finish();
+    }
+
+    private void toGroupDetail(String groupId){
+        Intent intent = new Intent(this, GroupDetailActivity.class);
+        intent.putExtra(IntentExtra.STR_TARGET_ID, groupId);
+        intent.putExtra(IntentExtra.SERIA_CONVERSATION_TYPE, Conversation.ConversationType.GROUP);
+        startActivity(intent);
     }
 
     /**
@@ -245,7 +251,8 @@ public class CreateGroupActivity extends TitleBaseActivity implements View.OnCli
         if(type == HttpHelper.BUSINESS.REQUEST_RY_CREATE_GROUP.getCode()){
             showToast("创建成功");
             //不返回结果时，创建成功后跳转到群组聊天中
-            toGroupChat(groupId);
+//            toGroupChat(groupId);
+            toGroupDetail(groupId);//跳转到群详情
 //            EventBus.getDefault().post(new MessageEvent("跳转到群列表",MessageEvent.EventType.SWITCH_GROUP_LIST));
             finish();
         }
